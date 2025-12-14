@@ -103,12 +103,12 @@ const ContentWithPlayer = ({ contentData, audioSrc, subTitleDate }) => {
         if (!contentData || contentData.length === 0) return;
         // debugger
         // Convert currentTime (seconds) to milliseconds for comparison
-        const currentTimeMs = currentTime;
+        // const currentTimeMs = currentTime;
 
         // Find the current sentence index
         let currentIndex = -1;
         for (let i = 0; i < contentData.length; i++) {
-            if (currentTimeMs >= contentData[i].offset) {
+            if (currentTime >= contentData[i].offset) {
                 currentIndex = i;
             } else {
                 break;
