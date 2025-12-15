@@ -13,7 +13,7 @@ export default forwardRef((props, ref) => {
         audioRef.current.currentTime = start / 1000;
         endTimeRef.current = end;
 
-        audio.play()
+        audioRef.current.play()
     }
     useImperativeHandle(ref, () => {
         return {
@@ -28,7 +28,7 @@ export default forwardRef((props, ref) => {
 
         const updateTime = () => {
             const currentTimeMs = audio.currentTime * 1000;
-
+            console.log(currentTimeMs, endTimeRef.current);
             if (currentTimeMs >= endTimeRef.current && endTimeRef.current) {
                 endTimeRef.current = 0;
                 audio.pause();

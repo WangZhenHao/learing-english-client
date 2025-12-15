@@ -3,7 +3,7 @@
 
 import { Button } from "@/components/ui/button";
 import { useEffect, useRef, useState } from "react";
-import Hls from "hls.js"; // HLS.js 库必须在客户端使用
+// import Hls from "hls.js"; // HLS.js 库必须在客户端使用
 import "./index.css";
 import AudioPlayer from "./AudioPlayer";
 
@@ -19,54 +19,78 @@ const ContentWithPlayer = ({ contentData, audioSrc, subTitleDate }) => {
     // const audioRef = useRef(null);
     // const hlsRef = useRef(null);
     // const [currentTime, setCurrentTime] = useState(0);
-    const activeSentenceIndexRef = useRef(null);
-    const [activeSentenceIndex, setActiveSentenceIndex] = useState(null);
+    const activeSentenceIndexRef = useRef(0);
+    const [activeSentenceIndex, setActiveSentenceIndex] = useState(0);
     const [currentWord, setCurrentWord] = useState({});
     const audioPlayRef = useRef(null);
-    // const
-    const combineSubTitle = (subTitleDate) => {
-        const result = [];
-        subTitleDate.forEach((itemList) => {
-            if (itemList.boundaryType === "WordBoundary") {
-                result.push(itemList);
-            } else if (itemList.boundaryType === "PunctuationBoundary") {
-                result[result.length - 1].text =
-                    result[result.length - 1].text + itemList.text;
+    const subtitleCacheRef = useRef([]);
+
+    function filterSubTitle(subTitleDate) {
+        return subTitleDate.map((itemList) => {
+            const list = itemList.map((item) => ({ ...item }));
+
+            for (let i = list.length - 1; i >= 0; i--) {
+                if (list[i].boundaryType === "PunctuationBoundary") {
+                    list[i - 1].text += list[i].text;
+                    list.splice(i, 1);
+                }
             }
+
+            return list;
         });
-        return result;
+    }
+
+    useEffect(() => {
+        subtitleCacheRef.current = filterSubTitle(subTitleDate);
+    }, [subTitleDate]);
+    // const subTitleDateNew = useMemo(() => {
+    //     return filterSubTitle(subTitleDate);
+    // }, [subTitleDate]);
+
+    const handlePlaySpecific = (start, end) => {
+        audioPlayRef.current.toSkip(start, end);
+        setCurrentWord({index: 0})
+
+    };
+    const updateActiveSentence = (time) => {
+        let idx = 0;
+        for (let i = 0; i < contentData.length; i++) {
+            if (time >= contentData[i].offset) idx = i;
+            else break;
+        }
+        return idx;
+    };
+    const updateActiveWord = (time, sentenceIndex) => {
+        const list = subtitleCacheRef.current[sentenceIndex];
+        if (!list) return null;
+
+        let wordIndex = 0;
+        const word = list.find((sub, index) => {
+            wordIndex = index;
+            return sub.offset <= time && sub.offset + sub.duration >= time;
+        });
+
+        return word ? { ...word, index: wordIndex } : null;
     };
     const onTimeUpdate = (currentTime) => {
-        let itemIndex = 0;
-        const sentenceIndex = Math.max(0, activeSentenceIndexRef.current);
-        const list = combineSubTitle(
-            JSON.parse(JSON.stringify(subTitleDate[sentenceIndex]))
-        );
-        // debugger;
-        const item = list.find((sub, index) => {
-            itemIndex = index;
-            return (
-                sub.offset <= currentTime &&
-                sub.offset + sub.duration >= currentTime
-            );
-        });
-        if (item) {
-            item.index = itemIndex;
-            setCurrentWord(item);
+        const sentenceIndex = updateActiveSentence(currentTime);
+
+        if (sentenceIndex !== activeSentenceIndexRef.current) {
+            activeSentenceIndexRef.current = sentenceIndex;
+            setActiveSentenceIndex(sentenceIndex);
         }
 
-        activeSentenceIndexRef.current = -1;
-        for (let i = 0; i < contentData.length; i++) {
-            if (currentTime >= contentData[i].offset) {
-                activeSentenceIndexRef.current = i;
-            } else {
-                break;
-            }
-        }
-
-        setActiveSentenceIndex(activeSentenceIndexRef.current);
+        const word = updateActiveWord(currentTime, sentenceIndex);
+        if (word) setCurrentWord(word);
     };
-    
+
+    const getEndTime = (item) => {
+        // const  item =  subTitleDate[activeSentenceIndex]
+        const num =
+            item[item.length - 1].offset + item[item.length - 1].duration;
+        return num;
+    };
+
     return (
         <>
             {/* 1. 渲染音频播放器，并获取其引用 */}
@@ -106,10 +130,8 @@ const ContentWithPlayer = ({ contentData, audioSrc, subTitleDate }) => {
                                             .map((word, index) => (
                                                 <span
                                                     className={`px-1 ${
-                                                        currentWord.text ===
-                                                            word &&
                                                         index ===
-                                                            currentWord.index
+                                                        currentWord.index
                                                             ? "active-word"
                                                             : ""
                                                     }`}
@@ -126,7 +148,10 @@ const ContentWithPlayer = ({ contentData, audioSrc, subTitleDate }) => {
                                 {/* 3. 在客户端组件中绑定点击事件 */}
                                 <Button
                                     onClick={() =>
-                                        handlePlaySpecific(item.offset)
+                                        handlePlaySpecific(
+                                            item.offset,
+                                            getEndTime(subTitleDate[index])
+                                        )
                                     }
                                     style={{ marginLeft: "10px" }}
                                 >
