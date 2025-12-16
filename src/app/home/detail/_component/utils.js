@@ -1,3 +1,5 @@
+import { useLocalStorageState } from "ahooks";
+import { useEffect, useState } from "react";
 export function mstoMinute(ms) {
   // Convert milliseconds to seconds
   const totalSeconds = Math.floor(ms / 1000);
@@ -11,4 +13,17 @@ export function mstoMinute(ms) {
   const formattedSeconds = String(seconds).padStart(2, '0');
   
   return `${formattedMinutes}:${formattedSeconds}`;
+}
+
+export function setReportStatus() {
+    const [isStorageLoop, setIsStorageLoop] = useLocalStorageState("isStorageLoop", {
+        defaultValue: false,
+    });
+    const [loop, setLoop] = useState(false)
+
+    useEffect(() => {
+        setLoop(isStorageLoop)
+    }, [isStorageLoop])
+
+    return [loop, setIsStorageLoop]
 }

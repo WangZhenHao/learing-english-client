@@ -1,7 +1,14 @@
 // components/AudioPlayer.js
 "use client";
 
-import { Play, ChevronsRight, ChevronsLeft, Pause, RotateCcw, Repeat1 } from "lucide-react";
+import {
+    Play,
+    ChevronsRight,
+    ChevronsLeft,
+    Pause,
+    RotateCcw,
+    Repeat1,
+} from "lucide-react";
 import {
     useEffect,
     useRef,
@@ -12,7 +19,7 @@ import {
 } from "react";
 import Hls from "hls.js";
 import style from "./audioPlay.module.css";
-import { mstoMinute } from "./utils";
+import { mstoMinute, setReportStatus } from "./utils";
 
 export default forwardRef((props, ref) => {
     const audioRef = useRef(null);
@@ -21,7 +28,7 @@ export default forwardRef((props, ref) => {
     const [totalDuration, setTotalDuration] = useState(0);
     const [currentTime, setCurrentTime] = useState(0);
     const [isPlaying, setIsPlaying] = useState(false);
-    const [isLoop, setIsLoop] = useState(false);
+    const [loop, setLoop] = setReportStatus()
 
     const toSkip = (start, end = 0) => {
         audioRef.current.currentTime = start / 1000;
@@ -144,8 +151,7 @@ export default forwardRef((props, ref) => {
     };
 
     const repeatClick = () => {
-        audioRef.current.loop = !isLoop;
-        setIsLoop(audioRef.current.loop)
+        setLoop(!loop);
     };
     return (
         <div>
@@ -153,6 +159,7 @@ export default forwardRef((props, ref) => {
                 ref={audioRef}
                 // src={src}
                 controls
+                loop={loop}
                 preload="metadata"
                 style={{ display: "none" }}
             />
@@ -174,9 +181,9 @@ export default forwardRef((props, ref) => {
                             className="pr-8 cursor-pointer"
                             onClick={repeatClick}
                         >
-                            <Repeat1 color={isLoop ? "#299764" : "black"} />
+                            <Repeat1 color={loop ? "#299764" : "black"} />
                         </div>
-                    
+
                         <div
                             className="pr-8 cursor-pointer"
                             onClick={() => toSkip(0)}
@@ -196,7 +203,7 @@ export default forwardRef((props, ref) => {
                         </div>
                         <ChevronsRight
                             className="cursor-pointer"
-                            onClick={() => toSkip(currentTime - 1500)}
+                            onClick={() => toSkip(currentTime + 1500)}
                         />
                         <div className="pl-8">
                             {mstoMinute(currentTime)}/{resTotalTime}
