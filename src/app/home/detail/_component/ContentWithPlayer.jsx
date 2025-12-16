@@ -100,14 +100,6 @@ const ContentWithPlayer = ({ contentData, audioSrc, subTitleDate }) => {
                 src={audioSrc}
                 ref={audioPlayRef}
             />
-            {/* <audio
-                ref={audioRef}
-                controls
-                style={{ width: "100%", marginBottom: "20px" }}
-            >
-                您的浏览器不支持 audio 元素。
-            </audio> */}
-
             {/* 2. 渲染内容和按钮 */}
             <div>
                 {contentData.map((item, index) => {

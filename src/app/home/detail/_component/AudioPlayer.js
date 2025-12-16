@@ -1,7 +1,7 @@
 // components/AudioPlayer.js
 "use client";
 
-import { Play, ChevronsRight, ChevronsLeft, Pause } from "lucide-react";
+import { Play, ChevronsRight, ChevronsLeft, Pause, RotateCcw, Repeat1 } from "lucide-react";
 import {
     useEffect,
     useRef,
@@ -21,12 +21,15 @@ export default forwardRef((props, ref) => {
     const [totalDuration, setTotalDuration] = useState(0);
     const [currentTime, setCurrentTime] = useState(0);
     const [isPlaying, setIsPlaying] = useState(false);
+    const [isLoop, setIsLoop] = useState(false);
 
     const toSkip = (start, end = 0) => {
         audioRef.current.currentTime = start / 1000;
         endTimeRef.current = end;
 
-        audioRef.current.play();
+        if (end) {
+            audioRef.current.play();
+        }
     };
     const toPlay = () => {
         audioRef.current.play();
@@ -72,7 +75,7 @@ export default forwardRef((props, ref) => {
             if ([" ", "ArrowLeft", "ArrowRight"].includes(e.key)) {
                 e.preventDefault();
             }
-            
+
             if (e.key === " ") {
                 if (audio.paused) {
                     toPlay();
@@ -133,6 +136,17 @@ export default forwardRef((props, ref) => {
         }
     }, [props.src]);
 
+    const progressLineClick = (e) => {
+        const width = e.currentTarget.offsetWidth;
+        const clickWidth = (e.clientX / width) * totalDuration;
+
+        audioRef.current.currentTime = clickWidth / 1000;
+    };
+
+    const repeatClick = () => {
+        audioRef.current.loop = !isLoop;
+        setIsLoop(audioRef.current.loop)
+    };
     return (
         <div>
             <audio
@@ -143,7 +157,10 @@ export default forwardRef((props, ref) => {
                 style={{ display: "none" }}
             />
             <div className={`fixed w-full ${style.audioWrap}`}>
-                <div className={`absolute w-full ${style.progressLine}`}>
+                <div
+                    className={`absolute cursor-pointer w-full ${style.progressLine}`}
+                    onClick={progressLineClick}
+                >
                     <div
                         className={`h-full ${style.progressBar}`}
                         style={{
@@ -153,6 +170,19 @@ export default forwardRef((props, ref) => {
                 </div>
                 <div className="w-full h-full flex items-center justify-center">
                     <div className="flex">
+                        <div
+                            className="pr-8 cursor-pointer"
+                            onClick={repeatClick}
+                        >
+                            <Repeat1 color={isLoop ? "#299764" : "black"} />
+                        </div>
+                    
+                        <div
+                            className="pr-8 cursor-pointer"
+                            onClick={() => toSkip(0)}
+                        >
+                            <RotateCcw />
+                        </div>
                         <ChevronsLeft
                             className="cursor-pointer"
                             onClick={() => toSkip(currentTime - 1500)}
