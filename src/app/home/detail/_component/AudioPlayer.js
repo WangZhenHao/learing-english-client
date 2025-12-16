@@ -1,26 +1,51 @@
 // components/AudioPlayer.js
 "use client";
 
-import { Button } from "@/components/ui/button";
-import { useEffect, useRef, forwardRef, useImperativeHandle } from "react";
+import { Play, ChevronsRight, ChevronsLeft, Pause } from "lucide-react";
+import {
+    useEffect,
+    useRef,
+    forwardRef,
+    useImperativeHandle,
+    useState,
+    useMemo,
+} from "react";
 import Hls from "hls.js";
+import style from "./audioPlay.module.css";
+import { mstoMinute } from "./utils";
 
 export default forwardRef((props, ref) => {
     const audioRef = useRef(null);
     const hlsRef = useRef(null);
     const endTimeRef = useRef(0);
+    const [totalDuration, setTotalDuration] = useState(0);
+    const [currentTime, setCurrentTime] = useState(0);
+    const [isPlaying, setIsPlaying] = useState(false);
+
     const toSkip = (start, end = 0) => {
         audioRef.current.currentTime = start / 1000;
         endTimeRef.current = end;
 
-        audioRef.current.play()
-    }
+        audioRef.current.play();
+    };
+    const toPlay = () => {
+        audioRef.current.play();
+        // setIsPlaying(true);
+    };
+    const toPause = () => {
+        audioRef.current.pause();
+        // setIsPlaying(false);
+    };
     useImperativeHandle(ref, () => {
         return {
             audio: audioRef.current,
-            toSkip
+            toSkip,
         };
     });
+
+    const resTotalTime = useMemo(() => {
+        return mstoMinute(totalDuration);
+    }, [totalDuration]);
 
     useEffect(() => {
         const audio = audioRef.current;
@@ -28,26 +53,59 @@ export default forwardRef((props, ref) => {
 
         const updateTime = () => {
             const currentTimeMs = audio.currentTime * 1000;
-            console.log(currentTimeMs, endTimeRef.current);
             if (currentTimeMs >= endTimeRef.current && endTimeRef.current) {
                 endTimeRef.current = 0;
                 audio.pause();
             }
 
+            setCurrentTime(currentTimeMs);
             props.onTimeUpdate && props.onTimeUpdate(currentTimeMs);
         };
         const loadedmetadata = () => {
             const totalDuration = audio.duration * 1000;
 
+            setTotalDuration(totalDuration);
             props.onLoadedmetadata && props.onLoadedmetadata(totalDuration);
         };
 
+        const keydown = (e) => {
+            if ([" ", "ArrowLeft", "ArrowRight"].includes(e.key)) {
+                e.preventDefault();
+            }
+            
+            if (e.key === " ") {
+                if (audio.paused) {
+                    toPlay();
+                } else {
+                    toPause();
+                }
+            }
+            if (e.key === "ArrowLeft") {
+                const currentTimeMs = audio.currentTime * 1000;
+                toSkip(currentTimeMs - 1500);
+            }
+            if (e.key === "ArrowRight") {
+                const currentTimeMs = audio.currentTime * 1000;
+                toSkip(currentTimeMs + 1500);
+            }
+        };
+
+        const handlePlay = () => setIsPlaying(true);
+        const handlePause = () => setIsPlaying(false);
+
         audio.addEventListener("timeupdate", updateTime);
         audio.addEventListener("loadedmetadata", loadedmetadata);
+        audio.addEventListener("play", handlePlay);
+        audio.addEventListener("pause", handlePause);
+        document.addEventListener("keydown", keydown);
+
         // Cleanup listener on unmount
         return () => {
             audio.removeEventListener("timeupdate", updateTime);
             audio.removeEventListener("loadedmetadata", loadedmetadata);
+            audio.removeEventListener("play", handlePlay);
+            audio.removeEventListener("pause", handlePause);
+            document.removeEventListener("keydown", keydown);
         };
     }, []);
     // 客户端水合后初始化 HLS 逻辑
@@ -74,19 +132,49 @@ export default forwardRef((props, ref) => {
             };
         }
     }, [props.src]);
-    const handle = () => {
-        audioRef.current.play();
-    };
+
     return (
         <div>
             <audio
                 ref={audioRef}
-                data={props.src}
                 // src={src}
                 controls
                 preload="metadata"
+                style={{ display: "none" }}
             />
-            <Button onClick={handle}>播放</Button>
+            <div className={`fixed w-full ${style.audioWrap}`}>
+                <div className={`absolute w-full ${style.progressLine}`}>
+                    <div
+                        className={`h-full ${style.progressBar}`}
+                        style={{
+                            width: (currentTime / totalDuration) * 100 + "%",
+                        }}
+                    ></div>
+                </div>
+                <div className="w-full h-full flex items-center justify-center">
+                    <div className="flex">
+                        <ChevronsLeft
+                            className="cursor-pointer"
+                            onClick={() => toSkip(currentTime - 1500)}
+                        />
+                        <div className="px-8 cursor-pointer">
+                            {isPlaying ? (
+                                <Pause onClick={toPause} />
+                            ) : (
+                                <Play onClick={toPlay} />
+                            )}
+                        </div>
+                        <ChevronsRight
+                            className="cursor-pointer"
+                            onClick={() => toSkip(currentTime - 1500)}
+                        />
+                        <div className="pl-8">
+                            {mstoMinute(currentTime)}/{resTotalTime}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {/* <Button onClick={handle}>播放</Button> */}
         </div>
     );
 });

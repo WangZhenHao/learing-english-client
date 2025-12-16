@@ -1,7 +1,8 @@
 // app/home/[id]/_component/ContentWithPlayer.jsx
 "use client";
 
-import { Button } from "@/components/ui/button";
+// import { Button } from "@/components/ui/button";
+import { CirclePlay } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 // import Hls from "hls.js"; // HLS.js 库必须在客户端使用
 import "./index.css";
@@ -146,17 +147,18 @@ const ContentWithPlayer = ({ contentData, audioSrc, subTitleDate }) => {
                                 )}
 
                                 {/* 3. 在客户端组件中绑定点击事件 */}
-                                <Button
+                                <div
                                     onClick={() =>
                                         handlePlaySpecific(
                                             item.offset,
                                             getEndTime(subTitleDate[index])
                                         )
                                     }
+                                    className="cursor-pointer"
                                     style={{ marginLeft: "10px" }}
                                 >
-                                    播放
-                                </Button>
+                                    <CirclePlay />
+                                </div>
                             </div>
                             <div>{item.alp}</div>
                             <div>{item.means}</div>
