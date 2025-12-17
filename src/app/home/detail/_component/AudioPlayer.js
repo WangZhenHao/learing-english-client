@@ -211,6 +211,7 @@ export default forwardRef((props, ref) => {
                     </div>
                 </div>
             </div>
+            <div style={{ height: '60px' }}></div>
             {/* <Button onClick={handle}>播放</Button> */}
         </div>
     );

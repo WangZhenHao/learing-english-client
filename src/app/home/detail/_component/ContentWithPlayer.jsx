@@ -94,12 +94,7 @@ const ContentWithPlayer = ({ contentData, audioSrc, subTitleDate }) => {
 
     return (
         <>
-            {/* 1. 渲染音频播放器，并获取其引用 */}
-            <AudioPlayer
-                onTimeUpdate={onTimeUpdate}
-                src={audioSrc}
-                ref={audioPlayRef}
-            />
+            
             {/* 2. 渲染内容和按钮 */}
             <div>
                 {contentData.map((item, index) => {
@@ -152,12 +147,19 @@ const ContentWithPlayer = ({ contentData, audioSrc, subTitleDate }) => {
                                     <CirclePlay />
                                 </div>
                             </div>
-                            <div>{item.alp}</div>
+                            {/* <div>{item.alp}</div> */}
                             <div>{item.means}</div>
                         </div>
                     );
                 })}
             </div>
+
+            {/* 1. 渲染音频播放器，并获取其引用 */}
+            <AudioPlayer
+                onTimeUpdate={onTimeUpdate}
+                src={audioSrc}
+                ref={audioPlayRef}
+            />
         </>
     );
 };
