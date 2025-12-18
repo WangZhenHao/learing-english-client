@@ -39,7 +39,7 @@ export default function RootLayout({ children }) {
         <Nav />
         <div className='flex'>
             <LeftSlide />
-            <div className='w-full border-t border-l border-border'>{children}</div>
+            <div className='w-full border-t border-l border-border flex-1'>{children}</div>
         </div>
         
       </body>
