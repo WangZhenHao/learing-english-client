@@ -1,0 +1,16 @@
+.item-wrap {
+    // column-count: 3;
+    gap: 15px 10px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+
+    .item {
+        border-radius: 12px;
+        overflow: hidden;
+    }
+
+    .item-img {
+        height: 140px;
+        object-fit: cover;
+    }
+}

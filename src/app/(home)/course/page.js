@@ -1,7 +1,6 @@
+import Item from './_components/item'
 const App = () => {
-    return <>
-        app
-    </>;
+    return <Item />
 }
  
 export default App;

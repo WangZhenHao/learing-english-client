@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Star } from "lucide-react";
 import "./_components/homepage.css";
-
+import Link from "next/link";
 export default function HomePage() {
   return (
     <main className="home-container">
@@ -19,12 +19,14 @@ export default function HomePage() {
 
         <p className="hero-desc">
           一个帮助你通过 <span className="highlight-light">影子跟读</span>、
-          <span className="highlight-light">实时语音反馈</span>、
-          <span className="highlight-light">AI 纠音</span> 来快速提升英语口语能力的学习工具。
+          <span className="highlight-light">逐字高亮</span>、
+          <span className="highlight-light">反复听读</span> 来快速提升英语口语能力的学习工具。
         </p>
 
         <div className="hero-actions">
-          <Button className="btn-start px-10 py-6">开始使用</Button>
+          <Link href="/home/course">
+            <Button className="btn-start px-10 py-6">开始使用</Button>
+          </Link>
         </div>
       </section>
 
