@@ -32,12 +32,12 @@ export const viewport = {
 
 export default function RootLayout({ children }) {
     return (
-        <>
+        <div className="bg-[#fafafa]">
             <Nav />
             <div className="flex">
                 <LeftSlide />
                 <div
-                    className="w-full border-t border-l border-border flex-1 p-2.5 overflow-y-auto"
+                    className="w-full border-t border-l border-border flex-1 p-2.5 overflow-y-auto bg-white"
                     style={{
                         borderRadius: "8px 0px 0px 0px",
                         height: "calc(100vh - 50px)",
@@ -46,6 +46,6 @@ export default function RootLayout({ children }) {
                     {children}
                 </div>
             </div>
-        </>
+        </div>
     );
 }

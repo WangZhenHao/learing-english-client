@@ -1,14 +1,14 @@
 "use client";
 import Link from "next/link";
 import style from "./componet.module.css";
-import { HousePlug, FolderClosed, FolderLock } from "lucide-react";
+import { HousePlug, FolderClosed, FolderLock, FilePlusCorner } from "lucide-react";
 import { usePathname } from "next/navigation";
 const App = () => {
     const pathname = usePathname();
     const linkList = [
         {
-            name: "主页",
-            href: "/home",
+            name: "返回主页",
+            href: "/",
             icon: <HousePlug size={20} />,
         },
         {
@@ -20,6 +20,11 @@ const App = () => {
             name: "我的课程",
             href: "/my-course",
             icon: <FolderLock size={20} />,
+        },
+        {
+            name: "创建课程",
+            href: "/create",
+            icon: <FilePlusCorner size={20} />,
         },
     ];
     return (

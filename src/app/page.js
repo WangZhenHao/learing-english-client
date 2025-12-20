@@ -24,7 +24,7 @@ export default function HomePage() {
         </p>
 
         <div className="hero-actions">
-          <Link href="/home/course">
+          <Link href="/course">
             <Button className="btn-start px-10 py-6">开始使用</Button>
           </Link>
         </div>
