@@ -24,6 +24,7 @@ const App = () => {
         setLoading(true);
         optimize({ context: text })
             .then((res) => {
+                setResult(res.data);
                 console.log(res);
             })
             .catch((err) => {
