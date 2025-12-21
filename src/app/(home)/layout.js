@@ -2,6 +2,7 @@
 import Nav from "./_components/nav";
 import LeftSlide from "./_components/leftSlide";
 import "../globals.css";
+import { Toaster } from "@/components/ui/sonner";
 
 // const geistSans = Geist({
 //   variable: "--font-geist-sans",
@@ -32,20 +33,23 @@ export const viewport = {
 
 export default function RootLayout({ children }) {
     return (
-        <div className="bg-[#fafafa]">
-            <Nav />
-            <div className="flex">
-                <LeftSlide />
-                <div
-                    className="w-full border-t border-l border-border flex-1 p-2.5 overflow-y-auto bg-white"
-                    style={{
-                        borderRadius: "8px 0px 0px 0px",
-                        height: "calc(100vh - 50px)",
-                    }}
-                >
-                    {children}
+        <>
+            <Toaster />
+            <div className="bg-[#fafafa]">
+                <Nav />
+                <div className="flex">
+                    <LeftSlide />
+                    <div
+                        className="w-full border-t border-l border-border flex-1 p-2.5 overflow-y-auto bg-white"
+                        style={{
+                            borderRadius: "8px 0px 0px 0px",
+                            height: "calc(100vh - 50px)",
+                        }}
+                    >
+                        {children}
+                    </div>
                 </div>
             </div>
-        </div>
+        </>
     );
 }
