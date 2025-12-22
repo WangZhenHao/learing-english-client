@@ -1,7 +1,7 @@
 "use client";
 import Link from "next/link";
 import style from "./componet.module.css";
-import { HousePlug, FolderClosed, FolderLock, FilePlusCorner } from "lucide-react";
+import { TvMinimalPlay, FolderClosed, FolderLock, FilePlusCorner } from "lucide-react";
 import { usePathname } from "next/navigation";
 const App = () => {
     const pathname = usePathname();
@@ -9,7 +9,7 @@ const App = () => {
         {
             name: "返回主页",
             href: "/",
-            icon: <HousePlug size={20} />,
+            icon: <TvMinimalPlay size={20} />,
         },
         {
             name: "课程",
@@ -49,7 +49,7 @@ const App = () => {
                 className={`${style.leftSiderItem} p-2 w-full flex items-center`}
                 href="/home"
             >
-                <HousePlug size={20} /> <span className="pl-2">主页</span>
+                <TvMinimalPlay size={20} /> <span className="pl-2">主页</span>
             </Link>
             <Link
                 className={`${style.leftSiderItem} p-2 w-full flex items-center`}

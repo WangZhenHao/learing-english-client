@@ -94,7 +94,7 @@ const ContentWithPlayer = ({ contentData, audioSrc, subTitleDate }) => {
     return (
         <>
             {/* 2. 渲染内容和按钮 */}
-            <div className="content-wrap text-[#333] text-[16px]">
+            <div className="content-wrap text-[#333]">
                 {contentData.map((item, index) => {
                     const isActive = index === activeSentenceIndex;
                     return (
