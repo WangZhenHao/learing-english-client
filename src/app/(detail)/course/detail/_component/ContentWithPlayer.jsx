@@ -110,7 +110,7 @@ const ContentWithPlayer = ({ contentData, audioSrc, subTitleDate }) => {
                             <div data-start={item.offset} className="flex">
                                 {isActive ? (
                                     <div>
-                                        {subTitleDate[index].map((word, i) => (
+                                        {subTitleDate[index] ? subTitleDate[index].map((word, i) => (
                                             <span
                                                 className={`${
                                                     i === currentWord.index &&
@@ -124,7 +124,7 @@ const ContentWithPlayer = ({ contentData, audioSrc, subTitleDate }) => {
                                                 <span>{word.text}</span>
                                                 <span>{' '}</span>
                                             </span>
-                                        ))}
+                                        )) : item.sentence}
                                         {/* {item.sentence
                                             .split(" ")
                                             .map((word, index) => (

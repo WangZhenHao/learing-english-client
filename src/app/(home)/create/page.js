@@ -77,7 +77,7 @@ const App = () => {
                 placeholder="请输入内容"
             />
             <Button loading={loading} className="mt-5" onClick={clickHandler}>
-                确定
+                {loading ? "生成中，请稍等..." : "确定"}
             </Button>
             <Dialog open={open} onOpenChange={setOpen}>
                 <DialogContent style={{ "--container-lg": "720px" }}>
