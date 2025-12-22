@@ -10,16 +10,16 @@ const Home = async ({ params }) => {
     let res = await getArticleId(id);
 
     // 构造完整的音频 URL
-    const audioSrc = BASE_URL + "/" + res.data.url.split(".")[0] + "/index.m3u8";
+    const audioSrc =  res.data.url ? BASE_URL + "/" + res.data.url.split(".")[0] + "/index.m3u8" : '';
 
-    return (
-        // 将所有需要交互的部分传入 Client Component
+    return <>
+        <h1 className="text-center pb-2 font-bold text-[18px]">{ res.data.title }</h1>
         <ContentWithPlayer 
             audioSrc={audioSrc}
             contentData={res.data.content}
             subTitleDate={res.data.subtitle}
         />
-    );
+    </>;
 };
 
 export default Home;

@@ -24,7 +24,7 @@ const ContentWithPlayer = ({ contentData, audioSrc, subTitleDate }) => {
     const [activeSentenceIndex, setActiveSentenceIndex] = useState(0);
     const [currentWord, setCurrentWord] = useState({});
     const audioPlayRef = useRef(null);
-    const subtitleCacheRef = useRef([]);
+    const subtitleCacheRef = useRef(subTitleDate);
 
     function filterSubTitle(subTitleDate) {
         return subTitleDate.map((itemList) => {
@@ -41,17 +41,16 @@ const ContentWithPlayer = ({ contentData, audioSrc, subTitleDate }) => {
         });
     }
 
-    useEffect(() => {
-        subtitleCacheRef.current = filterSubTitle(subTitleDate);
-    }, [subTitleDate]);
+    // useEffect(() => {
+    //     subtitleCacheRef.current = subTitleDate;
+    // }, [subTitleDate]);
     // const subTitleDateNew = useMemo(() => {
     //     return filterSubTitle(subTitleDate);
     // }, [subTitleDate]);
 
     const handlePlaySpecific = (start, end) => {
         audioPlayRef.current.toSkip(start, end);
-        setCurrentWord({index: 0})
-
+        setCurrentWord({ index: 0 });
     };
     const updateActiveSentence = (time) => {
         let idx = 0;
@@ -70,7 +69,7 @@ const ContentWithPlayer = ({ contentData, audioSrc, subTitleDate }) => {
             wordIndex = index;
             return sub.offset <= time && sub.offset + sub.duration >= time;
         });
-
+        // console.log(word)
         return word ? { ...word, index: wordIndex } : null;
     };
     const onTimeUpdate = (currentTime) => {
@@ -94,16 +93,14 @@ const ContentWithPlayer = ({ contentData, audioSrc, subTitleDate }) => {
 
     return (
         <>
-            
             {/* 2. 渲染内容和按钮 */}
-            <div>
+            <div className="content-wrap text-[#333] text-[16px]">
                 {contentData.map((item, index) => {
                     const isActive = index === activeSentenceIndex;
                     return (
                         <div
                             key={index}
                             style={{
-                                marginBottom: "10px",
                                 padding: "10px",
                                 backgroundColor: isActive
                                     ? "#e6f7ff"
@@ -113,7 +110,22 @@ const ContentWithPlayer = ({ contentData, audioSrc, subTitleDate }) => {
                             <div data-start={item.offset} className="flex">
                                 {isActive ? (
                                     <div>
-                                        {item.sentence
+                                        {subTitleDate[index].map((word, i) => (
+                                            <span
+                                                className={`${
+                                                    i === currentWord.index &&
+                                                    word.boundaryType ===
+                                                        "WordBoundary"
+                                                        ? "active-word"
+                                                        : ""
+                                                }`}
+                                                key={i}
+                                            >
+                                                <span>{word.text}</span>
+                                                <span>{' '}</span>
+                                            </span>
+                                        ))}
+                                        {/* {item.sentence
                                             .split(" ")
                                             .map((word, index) => (
                                                 <span
@@ -127,7 +139,7 @@ const ContentWithPlayer = ({ contentData, audioSrc, subTitleDate }) => {
                                                 >
                                                     {word}{" "}
                                                 </span>
-                                            ))}
+                                            ))} */}
                                     </div>
                                 ) : (
                                     <div>{item.sentence}</div>
@@ -148,18 +160,20 @@ const ContentWithPlayer = ({ contentData, audioSrc, subTitleDate }) => {
                                 </div>
                             </div>
                             {/* <div>{item.alp}</div> */}
-                            <div>{item.means}</div>
+                            <div className="text-[#666]">{item.means}</div>
                         </div>
                     );
                 })}
             </div>
 
             {/* 1. 渲染音频播放器，并获取其引用 */}
-            <AudioPlayer
-                onTimeUpdate={onTimeUpdate}
-                src={audioSrc}
-                ref={audioPlayRef}
-            />
+            {audioSrc && (
+                <AudioPlayer
+                    onTimeUpdate={onTimeUpdate}
+                    src={audioSrc}
+                    ref={audioPlayRef}
+                />
+            )}
         </>
     );
 };

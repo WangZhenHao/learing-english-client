@@ -62,7 +62,7 @@ function Button({
       {...props}
     >
       {loading && (
-        <span className="absolute inset-0 flex items-center justify-center">
+        <span className="flex items-center justify-center">
           <svg
             className="h-4 w-4 animate-spin text-current"
             xmlns="http://www.w3.org/2000/svg"
@@ -85,7 +85,7 @@ function Button({
           </svg>
         </span>
       )}
-      <span className={loading ? "invisible" : ""}>{children}</span>
+      <span>{children}</span>
     </Comp>
   );
 }
