@@ -168,6 +168,7 @@ export default forwardRef((props, ref) => {
                 controls
                 loop={loop}
                 preload="metadata"
+                style={{ display: "none" }}
             />
             <div className={`fixed w-full ${style.audioWrap}`}>
                 <div
