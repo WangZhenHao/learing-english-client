@@ -4,12 +4,12 @@ import { cn } from "@/lib/utils";
 function Textarea({
   className,
   maxLength,
-  value = "",
   ...props
 }) {
   const [internalValue, setInternalValue] = React.useState("");
   const currentValue = props.value !== undefined ? props.value : internalValue;
-  
+  // console.log(props.value)
+  // debugger
   const handleInputChange = (e) => {
     const newValue = e.target.value;
     

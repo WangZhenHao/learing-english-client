@@ -29,7 +29,14 @@ const App = () => {
     const [text, setText] = useState("");
     const [loading, setLoading] = useState(false);
     const [open, setOpen] = useState(false);
-    const [result, setResult] = useState({});
+    const [result, setResult] = useState({
+        // title: "请输入标题",
+        // sentences: [{
+        //     sentence: "waht is your name?",
+        //     means: "请输入内容",
+        // }]
+    });
+    // console.log(result.sentences.map(item => item.sentence).join('\n'));
     const clickHandler = () => {
         if (!text) {
             toast("请输入内容", {
@@ -81,8 +88,8 @@ const App = () => {
             <Textarea
                 style={{ height: "60vh" }}
                 onInput={inputHandle}
-                placeholder="请输入内容,最多2000个字符"
-                maxLength={2000}
+                placeholder="请输入内容,最多3000个字符"
+                maxLength={3000}
             />
             <Button loading={loading} className="mt-5" onClick={clickHandler}>
                 {loading ? "生成中，请稍等..." : "生成文章"}
@@ -114,10 +121,7 @@ const App = () => {
                                     disabled
                                     style={{ height: "400px" }}
                                     placeholder="请输入内容,最多2000个字符"
-                                    value={result.sentences
-                                        ?.map((item) => item.sentence + '\n' + item.means)
-                                        .join("\n\n")}
-                                   
+                                    value={result.sentences?.map((item) => item.sentence + '\n' + item.means).join("\n\n")}
                                 />
                             </Field>
                         </FieldGroup>
