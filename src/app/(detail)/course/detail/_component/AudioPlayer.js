@@ -28,7 +28,7 @@ export default forwardRef((props, ref) => {
     const [totalDuration, setTotalDuration] = useState(0);
     const [currentTime, setCurrentTime] = useState(0);
     const [isPlaying, setIsPlaying] = useState(false);
-    const [loop, setLoop] = setReportStatus()
+    const [loop, setLoop] = setReportStatus("isStorageLoop");
 
     const toSkip = (start, end = 0) => {
         audioRef.current.currentTime = start / 1000;
@@ -61,6 +61,7 @@ export default forwardRef((props, ref) => {
         const audio = audioRef.current;
         if (!audio) return;
 
+        
         const updateTime = () => {
             const currentTimeMs = audio.currentTime * 1000;
             if (currentTimeMs >= endTimeRef.current && endTimeRef.current) {
@@ -103,12 +104,17 @@ export default forwardRef((props, ref) => {
         const handlePlay = () => setIsPlaying(true);
         const handlePause = () => setIsPlaying(false);
 
+        const handleRateChange = (e) => {
+            console.log(e.target.playbackRate);
+        };
+
         audio.addEventListener("timeupdate", updateTime);
         audio.addEventListener("loadedmetadata", loadedmetadata);
         audio.addEventListener("play", handlePlay);
         audio.addEventListener("pause", handlePause);
         document.addEventListener("keydown", keydown);
 
+        audio.addEventListener("ratechange", handleRateChange);
         // Cleanup listener on unmount
         return () => {
             audio.removeEventListener("timeupdate", updateTime);
@@ -116,6 +122,7 @@ export default forwardRef((props, ref) => {
             audio.removeEventListener("play", handlePlay);
             audio.removeEventListener("pause", handlePause);
             document.removeEventListener("keydown", keydown);
+            audio.removeEventListener("ratechange", handleRateChange);
         };
     }, []);
     // 客户端水合后初始化 HLS 逻辑
@@ -161,7 +168,6 @@ export default forwardRef((props, ref) => {
                 controls
                 loop={loop}
                 preload="metadata"
-                style={{ display: "none" }}
             />
             <div className={`fixed w-full ${style.audioWrap}`}>
                 <div
@@ -177,6 +183,7 @@ export default forwardRef((props, ref) => {
                 </div>
                 <div className="w-full h-full flex items-center justify-center">
                     <div className="flex">
+                        {props.controller ? props.controller : null}
                         <div
                             className="pr-8 cursor-pointer"
                             onClick={repeatClick}
@@ -211,7 +218,7 @@ export default forwardRef((props, ref) => {
                     </div>
                 </div>
             </div>
-            <div style={{ height: '60px' }}></div>
+            <div style={{ height: "60px" }}></div>
             {/* <Button onClick={handle}>播放</Button> */}
         </div>
     );

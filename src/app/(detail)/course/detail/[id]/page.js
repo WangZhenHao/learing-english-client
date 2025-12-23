@@ -13,7 +13,7 @@ const Home = async ({ params }) => {
     const audioSrc =  res.data.url ? BASE_URL + "/" + res.data.url.split(".")[0] + "/index.m3u8" : '';
 
     return <>
-        <h1 className="text-center pb-2 font-bold text-[18px]">{ res.data.title }</h1>
+        <h1 className="text-center pb-2 font-bold text-[18px] pt-2.5">{ res.data.title }</h1>
         <ContentWithPlayer 
             audioSrc={audioSrc}
             contentData={res.data.content}

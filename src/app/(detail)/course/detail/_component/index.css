@@ -1,7 +1,15 @@
 .active-word {
-    background-color: yellow;
+    /* background-color: yellow; */
+    color: #fff;
+    background-color: rgba(136, 93, 253, 1);
     font-size: 18px;
     padding: 6px;
+    border-radius: 12px;
+}
+
+.sentence-item {
+    background-color: rgba(136, 93, 253, .12);
+    border-radius: 12px;
 }
 
 .content-wrap {

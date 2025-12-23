@@ -15,9 +15,9 @@ export function mstoMinute(ms) {
   return `${formattedMinutes}:${formattedSeconds}`;
 }
 
-export function setReportStatus() {
-    const [isStorageLoop, setIsStorageLoop] = useLocalStorageState("isStorageLoop", {
-        defaultValue: false,
+export function setReportStatus(storekey, initValue = false) {
+    const [isStorageLoop, setIsStorageLoop] = useLocalStorageState(storekey, {
+        defaultValue: initValue,
     });
     const [loop, setLoop] = useState(false)
 

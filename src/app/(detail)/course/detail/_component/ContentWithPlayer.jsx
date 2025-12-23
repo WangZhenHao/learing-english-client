@@ -2,11 +2,12 @@
 "use client";
 
 // import { Button } from "@/components/ui/button";
-import { CirclePlay } from "lucide-react";
+import { CirclePlay, EyeOff, Eye } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 // import Hls from "hls.js"; // HLS.js 库必须在客户端使用
 import "./index.css";
 import AudioPlayer from "./AudioPlayer";
+import useShowWord from "./useShowWord";
 
 /**
  * 这是一个客户端组件，负责处理所有的交互逻辑和DOM操作。
@@ -16,15 +17,23 @@ import AudioPlayer from "./AudioPlayer";
  * @param {string} props.audioSrc - 音频源 URL
  */
 
-const ContentWithPlayer = ({ contentData, audioSrc, subTitleDate }) => {
+const ContentWithPlayer = ({ contentData, audioSrc, subTitleDate = [] }) => {
     // const audioRef = useRef(null);
     // const hlsRef = useRef(null);
     // const [currentTime, setCurrentTime] = useState(0);
-    const activeSentenceIndexRef = useRef(0);
-    const [activeSentenceIndex, setActiveSentenceIndex] = useState(0);
+    const activeSentenceIndexRef = useRef(null);
+    const [activeSentenceIndex, setActiveSentenceIndex] = useState(null);
     const [currentWord, setCurrentWord] = useState({});
     const audioPlayRef = useRef(null);
     const subtitleCacheRef = useRef(subTitleDate);
+    const [sentenceDate, setSentenceDate] = useState([...contentData]);
+
+    const {
+        showHideWordHandle,
+        showAllWordHandle,
+        hideAllWordHandle,
+        isShowAllWord,
+    } = useShowWord({ sentenceDate, setSentenceDate });
 
     function filterSubTitle(subTitleDate) {
         return subTitleDate.map((itemList) => {
@@ -74,6 +83,7 @@ const ContentWithPlayer = ({ contentData, audioSrc, subTitleDate }) => {
     };
     const onTimeUpdate = (currentTime) => {
         const sentenceIndex = updateActiveSentence(currentTime);
+        console.log(sentenceIndex, activeSentenceIndexRef.current);
 
         if (sentenceIndex !== activeSentenceIndexRef.current) {
             activeSentenceIndexRef.current = sentenceIndex;
@@ -91,40 +101,54 @@ const ContentWithPlayer = ({ contentData, audioSrc, subTitleDate }) => {
         return num;
     };
 
+    const WordController = () => {
+        return (
+            <div className="pr-8 cursor-pointer">
+                {isShowAllWord ? (
+                    <Eye size={28} onClick={hideAllWordHandle} />
+                ) : (
+                    <EyeOff size={26} onClick={showAllWordHandle} />
+                )}
+            </div>
+        );
+    };
+
     return (
         <>
             {/* 2. 渲染内容和按钮 */}
-            <div className="content-wrap text-[#333]">
-                {contentData.map((item, index) => {
+            <div className="content-wrap text-[#333] pb-5">
+                {sentenceDate.map((item, index) => {
                     const isActive = index === activeSentenceIndex;
                     return (
                         <div
                             key={index}
-                            style={{
-                                padding: "10px",
-                                backgroundColor: isActive
-                                    ? "#e6f7ff"
-                                    : "transparent",
-                            }}
+                            className={`${isActive ? 'sentence-item' : ''} p-2.5`}
                         >
                             <div data-start={item.offset} className="flex">
                                 {isActive ? (
                                     <div>
-                                        {subTitleDate[index] ? subTitleDate[index].map((word, i) => (
-                                            <span
-                                                className={`${
-                                                    i === currentWord.index &&
-                                                    word.boundaryType ===
-                                                        "WordBoundary"
-                                                        ? "active-word"
-                                                        : ""
-                                                }`}
-                                                key={i}
-                                            >
-                                                <span>{word.text}</span>
-                                                <span>{' '}</span>
-                                            </span>
-                                        )) : item.sentence}
+                                        {subTitleDate[index]
+                                            ? subTitleDate[index].map(
+                                                  (word, i) => (
+                                                      <span
+                                                          className={`${
+                                                              i ===
+                                                                  currentWord.index &&
+                                                              word.boundaryType ===
+                                                                  "WordBoundary"
+                                                                  ? "active-word"
+                                                                  : ""
+                                                          }`}
+                                                          key={i}
+                                                      >
+                                                          <span>
+                                                              {word.text}
+                                                          </span>
+                                                          <span> </span>
+                                                      </span>
+                                                  )
+                                              )
+                                            : item.sentence}
                                         {/* {item.sentence
                                             .split(" ")
                                             .map((word, index) => (
@@ -146,21 +170,56 @@ const ContentWithPlayer = ({ contentData, audioSrc, subTitleDate }) => {
                                 )}
 
                                 {/* 3. 在客户端组件中绑定点击事件 */}
-                                <div
-                                    onClick={() =>
-                                        handlePlaySpecific(
-                                            item.offset,
-                                            getEndTime(subTitleDate[index])
-                                        )
-                                    }
-                                    className="cursor-pointer"
-                                    style={{ marginLeft: "10px" }}
-                                >
-                                    <CirclePlay />
-                                </div>
+                                {audioSrc && (
+                                    <div
+                                        className="cursor-pointer flex items-center"
+                                        style={{ marginLeft: "10px" }}
+                                    >
+                                        <CirclePlay
+                                            className="mr-2.5 text-[#666]"
+                                            onClick={() =>
+                                                handlePlaySpecific(
+                                                    item.offset,
+                                                    getEndTime(
+                                                        subTitleDate[index]
+                                                    )
+                                                )
+                                            }
+                                        />
+                                        {item.showWord === false ? (
+                                            <EyeOff
+                                                className="text-[#666]"
+                                                size={26}
+                                                onClick={() =>
+                                                    showHideWordHandle(index)
+                                                }
+                                            />
+                                        ) : (
+                                            <Eye
+                                                size={28}
+                                                className="text-[#666]"
+                                                onClick={() =>
+                                                    showHideWordHandle(index)
+                                                }
+                                            />
+                                        )}
+                                    </div>
+                                )}
                             </div>
                             {/* <div>{item.alp}</div> */}
-                            <div className="text-[#666]">{item.means}</div>
+                            <div
+                                className="text-[#666]"
+                                style={{
+                                    display:
+                                        item.showWord === false
+                                            ? "none"
+                                            : item.showWord === true
+                                            ? "block"
+                                            : null,
+                                }}
+                            >
+                                {item.means}
+                            </div>
                         </div>
                     );
                 })}
@@ -172,6 +231,7 @@ const ContentWithPlayer = ({ contentData, audioSrc, subTitleDate }) => {
                     onTimeUpdate={onTimeUpdate}
                     src={audioSrc}
                     ref={audioPlayRef}
+                    controller={<WordController />}
                 />
             )}
         </>
