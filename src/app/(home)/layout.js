@@ -34,7 +34,7 @@ export const viewport = {
 export default function RootLayout({ children }) {
     return (
         <>
-            <Toaster />
+            <Toaster position="top-center" />
             <div className="bg-[#fafafa]">
                 <Nav />
                 <div className="flex">

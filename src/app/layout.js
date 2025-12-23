@@ -1,5 +1,6 @@
 // import { Geist, Geist_Mono } from "next/font/google";
-import { icons } from "lucide-react";
+// import { Toaster } from "@/components/ui/sonner"
+// import { Toaster, toast } from 'sonner';
 import "./globals.css";
 
 // const geistSans = Geist({
@@ -36,6 +37,7 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <body>
         {children}
+
       </body>
     </html>
   );

@@ -21,8 +21,8 @@ import {
     FieldSet,
 } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
-import { toast } from "sonner"
-import { useRouter } from 'next/navigation';
+import { toast } from "sonner";
+import { useRouter } from "next/navigation";
 
 const App = () => {
     const router = useRouter();
@@ -32,39 +32,46 @@ const App = () => {
     const [result, setResult] = useState({});
     const clickHandler = () => {
         if (!text) {
+            toast("请输入内容", {
+                // duration: 1000000,
+            });
+            return;
         }
         // setOpen(true);
         setLoading(true);
         optimize({ context: text })
             .then((res) => {
-                setOpen(true)
+                setOpen(true);
                 setResult(res.data);
-            }).finally(() => {
+            })
+            .finally(() => {
                 setLoading(false);
             });
     };
-    const submitHandler = (e) => { 
+    const submitHandler = (e) => {
         e.preventDefault(); // Prevent default form submission
-  
+
         // Check if form is valid using browser validation
-        const form = e.target.closest('form');
+        const form = e.target.closest("form");
         if (form && !form.checkValidity()) {
-          // If form is invalid, let browser show validation messages
-          form.reportValidity();
-          return;
+            // If form is invalid, let browser show validation messages
+            form.reportValidity();
+            return;
         }
-        
-        setLoading(true)
+
+        setLoading(true);
         createArticel({
             title: result.title,
             sentences: result.sentences,
-        }).then(res => {
-            setLoading(false)
-            toast("生成文章成功")
-            router.push('/course');
-        }).finally(() => {
-            setLoading(false)
         })
+            .then((res) => {
+                setOpen(false);
+                toast("生成文章成功");
+                router.push("/course");
+            })
+            .finally(() => {
+                setLoading(false);
+            });
     };
     const inputHandle = (e) => {
         setText(e.target.value);
@@ -72,12 +79,13 @@ const App = () => {
     return (
         <>
             <Textarea
-                style={{ height: "60%" }}
+                style={{ height: "60vh" }}
                 onInput={inputHandle}
-                placeholder="请输入内容"
+                placeholder="请输入内容,最多2000个字符"
+                maxLength={2000}
             />
             <Button loading={loading} className="mt-5" onClick={clickHandler}>
-                {loading ? "生成中，请稍等..." : "确定"}
+                {loading ? "生成中，请稍等..." : "生成文章"}
             </Button>
             <Dialog open={open} onOpenChange={setOpen}>
                 <DialogContent style={{ "--container-lg": "720px" }}>
@@ -88,15 +96,28 @@ const App = () => {
                         <FieldGroup>
                             <Field>
                                 <FieldLabel>文章标题</FieldLabel>
-                                <Input placeholder="标题" required value={result.title || ''} />
+                                <Input
+                                    placeholder="标题"
+                                    required
+                                    value={result.title}
+                                    onInput={(e) => {
+                                        setResult({
+                                            ...result,
+                                            title: e.target.value,
+                                        });
+                                    }}
+                                />
                             </Field>
                             <Field>
                                 <FieldLabel>内容</FieldLabel>
                                 <Textarea
                                     disabled
                                     style={{ height: "400px" }}
-                                    placeholder="请输入内容"
-                                    value={result.sentences?.map(item => item.sentence).join("\n\n")}
+                                    placeholder="请输入内容,最多2000个字符"
+                                    value={result.sentences
+                                        ?.map((item) => item.sentence + '\n' + item.means)
+                                        .join("\n\n")}
+                                   
                                 />
                             </Field>
                         </FieldGroup>
