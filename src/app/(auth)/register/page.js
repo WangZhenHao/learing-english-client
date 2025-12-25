@@ -93,6 +93,7 @@ const RegisterPage = () => {
                 required
               />
             </div>
+            <div className="space-y-2"> </div>
           </CardContent>
           <CardFooter className="flex flex-col">
             <Button 
