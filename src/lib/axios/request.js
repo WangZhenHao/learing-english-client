@@ -1,10 +1,10 @@
 import axios from 'axios';
 import { toast } from "sonner"
-
+import Cookies from 'js-cookie';
 
 
 function Toast(text) {
-    toast(text)
+    toast.error(text)
 }
 function decryptedData(data) {
     return data
@@ -68,6 +68,19 @@ const reqConfig = {
 
 const Axios = axios.create(reqConfig);
 
+Axios.interceptors.request.use(
+    (config) => {
+        const Bearer = Cookies.get('Bearer');
+        if (Bearer) {
+            config.headers.Authorization = `Bearer ${Bearer}`;
+        }
+        return config;
+    },
+    (error) => {
+        return Promise.reject(error);
+    }
+);
+
 Axios.interceptors.response.use(
     (res) => {
         const data = res.data;
@@ -85,10 +98,12 @@ Axios.interceptors.response.use(
     },
     (error) => {
         const response = error.response;
+        const data = response.data;
+        
         if (error.message.includes('timeout')) {
             Toast(requestError(504) || '服务器异常');
         } else {
-            Toast(response ? requestError(response.status) : '网络异常！');
+            Toast(data && data.message ? data.message : requestError(response.status));
         }
         return Promise.reject(error);
     }

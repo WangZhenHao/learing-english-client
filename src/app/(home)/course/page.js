@@ -3,7 +3,7 @@ import { getList } from '@/api/server/course'
 const App = async () => {
     const res = await getList();
 
-    return <Item data={res.data.list} />
+    return <Item route='/course/detail' data={res.data.list} />
 }
  
 export default App;

@@ -35,11 +35,12 @@ export async function fetcher(url, options = {}) {
   // ✅ 服务端自动携带 cookie
   if (isServer) {
     try {
-      const cookieStore = cookies()
-      const cookieStr = null
-
-      if (cookieStr) {
-        finalHeaders.Cookie = cookieStr
+      const cookieStore = await cookies()
+      const Bearer = cookieStore.get("Bearer")?.value
+      // const cookieStr = null
+      
+      if (Bearer) {
+        finalHeaders.Authorization = 'Bearer ' + Bearer
       }
     } catch (e) {
       // 客户端环境会进 catch
@@ -61,8 +62,10 @@ export async function fetcher(url, options = {}) {
     fetchOptions.body = JSON.stringify(data)
   }
 
-  const res = await fetch(BASE_URL + url, fetchOptions)
+  
 
+  const res = await fetch(BASE_URL + url, fetchOptions)
+  
   if (!res.ok) {
     const text = await res.text()
     throw new Error(`Fetch error ${res.status}: ${text}`)

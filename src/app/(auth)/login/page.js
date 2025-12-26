@@ -1,36 +1,50 @@
 "use client";
 
 import { useState } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { toast } from "sonner";
-
+import { login } from "@/api/login";
+import { useCookieState, useLocalStorageState } from 'ahooks';
 const LoginPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
+  const callback = useSearchParams().get("callback");
+
+  const [, setValue] = useCookieState('Bearer', {
+    defaultValue: '',
+    path: '/',
+    expires: (() => new Date(+new Date() + 6 * 24 * 60 * 60 * 1000))(),
+  });
+  const [, setLocalValue] = useLocalStorageState('userInfo')
+  
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsLoading(true);
 
     try {
-      // TODO: Implement actual authentication logic
-      console.log("Login attempt with:", { email, password });
-      
-      // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 1000));
-      
-      // Successful login simulation
-      toast.success("登录成功！");
-      router.push("/dashboard"); // Redirect after login
+      if(!email) {
+        toast.error("请输入邮箱");
+        return
+      } else if(!password) {
+        toast.error("请输入密码");
+        return
+      }
+
+      const result = await login({ email, password })
+      console.log(result)
+      setValue(result.data.token)
+      setLocalValue(result.data.user)
+      router.push(callback ? callback : "/course"); // Redirect after login
     } catch (error) {
-      toast.error("登录失败，请检查您的凭据");
+      // toast.error("登录失败，请检查您的凭据");
     } finally {
       setIsLoading(false);
     }

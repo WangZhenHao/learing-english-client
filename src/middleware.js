@@ -3,7 +3,7 @@ import { NextResponse } from "next/server";
 
 const needLoogin = ["/create", "/my-course"];
 export function middleware(request) {
-    const token = request.cookies.get("Authorization")?.value;
+    const token = request.cookies.get("Bearer")?.value;
     const pathname = request.nextUrl.pathname;
 
     if(needLoogin.includes(pathname) && !token) {
