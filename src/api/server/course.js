@@ -8,6 +8,6 @@ export function getList(data) {
     return fetcher("/article/list", data);
 }
 
-export function getUserArticles(data) {
-    return fetcher("/user/articles", data);
+export function getUserArticles(params) {
+    return fetcher("/user/articles", { params });
 }

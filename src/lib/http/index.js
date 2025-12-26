@@ -22,7 +22,8 @@ export async function fetcher(url, options = {}) {
      * revalidate: number | undefined
      * ISR 秒数
      */
-    revalidate,
+    // revalidate,
+    params
   } = options
 
   const isServer = typeof window === "undefined"
@@ -54,17 +55,30 @@ export async function fetcher(url, options = {}) {
   }
 
   // ISR 支持
-  if (revalidate !== undefined) {
-    fetchOptions.next = { revalidate }
+  // if (revalidate !== undefined) {
+  //   fetchOptions.next = { revalidate }
+  // }
+
+  // 处理 GET 请求的查询参数
+  let finalUrl = BASE_URL + url
+  if (params && (method === 'GET' || method === 'DELETE')) {
+    const searchParams = new URLSearchParams()
+    Object.keys(params).forEach(key => {
+      if (params[key] !== undefined && params[key] !== null) {
+        searchParams.append(key, params[key])
+      }
+    })
+    finalUrl += `?${searchParams.toString()}`
   }
 
-  if (data) {
+  if (data && ['POST', 'PUT', 'PATCH'].includes(method)) {
     fetchOptions.body = JSON.stringify(data)
   }
 
   
+console.log('fetchOptions', finalUrl)
 
-  const res = await fetch(BASE_URL + url, fetchOptions)
+  const res = await fetch(finalUrl, fetchOptions)
   
   if (!res.ok) {
     const text = await res.text()

@@ -35,7 +35,7 @@ const App = () => {
                 <img src="/logo2.png" alt="logo" style={{ width: "32px" }} />
                 <span className="pl-2 font-bold">影跟读</span>
             </div>
-            {userInfo.id && (
+            {/* {userInfo.id && (
                 <Popover>
                     <PopoverTrigger className="flex items-center cursor-pointer text-[#666]">
                         <div className="pr-2">{hideSomething(userInfo.email, 3, 4)}</div>
@@ -47,7 +47,7 @@ const App = () => {
                         <div className="cursor-pointer" onClick={logout}>退出登录</div>
                     </PopoverContent>
                 </Popover>
-            )}
+            )} */}
         </header>
     );
 };
