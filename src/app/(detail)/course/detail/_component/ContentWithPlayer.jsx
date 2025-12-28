@@ -8,6 +8,7 @@ import { useEffect, useRef, useState } from "react";
 import "./index.css";
 import AudioPlayer from "./AudioPlayer";
 import useShowWord from "./useShowWord";
+import { Fragment } from 'react'; // 1. 记得引入 Fragment
 
 /**
  * 这是一个客户端组件，负责处理所有的交互逻辑和DOM操作。
@@ -122,7 +123,9 @@ const ContentWithPlayer = ({ contentData, audioSrc, subTitleDate = [] }) => {
                     return (
                         <div
                             key={index}
-                            className={`${isActive ? 'sentence-item' : ''} p-2.5`}
+                            className={`${
+                                isActive ? "sentence-item" : ""
+                            } p-2.5`}
                         >
                             <div data-start={item.offset} className="flex">
                                 {isActive ? (
@@ -130,22 +133,18 @@ const ContentWithPlayer = ({ contentData, audioSrc, subTitleDate = [] }) => {
                                         {subTitleDate[index]
                                             ? subTitleDate[index].map(
                                                   (word, i) => (
-                                                      <span
-                                                          className={`${
-                                                              i ===
-                                                                  currentWord.index &&
-                                                              word.boundaryType ===
-                                                                  "WordBoundary"
-                                                                  ? "active-word"
-                                                                  : ""
-                                                          }`}
-                                                          key={i}
-                                                      >
-                                                          <span>
-                                                              {word.text}
-                                                          </span>
-                                                          <span> </span>
-                                                      </span>
+                                                      <Fragment key={i}>
+                                                          {i ===
+                                                              currentWord.index &&
+                                                          word.boundaryType ===
+                                                              "WordBoundary" ? (
+                                                              <span className="active-word">
+                                                                 {word.text}
+                                                              </span>
+                                                          ) : (
+                                                              word.text
+                                                          )}{" "}
+                                                      </Fragment>
                                                   )
                                               )
                                             : item.sentence}
@@ -166,7 +165,11 @@ const ContentWithPlayer = ({ contentData, audioSrc, subTitleDate = [] }) => {
                                             ))} */}
                                     </div>
                                 ) : (
-                                    <div dangerouslySetInnerHTML={{__html: item.sentence}} />
+                                    <div
+                                        dangerouslySetInnerHTML={{
+                                            __html: item.sentence,
+                                        }}
+                                    />
                                 )}
 
                                 {/* 3. 在客户端组件中绑定点击事件 */}

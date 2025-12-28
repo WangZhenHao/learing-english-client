@@ -10,18 +10,18 @@ function useShowWord({ sentenceDate, setSentenceDate }) {
         const item = sentenceDate[index];
         item.showWord = !item.showWord;
 
-        let isShow = false;
-        for (let i = 0; i < sentenceDate.length; i++) {
-            const item = sentenceDate[i];
-            if (item.showWord === false) {
-                isShow = false;
-                break;
-            } else {
-                isShow = true;
-            }
-        }
+        // let isShow = false;
+        // for (let i = 0; i < sentenceDate.length; i++) {
+        //     const item = sentenceDate[i];
+        //     if (item.showWord === false) {
+        //         isShow = false;
+        //         break;
+        //     } else {
+        //         isShow = true;
+        //     }
+        // }
 
-        setIsShowAllWord(isShow);
+        // setIsShowAllWord(isShow);
         setSentenceDate([...sentenceDate]);
     };
 
