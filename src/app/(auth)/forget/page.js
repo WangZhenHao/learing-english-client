@@ -15,7 +15,7 @@ import {
 } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { toast } from "sonner";
-import Code from "./_components/Code";
+import Code from "../register/_components/Code";
 import { isEmailSimple } from "@/lib/validate";
 import useAuth from "../_component/useAuth";
 import { register } from '@/api/login'
@@ -77,9 +77,9 @@ const RegisterPage = () => {
             <Card className="w-full max-w-md shadow-xl">
                 <CardHeader className="text-center space-y-2">
                     <CardTitle className="text-2xl font-bold">
-                        注册影跟读账号
+                        找回影跟读账号
                     </CardTitle>
-                    <CardDescription>创建您的账户</CardDescription>
+                    <CardDescription>找回您的账户</CardDescription>
                 </CardHeader>
                 <form onSubmit={handleSubmit}>
                     <CardContent className="space-y-4">
@@ -145,7 +145,7 @@ const RegisterPage = () => {
                             size="lg"
                             loading={isLoading}
                         >
-                            {isLoading ? "注册中..." : "注册"}
+                            确定
                         </Button>
                         <Separator className="my-4" />
                         <div className="text-center text-sm">
