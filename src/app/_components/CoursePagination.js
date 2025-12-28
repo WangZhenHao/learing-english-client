@@ -42,7 +42,6 @@ function getPaginationPages(
   
 export default function CoursePagination({ page, totalPages }) {
   const pages = getPaginationPages(page, totalPages);
-  console.log(page, totalPages)
   return (
     <Pagination>
       <PaginationContent>

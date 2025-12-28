@@ -166,7 +166,7 @@ const ContentWithPlayer = ({ contentData, audioSrc, subTitleDate = [] }) => {
                                             ))} */}
                                     </div>
                                 ) : (
-                                    <div>{item.sentence}</div>
+                                    <div dangerouslySetInnerHTML={{__html: item.sentence}} />
                                 )}
 
                                 {/* 3. 在客户端组件中绑定点击事件 */}

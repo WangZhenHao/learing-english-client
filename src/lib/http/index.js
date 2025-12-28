@@ -76,12 +76,12 @@ export async function fetcher(url, options = {}) {
   }
 
   
-console.log('fetchOptions', finalUrl)
+// console.log('fetchOptions', finalUrl)
 
   const res = await fetch(finalUrl, fetchOptions)
-  
   if (!res.ok) {
     const text = await res.text()
+    
     throw new Error(`Fetch error ${res.status}: ${text}`)
   }
 

@@ -19,6 +19,7 @@
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "dayjs": "^1.11.19",
+    "he": "^1.2.0",
     "hls.js": "^1.6.15",
     "js-cookie": "^3.0.5",
     "lucide-react": "^0.556.0",
