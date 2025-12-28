@@ -11,7 +11,7 @@ const App = async ({ searchParams  }) => {
             <div className="absolute bottom-0 right-0" style={{zIndex: 2}}>
                 <CoursePagination
                     page={data.page.page}
-                    total={data.page.totalPage}
+                    totalPages={data.page.totalPage}
                 />
             </div>
         </div>

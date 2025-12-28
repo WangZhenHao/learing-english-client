@@ -4,8 +4,8 @@ export function getArticleId(id) {
     return fetcher("/article/getArticleById/" + id);
 }
 
-export function getList(data) {
-    return fetcher("/article/list", data);
+export function getList(params) {
+    return fetcher("/article/list", { params });
 }
 
 export function getUserArticles(params) {

@@ -8,9 +8,18 @@ import {
     PopoverTrigger,
 } from "@/components/ui/popover";
 import { useCookieState } from "ahooks";
+import { useState, useEffect } from "react";
+
 const App = () => {
-    const [userInfo, setUserInfo] = useLocalStorageState("userInfo", { defaultValue: {} });
+    const [userInfo, setUserInfo] = useLocalStorageState("userInfo", {
+        defaultValue: {},
+    });
     const [, setToken] = useCookieState("Bearer");
+    const [isClient, setIsClient] = useState(false);
+
+    useEffect(() => {
+        setIsClient(true);
+    }, []);
     const hideSomething = (targetStr, start, howmany, symbol = "*") => {
         let str = "",
             end = start + howmany;
@@ -20,13 +29,13 @@ const App = () => {
         return targetStr.substring(0, start) + str + targetStr.substring(end);
     };
 
-    const logout = () => { 
-        setToken('', {
-            expires: (() => new Date(+new Date() - 10000))()
-        })
-        setUserInfo({})
+    const logout = () => {
+        setToken("", {
+            expires: (() => new Date(+new Date() - 10000))(),
+        });
+        setUserInfo({});
 
-        location.reload()
+        location.reload();
     };
 
     return (
@@ -35,16 +44,20 @@ const App = () => {
                 <img src="/logo2.png" alt="logo" style={{ width: "32px" }} />
                 <span className="pl-2 font-bold">影跟读</span>
             </div>
-            {userInfo.id && (
+            {isClient && userInfo.id && (
                 <Popover>
                     <PopoverTrigger className="flex items-center cursor-pointer text-[#666]">
-                        <div className="pr-2">{hideSomething(userInfo.email, 3, 4)}</div>
+                        <div className="pr-2">
+                            {hideSomething(userInfo.email, 3, 4)}
+                        </div>
                         <div>
                             <CircleUser size={30} />
                         </div>
                     </PopoverTrigger>
                     <PopoverContent>
-                        <div className="cursor-pointer" onClick={logout}>退出登录</div>
+                        <div className="cursor-pointer" onClick={logout}>
+                            退出登录
+                        </div>
                     </PopoverContent>
                 </Popover>
             )}
