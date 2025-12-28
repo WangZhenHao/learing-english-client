@@ -7,7 +7,7 @@ const App = async ({searchParams}) => {
     const { data } = await getList({page});
     return (
         <div className="relative h-full">
-            <Item route="/my-course/detail" data={data.list} />
+            <Item route="/course/detail" data={data.list} />
             <div className="absolute bottom-0 right-0" style={{zIndex: 2}}>
                 <CoursePagination
                     page={data.page.page}
