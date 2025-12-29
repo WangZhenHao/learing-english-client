@@ -11,3 +11,6 @@ export function getList(params) {
 export function getUserArticles(params) {
     return fetcher("/user/articles", { params });
 }
+export function getCatergory() {
+    return fetcher("/catergory/list");
+}
