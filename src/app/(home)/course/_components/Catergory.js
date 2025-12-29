@@ -90,9 +90,7 @@ const App = ({ list = [], categoryId }) => {
         <>
             <div className="catergory-wrap mb-2.5">
                 <div className="flex">
-                    <div className="leve-1 leve-item">
-                        <Link href="/course">全部</Link>
-                    </div>
+                    <Link href="/course" className={` leve-item relative ${!currentId ? "active" : ""}`}>全部</Link>
                     {renderList()}
                 </div>
                 {list.map((item) => {
