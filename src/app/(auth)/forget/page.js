@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { use, useEffect, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -18,8 +18,7 @@ import { toast } from "sonner";
 import Code from "../register/_components/Code";
 import { isEmailSimple } from "@/lib/validate";
 import useAuth from "../_component/useAuth";
-import { register } from '@/api/login'
-
+import { forget, getImgCaptcha } from "@/api/login";
 
 const RegisterPage = () => {
     const [email, setEmail] = useState("");
@@ -30,47 +29,74 @@ const RegisterPage = () => {
     const router = useRouter();
     const searchParams = useSearchParams();
     const callback = searchParams.get("callback");
-    const { setCookie, setLocalValue  } = useAuth()  
+    const { setCookie, setLocalValue } = useAuth();
+    const [imgCaptcha, setImgCaptcha] = useState({
+        capthaId: "",
+        image: "",
+        captchaCode: ''
+    });
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         if (!email) {
             toast.error("请输入邮箱");
             return;
-        } else if(!isEmailSimple(email)) {
+        } else if (!isEmailSimple(email)) {
             toast.error("请输入正确的邮箱");
-            return
+            return;
         } else if (password !== confirmPassword) {
             toast.error("两次输入的密码不一致");
             return;
         } else if (password.length < 6) {
             toast.error("密码长度至少为6位");
             return;
-        } else if(!code) {
+        } else if (!code) {
             toast.error("请输入验证码");
-            return
-        } else if(code.length !== 6) {
+            return;
+        } else if (code.length !== 6) {
             toast.error("验证码长度为6位");
-            return
+            return;
+        } else if(!imgCaptcha.capthaId) {
+            toast.error("请先获取验证码");
+            return;
+        } else if(!imgCaptcha.captchaCode) {
+            toast.error("请输入图形验证码");
+            return;
         }
-        
+
         setIsLoading(true);
 
         try {
             // TODO: Implement actual registration logic
             // console.log("Registration attempt with:", { email, password });
 
-            const result = await register({ email, password, code, confirmPassword });
+            const result = await forget({
+                email,
+                password,
+                code,
+                confirmPassword,
+                capthaId: imgCaptcha.capthaId,
+                captchaCode: imgCaptcha.captchaCode
+            });
             setCookie(result.data.token);
             setLocalValue(result.data.user);
             router.push(callback ? callback : "/course");
-            toast.success("注册成功！");
+            toast.success("修改密码成功！");
         } catch (error) {
-            console.error("注册失败:", error);
+            console.error("修改密码失败:", error);
         } finally {
             setIsLoading(false);
         }
     };
+
+    const getImgCaptchaHanlde = async () => {
+        const result = await getImgCaptcha();
+        setImgCaptcha(result.data);
+    };
+
+    useEffect(() => {
+        getImgCaptchaHanlde();
+    }, []);
 
     return (
         <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-indigo-100 p-4">
@@ -136,7 +162,32 @@ const RegisterPage = () => {
                                 maxLength={20}
                             />
                         </div>
-                        <div className="space-y-2"> </div>
+                        {imgCaptcha.capthaId && (
+                            <div className="space-y-2">
+                                <Label htmlFor="email">图形验证码</Label>
+                                <div className="flex items-center">
+                                    <Input
+                                        style={{ width: "200px" }}
+                                        id="captchaId"
+                                        placeholder="请输入您的图形验证码"
+                                        required
+                                        onChange={(e) =>
+                                            setImgCaptcha({...imgCaptcha, captchaCode: e.target.value})
+                                        }
+                                        maxLength={6}
+                                    />
+                                    <div className="pl-2">
+                                        <img
+                                            width="120px"
+                                            className=" cursor-pointer"
+                                            onClick={getImgCaptchaHanlde}
+                                            src={imgCaptcha.image}
+                                            alt="captcha"
+                                        />
+                                    </div>
+                                </div>
+                            </div>
+                        )}
                     </CardContent>
                     <CardFooter className="flex flex-col">
                         <Button

@@ -96,7 +96,7 @@ const LoginPage = () => {
                                 required
                             />
                         </div>
-                        {/* <div className="space-y-2 text-sm">
+                        <div className="space-y-2 text-sm">
                             忘记密码？
                             <a
                                 href={forgetHref}
@@ -104,7 +104,7 @@ const LoginPage = () => {
                             >
                                 立即找回
                             </a>
-                        </div> */}
+                        </div>
                     </CardContent>
                     <CardFooter className="flex flex-col">
                         <Button

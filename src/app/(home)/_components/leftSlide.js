@@ -10,6 +10,7 @@ const App = () => {
             name: "返回主页",
             href: "/",
             icon: <TvMinimalPlay size={20} />,
+            active: false
         },
         {
             name: "课程",
@@ -30,7 +31,7 @@ const App = () => {
     return (
         <div className={`bg-[#fafafa] ${style.leftSider} p-2`}>
             {linkList.map((item) => {
-                const isActive = pathname === item.href;
+                const isActive = pathname.indexOf(item.href) === 0 && item.active !== false;
                 return (
                     <Link
                         key={item.name}

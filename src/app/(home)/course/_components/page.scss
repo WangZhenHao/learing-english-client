@@ -15,6 +15,29 @@
     }
 }
 
+@media (min-width: 0px) and (max-width: 768px) {
+    .item-wrap {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (min-width: 769px) and (max-width: 1400px) {
+    .item-wrap {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media (min-width: 1401px) and (max-width: 1600px) {
+    .item-wrap {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
+@media (min-width: 1601px) {
+    .item-wrap {
+        grid-template-columns: repeat(5, 1fr);
+    }
+}
+
 .catergory-wrap { 
     .leve-item {
         padding: 4px 20px;
