@@ -17,7 +17,7 @@ import { Separator } from "@/components/ui/separator";
 import { toast } from "sonner";
 import Code from "../register/_components/Code";
 import { isEmailSimple } from "@/lib/validate";
-import useAuth from "../_component/useAuth";
+// import useAuth from "../_component/useAuth";
 import { forget, getImgCaptcha } from "@/api/login";
 
 const RegisterPage = () => {
@@ -28,8 +28,11 @@ const RegisterPage = () => {
     const [isLoading, setIsLoading] = useState(false);
     const router = useRouter();
     const searchParams = useSearchParams();
-    const callback = searchParams.get("callback");
-    const { setCookie, setLocalValue } = useAuth();
+    // const callback = searchParams.get("callback");
+    const backHerf = `/login${
+        searchParams.toString() ? `?${searchParams.toString()}` : ""
+    }`
+    // const { setCookie, setLocalValue } = useAuth();
     const [imgCaptcha, setImgCaptcha] = useState({
         capthaId: "",
         image: "",
@@ -37,6 +40,7 @@ const RegisterPage = () => {
     });
 
     const handleSubmit = async (e) => {
+        // router.push(backHerf);
         e.preventDefault();
         if (!email) {
             toast.error("请输入邮箱");
@@ -70,7 +74,7 @@ const RegisterPage = () => {
             // TODO: Implement actual registration logic
             // console.log("Registration attempt with:", { email, password });
 
-            const result = await forget({
+            await forget({
                 email,
                 password,
                 code,
@@ -78,9 +82,10 @@ const RegisterPage = () => {
                 capthaId: imgCaptcha.capthaId,
                 captchaCode: imgCaptcha.captchaCode
             });
-            setCookie(result.data.token);
-            setLocalValue(result.data.user);
-            router.push(callback ? callback : "/course");
+            // setCookie(result.data.token);
+            // setLocalValue(result.data.user);
+            // router.push(callback ? callback : "/course");
+            router.push(backHerf);
             toast.success("修改密码成功！");
         } catch (error) {
             console.error("修改密码失败:", error);
@@ -203,7 +208,7 @@ const RegisterPage = () => {
                             <p>
                                 已有账户？{" "}
                                 <a
-                                    href="/login"
+                                    href={backHerf}
                                     className="text-blue-600 hover:underline"
                                 >
                                     登录
