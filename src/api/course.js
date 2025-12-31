@@ -8,3 +8,6 @@ export function optimize(data) {
 export function createArticel(data) {
     return ipost("/article/create", data);
 }
+export function deleteArticel(id) {
+    return iget("/user/delete/"  + id);
+}

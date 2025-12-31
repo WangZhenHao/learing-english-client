@@ -13,6 +13,13 @@
         height: 140px;
         object-fit: cover;
     }
+
+    .delete-wrap {
+        right: 0px;
+        top: 0px;
+        z-index: 2;
+        padding: 4px 6px;
+    }
 }
 
 @media (min-width: 0px) and (max-width: 768px) {
