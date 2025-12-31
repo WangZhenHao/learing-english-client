@@ -3,6 +3,7 @@ import Link from "next/link";
 import dayjs from "dayjs";
 import { Trash2 } from "lucide-react";
 import { deleteArticel } from "@/api/course";
+import { statusMap } from "./map";
 
 import "./page.scss";
 const App = (props) => {
@@ -25,6 +26,19 @@ const App = (props) => {
                     return (
                         <Link href={`${props.route}/${item.id}`} key={index}>
                             <div className="item border border-border relative">
+                                {item.status !== 1 && (
+                                    <div className="absolute top-0 left-0 bg-white rounded-[6px] flex items-center">
+                                        <span
+                                            className={`text-[12px] py-1 px-1.5 ${
+                                                item.status === 0
+                                                    ? "text-yellow-500"
+                                                    : "text-red-500"
+                                            }`}
+                                        >
+                                            音频{statusMap[item.status]}
+                                        </span>
+                                    </div>
+                                )}
                                 <img
                                     className="item-img w-full"
                                     src={
@@ -54,7 +68,7 @@ const App = (props) => {
                                 </div>
                                 {canDelete ? (
                                     <div
-                                        className="absolute delete-wrap bg-white"
+                                        className="absolute delete-wrap bg-white rounded-[6px]"
                                         onClick={(e) =>
                                             deleteArticelHadnle(e, item)
                                         }

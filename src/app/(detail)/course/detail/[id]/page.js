@@ -4,6 +4,7 @@ import { getArticleId } from "@/api/home";
 import ContentWithPlayer from "../_component/ContentWithPlayer";
 import { notFound } from "next/navigation";
 import he from 'he';
+import ShowComfirm from "../_component/ShowComfirm";
 // 移除不需要的 Hls 导入和注释掉的 Hooks
 export async function generateMetadata({ params }) {
     const id = (await params).id;
@@ -39,6 +40,8 @@ const Home = async ({ params }) => {
                 contentData={res.data.content}
                 subTitleDate={res.data.subtitle}
             />
+
+            { res.data.status === 2 && <ShowComfirm id={id} /> }
         </>
     );
 };

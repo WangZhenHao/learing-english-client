@@ -26,7 +26,7 @@ const ContentWithPlayer = ({ contentData, audioSrc, subTitleDate = [] }) => {
     const [activeSentenceIndex, setActiveSentenceIndex] = useState(null);
     const [currentWord, setCurrentWord] = useState({});
     const audioPlayRef = useRef(null);
-    const subtitleCacheRef = useRef(subTitleDate);
+    const subtitleCacheRef = useRef(subTitleDate || []);
     const [sentenceDate, setSentenceDate] = useState([...contentData]);
 
     const {
@@ -36,20 +36,20 @@ const ContentWithPlayer = ({ contentData, audioSrc, subTitleDate = [] }) => {
         isShowAllWord,
     } = useShowWord({ sentenceDate, setSentenceDate });
 
-    function filterSubTitle(subTitleDate) {
-        return subTitleDate.map((itemList) => {
-            const list = itemList.map((item) => ({ ...item }));
+    // function filterSubTitle(subTitleDate) {
+    //     return subTitleDate.map((itemList) => {
+    //         const list = itemList.map((item) => ({ ...item }));
 
-            for (let i = list.length - 1; i >= 0; i--) {
-                if (list[i].boundaryType === "PunctuationBoundary") {
-                    list[i - 1].text += list[i].text;
-                    list.splice(i, 1);
-                }
-            }
+    //         for (let i = list.length - 1; i >= 0; i--) {
+    //             if (list[i].boundaryType === "PunctuationBoundary") {
+    //                 list[i - 1].text += list[i].text;
+    //                 list.splice(i, 1);
+    //             }
+    //         }
 
-            return list;
-        });
-    }
+    //         return list;
+    //     });
+    // }
 
     // useEffect(() => {
     //     subtitleCacheRef.current = subTitleDate;
@@ -85,8 +85,8 @@ const ContentWithPlayer = ({ contentData, audioSrc, subTitleDate = [] }) => {
     const onTimeUpdate = (currentTime) => {
         const sentenceIndex = updateActiveSentence(currentTime);
         console.log(sentenceIndex, activeSentenceIndexRef.current);
-
-        if (sentenceIndex !== activeSentenceIndexRef.current) {
+        // debugger
+        if (sentenceIndex !== activeSentenceIndexRef.current && activeSentenceIndexRef.current !== null) {
             activeSentenceIndexRef.current = sentenceIndex;
             setActiveSentenceIndex(sentenceIndex);
         }

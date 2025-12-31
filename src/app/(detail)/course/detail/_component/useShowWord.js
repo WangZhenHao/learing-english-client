@@ -57,7 +57,7 @@ function useShowWord({ sentenceDate, setSentenceDate }) {
         // } else {
         //     hideAllWordHandle()
         // }
-        console.log(isShowAllWord);
+        // console.log(isShowAllWord);
     }, [isShowAllWord]);
 
     return {
