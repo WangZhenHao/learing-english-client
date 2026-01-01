@@ -31,6 +31,7 @@ const Home = async ({ params }) => {
 
     return (
         <>
+           { res.data.status !== 1 && <ShowComfirm status={res.data.status} id={id} /> }
             <h1
                 className="text-center pb-2 font-bold text-[18px] pt-2.5"
                 dangerouslySetInnerHTML={{ __html: res.data.title }}
@@ -41,7 +42,7 @@ const Home = async ({ params }) => {
                 subTitleDate={res.data.subtitle}
             />
 
-            { res.data.status === 2 && <ShowComfirm id={id} /> }
+            
         </>
     );
 };

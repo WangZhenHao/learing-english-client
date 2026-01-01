@@ -11,3 +11,7 @@ export function createArticel(data) {
 export function deleteArticel(id) {
     return iget("/user/delete/"  + id);
 }
+
+export function regenerate(id) {
+    return iget("/user/regenerate/"  + id);
+}
