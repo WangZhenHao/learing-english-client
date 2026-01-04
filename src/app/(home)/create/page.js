@@ -25,7 +25,7 @@ import { Input } from "@/components/ui/input";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import MySelect from "./_components/select";
-import { langMap } from "./_components/map";
+import { langMap, charaterMap, speakRateMap } from "./_components/map";
 
 const App = () => {
     const router = useRouter();
@@ -98,15 +98,39 @@ const App = () => {
                     </Field>
                     <Field>
                         <FieldLabel htmlFor="zip">学习目标语言</FieldLabel>
-                        <Input id="zip" type="text" placeholder="90502" />
+                        <MySelect
+                            placeholder="请选择学习目标语言"
+                            list={Object.keys(langMap).map((item) => {
+                                return {
+                                    value: item,
+                                    label: langMap[item],
+                                };
+                            })}
+                        />
                     </Field>
                     <Field>
                         <FieldLabel htmlFor="zip">发音人物</FieldLabel>
-                        <Input id="zip" type="text" placeholder="90502" />
+                        <MySelect
+                            placeholder="请选择发音人物"
+                            list={Object.keys(charaterMap).map((item) => {
+                                return {
+                                    value: item,
+                                    label: charaterMap[item],
+                                };
+                            })}
+                        />
                     </Field>
                     <Field>
                         <FieldLabel htmlFor="zip">说话速度</FieldLabel>
-                        <Input id="zip" type="text" placeholder="90502" />
+                        <MySelect
+                            placeholder="请选择说话速度"
+                            list={Object.keys(speakRateMap).map((item) => {
+                                return {
+                                    value: item,
+                                    label: speakRateMap[item],
+                                };
+                            })}
+                        />
                     </Field>
                 </div>
                 <div className="space-y-2">

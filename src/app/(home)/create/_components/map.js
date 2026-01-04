@@ -13,14 +13,14 @@ export const langMap = {
 }
 
 export const charaterMap = {
-    'female': 'en-US-SerenaMultilingualNeural',
-    'male': 'en-US-DustinMultilingualNeural',
+    'female': '女性',
+    'male': '男性',
 }
 
-export const speakRate = {
-    'x1.5': 1.5,
-    'x1.2': 1.2,
-    'x1': 1,
-    'x0.8': 0.8,
-    'x0.5': 0.5,
+export const speakRateMap = {
+    '1.5': 'x1.5',
+    '1.2': 'x1.2',
+    '1': 'x1',
+    '0.8': 'x0.8(推荐)',
+    '0.5': 'x0.5',
 }
