@@ -2,6 +2,7 @@
 
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
+import { Label } from "@/components/ui/label";
 import { useState } from "react";
 import { optimize, createArticel } from "@/api/course";
 import {
@@ -23,19 +24,15 @@ import {
 import { Input } from "@/components/ui/input";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
+import MySelect from "./_components/select";
+import { langMap } from "./_components/map";
 
 const App = () => {
     const router = useRouter();
     const [text, setText] = useState("");
     const [loading, setLoading] = useState(false);
     const [open, setOpen] = useState(false);
-    const [result, setResult] = useState({
-        // title: "请输入标题",
-        // sentences: [{
-        //     sentence: "waht is your name?",
-        //     means: "请输入内容",
-        // }]
-    });
+    const [result, setResult] = useState({});
     // console.log(result.sentences.map(item => item.sentence).join('\n'));
     const clickHandler = () => {
         if (!text) {
@@ -85,15 +82,47 @@ const App = () => {
     };
     return (
         <>
-            <Textarea
-                style={{ height: "60vh" }}
-                onInput={inputHandle}
-                placeholder="请输入内容,最多3000个字符"
-                maxLength={3000}
-            />
-            <Button loading={loading} className="mt-5" onClick={clickHandler}>
-                {loading ? "生成中，请稍等..." : "生成文章"}
-            </Button>
+            <form onSubmit={clickHandler}>
+                <div className="space-y-2 grid grid-cols-4 gap-4">
+                    <Field>
+                        <FieldLabel htmlFor="city">我的母语</FieldLabel>
+                        <MySelect
+                            placeholder="请选择我的母语"
+                            list={Object.keys(langMap).map((item) => {
+                                return {
+                                    value: item,
+                                    label: langMap[item],
+                                };
+                            })}
+                        />
+                    </Field>
+                    <Field>
+                        <FieldLabel htmlFor="zip">学习目标语言</FieldLabel>
+                        <Input id="zip" type="text" placeholder="90502" />
+                    </Field>
+                    <Field>
+                        <FieldLabel htmlFor="zip">发音人物</FieldLabel>
+                        <Input id="zip" type="text" placeholder="90502" />
+                    </Field>
+                    <Field>
+                        <FieldLabel htmlFor="zip">说话速度</FieldLabel>
+                        <Input id="zip" type="text" placeholder="90502" />
+                    </Field>
+                </div>
+                <div className="space-y-2">
+                    <Label htmlFor="confirmPassword">内容</Label>
+                    <Textarea
+                        style={{ height: "60vh" }}
+                        onInput={inputHandle}
+                        placeholder="请输入内容,最多3000个字符"
+                        maxLength={3000}
+                    />
+                </div>
+
+                <Button loading={loading} type="submit" className="mt-5">
+                    {loading ? "生成中，请稍等..." : "生成文章"}
+                </Button>
+            </form>
             <Dialog open={open} onOpenChange={setOpen}>
                 <DialogContent style={{ "--container-lg": "720px" }}>
                     <DialogHeader>
@@ -121,7 +150,14 @@ const App = () => {
                                     disabled
                                     style={{ height: "400px" }}
                                     placeholder="请输入内容,最多2000个字符"
-                                    value={result.sentences?.map((item) => item.sentence + '\n' + item.means).join("\n\n")}
+                                    value={result.sentences
+                                        ?.map(
+                                            (item) =>
+                                                item.sentence +
+                                                "\n" +
+                                                item.means
+                                        )
+                                        .join("\n\n")}
                                 />
                             </Field>
                         </FieldGroup>
