@@ -26,6 +26,7 @@ import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import MySelect from "./_components/select";
 import { langMap, charaterMap, speakRateMap } from "./_components/map";
+import SelectCatergory from "./_components/SelectCatergory";
 
 const App = () => {
     const router = useRouter();
@@ -33,6 +34,11 @@ const App = () => {
     const [loading, setLoading] = useState(false);
     const [open, setOpen] = useState(false);
     const [result, setResult] = useState({});
+    const [targetLang, setTargetLang] = useState("en");
+    const [owerLang, setOwerLang] = useState("zh");
+    const [character, setCharater] = useState("female");
+    const [speakRate, setSpeakRate] = useState("0.8");
+    const [categoryId, setCategoryId] = useState("other");
     // console.log(result.sentences.map(item => item.sentence).join('\n'));
     const clickHandler = () => {
         if (!text) {
@@ -40,10 +46,14 @@ const App = () => {
                 // duration: 1000000,
             });
             return;
+        } else if(owerLang === targetLang) {
+            toast("母语和目标语言不能相同");
+            return;
+        
         }
         // setOpen(true);
         setLoading(true);
-        optimize({ context: text })
+        optimize({ context: text, targetLang, owerLang })
             .then((res) => {
                 setOpen(true);
                 setResult(res.data);
@@ -63,10 +73,20 @@ const App = () => {
             return;
         }
 
+        if(targetLang === owerLang) {
+            toast("母语和目标语言不能相同");
+            return;
+        }
+
         setLoading(true);
         createArticel({
             title: result.title,
             sentences: result.sentences,
+            targetLang,
+            character,
+            speakRate,
+            owerLang,
+            categoryId
         })
             .then((res) => {
                 setOpen(false);
@@ -82,11 +102,15 @@ const App = () => {
     };
     return (
         <>
-            <form onSubmit={clickHandler}>
+            <form>
                 <div className="space-y-2 grid grid-cols-4 gap-4">
                     <Field>
                         <FieldLabel htmlFor="city">我的母语</FieldLabel>
                         <MySelect
+                            onChange={(e) => {
+                                setOwerLang(e);
+                            }}
+                            value={owerLang}
                             placeholder="请选择我的母语"
                             list={Object.keys(langMap).map((item) => {
                                 return {
@@ -99,7 +123,11 @@ const App = () => {
                     <Field>
                         <FieldLabel htmlFor="zip">学习目标语言</FieldLabel>
                         <MySelect
+                            onChange={(e) => {
+                                setTargetLang(e);
+                            }}
                             placeholder="请选择学习目标语言"
+                            value={targetLang}
                             list={Object.keys(langMap).map((item) => {
                                 return {
                                     value: item,
@@ -111,7 +139,11 @@ const App = () => {
                     <Field>
                         <FieldLabel htmlFor="zip">发音人物</FieldLabel>
                         <MySelect
+                            onChange={(e) => {
+                                setCharater(e);
+                            }}
                             placeholder="请选择发音人物"
+                            value={character}
                             list={Object.keys(charaterMap).map((item) => {
                                 return {
                                     value: item,
@@ -123,6 +155,10 @@ const App = () => {
                     <Field>
                         <FieldLabel htmlFor="zip">说话速度</FieldLabel>
                         <MySelect
+                            onChange={(e) => {
+                                setSpeakRate(e);
+                            }}
+                            value={speakRate}
                             placeholder="请选择说话速度"
                             list={Object.keys(speakRateMap).map((item) => {
                                 return {
@@ -133,17 +169,27 @@ const App = () => {
                         />
                     </Field>
                 </div>
-                <div className="space-y-2">
-                    <Label htmlFor="confirmPassword">内容</Label>
-                    <Textarea
-                        style={{ height: "60vh" }}
-                        onInput={inputHandle}
-                        placeholder="请输入内容,最多3000个字符"
-                        maxLength={3000}
-                    />
+                <div className="space-y-2  grid grid-cols-4 gap-4">
+                    <Field>
+                        <Label htmlFor="confirmPassword">分类</Label>
+                        <SelectCatergory onChange={(e) =>{
+                            setCategoryId(e);
+                        }} value={categoryId} />
+                    </Field>
+                </div>
+                <div className="py-2">
+                    <Field>
+                        <Label htmlFor="confirmPassword">内容</Label>
+                        <Textarea
+                            style={{ height: "60vh" }}
+                            onInput={inputHandle}
+                            placeholder="请输入内容,最多3000个字符"
+                            maxLength={3000}
+                        />
+                    </Field>
                 </div>
 
-                <Button loading={loading} type="submit" className="mt-5">
+                <Button loading={loading} className="mt-5" onClick={clickHandler}>
                     {loading ? "生成中，请稍等..." : "生成文章"}
                 </Button>
             </form>
@@ -171,9 +217,9 @@ const App = () => {
                             <Field>
                                 <FieldLabel>内容</FieldLabel>
                                 <Textarea
-                                    disabled
+                                    readOnly
                                     style={{ height: "400px" }}
-                                    placeholder="请输入内容,最多2000个字符"
+                                    placeholder="请输入内容,最多3000个字符"
                                     value={result.sentences
                                         ?.map(
                                             (item) =>
@@ -187,7 +233,6 @@ const App = () => {
                         </FieldGroup>
                         <DialogFooter>
                             <Button
-                                type="submit"
                                 className="mt-2.5"
                                 onClick={submitHandler}
                                 loading={loading}

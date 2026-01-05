@@ -49,12 +49,12 @@ const App = (props) => {
                                     alt="标题图片"
                                 />
                                 <div
-                                    className="item-title p-2 font-bold"
-                                    style={{ height: "64px" }}
+                                    className="item-title px-2 font-bold"
+                                    style={{ height: "54px" }}
                                 >
                                     {item.title}
                                 </div>
-                                <div className="flex justify-between px-2 pb-2 text-[12px] text-[#999]">
+                                <div className="flex justify-between px-2 py-2 text-[12px] text-[#999]">
                                     <span>
                                         {dayjs(item.createdAt).format(
                                             "YYYY-MM-DD HH:mm"

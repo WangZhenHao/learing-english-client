@@ -12,7 +12,7 @@ import {
 const App = (props) => {
     const list = props.list || [];
     return (
-        <Select onChange={props.onChange}>
+        <Select onValueChange={props.onChange} value={props.value}>
             <SelectTrigger>
                 <SelectValue placeholder={props.placeholder} />
             </SelectTrigger>
