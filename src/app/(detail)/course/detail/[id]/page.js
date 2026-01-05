@@ -1,5 +1,5 @@
 // app/home/[id]/page.jsx
-import { getArticleId } from "@/api/home";
+import { getArticleId } from "@/api/server/course";
 // 导入新的客户端组件
 import ContentWithPlayer from "../_component/ContentWithPlayer";
 import { notFound } from "next/navigation";

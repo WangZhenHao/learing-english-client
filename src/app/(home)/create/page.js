@@ -27,7 +27,7 @@ import { useRouter } from "next/navigation";
 import MySelect from "./_components/select";
 import { langMap, charaterMap, speakRateMap } from "./_components/map";
 import SelectCatergory from "./_components/SelectCatergory";
-
+import useAuth from "@/app/(auth)/_component/useAuth";
 const App = () => {
     const router = useRouter();
     const [text, setText] = useState("");
@@ -39,8 +39,10 @@ const App = () => {
     const [character, setCharater] = useState("female");
     const [speakRate, setSpeakRate] = useState("0.8");
     const [categoryId, setCategoryId] = useState("other");
+    const { userInfo } = useAuth()
     // console.log(result.sentences.map(item => item.sentence).join('\n'));
-    const clickHandler = () => {
+    const clickHandler = (e) => {
+        e.preventDefault();
         if (!text) {
             toast("请输入内容", {
                 // duration: 1000000,
@@ -169,14 +171,14 @@ const App = () => {
                         />
                     </Field>
                 </div>
-                <div className="space-y-2  grid grid-cols-4 gap-4">
+                { userInfo?.uid === 'admin' && (<div className="space-y-2  grid grid-cols-4 gap-4">
                     <Field>
                         <Label htmlFor="confirmPassword">分类</Label>
                         <SelectCatergory onChange={(e) =>{
                             setCategoryId(e);
                         }} value={categoryId} />
                     </Field>
-                </div>
+                </div>)}
                 <div className="py-2">
                     <Field>
                         <Label htmlFor="confirmPassword">内容</Label>

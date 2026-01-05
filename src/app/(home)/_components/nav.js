@@ -1,25 +1,27 @@
 "use client";
 
 import { CircleUser } from "lucide-react";
-import { useLocalStorageState } from "ahooks";
+// import { useLocalStorageState } from "ahooks";
 import {
     Popover,
     PopoverContent,
     PopoverTrigger,
 } from "@/components/ui/popover";
-import { useCookieState } from "ahooks";
-import { useState, useEffect } from "react";
+// import { useCookieState } from "ahooks";
+// import { useState, useEffect } from "react";
+import useAuth from "@/app/(auth)/_component/useAuth";
 
 const App = () => {
-    const [userInfo, setUserInfo] = useLocalStorageState("userInfo", {
-        defaultValue: {},
-    });
-    const [, setToken] = useCookieState("Bearer");
-    const [isClient, setIsClient] = useState(false);
+    const { userInfo, setCookie: setToken, setLocalValue: setUserInfo } = useAuth()
+    // const [userInfo, setUserInfo] = useLocalStorageState("userInfo", {
+    //     defaultValue: {},
+    // });
+    // const [, setToken] = useCookieState("Bearer");
+    // const [isClient, setIsClient] = useState(false);
 
-    useEffect(() => {
-        setIsClient(true);
-    }, []);
+    // useEffect(() => {
+    //     setIsClient(true);
+    // }, []);
     const hideSomething = (targetStr, start, howmany, symbol = "*") => {
         let str = "",
             end = start + howmany;
@@ -44,7 +46,7 @@ const App = () => {
                 <img src="/logo2.png" alt="logo" style={{ width: "32px" }} />
                 <span className="pl-2 font-bold">影跟读</span>
             </div>
-            {isClient && userInfo.id && (
+            { userInfo?.id && (
                 <Popover>
                     <PopoverTrigger className="flex items-center cursor-pointer text-[#666]">
                         <div className="pr-2">

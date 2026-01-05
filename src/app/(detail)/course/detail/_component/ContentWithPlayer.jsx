@@ -220,8 +220,10 @@ const ContentWithPlayer = ({ contentData, audioSrc, subTitleDate = [] }) => {
                                             ? "block"
                                             : null,
                                 }}
+                                dangerouslySetInnerHTML={{
+                                    __html: item.means,
+                                }}
                             >
-                                {item.means}
                             </div>
                         </div>
                     );
