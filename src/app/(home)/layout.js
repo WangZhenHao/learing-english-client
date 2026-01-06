@@ -2,6 +2,7 @@
 import Nav from "./_components/nav";
 import LeftSlide from "./_components/leftSlide";
 import "../globals.css";
+import { isMobileServer } from "@/lib/isMobile";
 // import { Toaster } from "@/components/ui/sonner";
 
 // const geistSans = Geist({
@@ -31,18 +32,20 @@ export const viewport = {
     // interactiveWidget: 'resizes-visual',
 };
 
-export default function RootLayout({ children }) {
+export default async function RootLayout({ children }) {
+    const isMobile = await isMobileServer()
+
     return (
         <>
            
             <div className="bg-[#fafafa]">
                 <Nav />
                 <div className="flex">
-                    <LeftSlide />
+                    { !isMobile && <LeftSlide /> }
                     <div
                         className="w-full border-t border-l border-border flex-1 p-2.5 overflow-y-auto bg-white relative"
                         style={{
-                            borderRadius: "8px 0px 0px 0px",
+                            borderRadius: isMobile ? "0": "8px 0px 0px 0px",
                             height: "calc(100vh - 50px)",
                         }}
                     >
