@@ -11,22 +11,18 @@ const App = async ({ searchParams, params }) => {
     const { data: categoryList } = await getCatergory();
     // console.log(category)
     return (
-        <div className="relative h-full">
-            <Catergory categoryId={category} list={categoryList} />
-            {data.list.length > 0 ? (
-                <>
-                    <Item route="/course/detail" data={data.list} />
-                    <div
-                        className="absolute bottom-0 right-0"
-                        style={{ zIndex: 2 }}
-                    >
-                        <CoursePagination
-                            page={data.page.page}
-                            totalPages={data.page.totalPage}
-                        />
-                    </div>
-                </>
-            ) : <Empty />}
+        <div className="h-full flex content-between flex-wrap">
+            <div className="w-full">
+                <Catergory categoryId={category} list={categoryList} />
+                <Item route="/course/detail" data={data.list} />
+                {data.list.length <= 0 && <Empty />}
+            </div>
+            <div className="w-full justify-end flex py-2.5">
+                <CoursePagination
+                    page={data.page.page}
+                    totalPages={data.page.totalPage}
+                />
+            </div>
         </div>
     );
     // return <Item route='/course/detail' data={res.data.list} />

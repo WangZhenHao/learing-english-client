@@ -1,8 +1,13 @@
-import { Spinner } from "@/components/ui/spinner"
+// import { Spinner } from "@/components/ui/spinner"
 const App = () => {
-    return <div className="h-screen flex items-center justify-center">
-        <div className="flex items-center justify-center"><Spinner /> <div className="pl-1">加载中...</div></div>
-    </div>;
-}
- 
+    return (
+        <div className="h-screen flex items-center justify-center">
+            <div className="flex items-center justify-center">
+                <img className="animated animate__bounce infinite" src="/logo2.png" alt="logo" style={{ width: "32px" }} />{" "}
+                <div className="pl-1">加载中...</div>
+            </div>
+        </div>
+    );
+};
+
 export default App;

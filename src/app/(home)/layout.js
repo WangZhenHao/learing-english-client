@@ -40,7 +40,7 @@ export default function RootLayout({ children }) {
                 <div className="flex">
                     <LeftSlide />
                     <div
-                        className="w-full border-t border-l border-border flex-1 p-2.5 overflow-y-auto bg-white"
+                        className="w-full border-t border-l border-border flex-1 p-2.5 overflow-y-auto bg-white relative"
                         style={{
                             borderRadius: "8px 0px 0px 0px",
                             height: "calc(100vh - 50px)",
