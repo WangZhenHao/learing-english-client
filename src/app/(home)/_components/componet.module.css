@@ -1,13 +1,20 @@
+
 .leftSider {
     width: 256px;
     height: calc(100vh - 50px);
 }
 
-.leftSiderItem {
-    /* height: 32px; */
-}
-
 .active {
     background-color: #e6e6e6;
     border-radius: 6px;
+}
+
+.mActive {
+    background-color: #e6e6e6;
+    font-weight: bold;
+    
+}
+
+.mNavBar {
+    height: 50px;
 }

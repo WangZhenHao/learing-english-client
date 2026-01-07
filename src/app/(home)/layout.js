@@ -3,6 +3,7 @@ import Nav from "./_components/nav";
 import LeftSlide from "./_components/leftSlide";
 import "../globals.css";
 import { isMobileServer } from "@/lib/isMobile";
+import MobilTab from "./_components/MobilTab";
 // import { Toaster } from "@/components/ui/sonner";
 
 // const geistSans = Geist({
@@ -33,24 +34,21 @@ export const viewport = {
 };
 
 export default async function RootLayout({ children }) {
-    const isMobile = await isMobileServer()
+    // const isMobile = await isMobileServer()
 
     return (
         <>
-           
-            <div className="bg-[#fafafa]">
+            <div className="bg-[#fafafa] page-wrap">
                 <Nav />
-                <div className="flex">
-                    { !isMobile && <LeftSlide /> }
-                    <div
-                        className="w-full border-t border-l border-border flex-1 p-2.5 overflow-y-auto bg-white relative"
-                        style={{
-                            borderRadius: isMobile ? "0": "8px 0px 0px 0px",
-                            height: "calc(100vh - 50px)",
-                        }}
-                    >
-                        {children}
+                <div>
+                    <div className="flex">
+                        <LeftSlide />
+                        <div className="w-full border-t border-l border-border flex-1 p-2.5 overflow-y-auto bg-white relative right-silde-wrap">
+                            {children}
+                        </div>
                     </div>
+
+                    <MobilTab />
                 </div>
             </div>
         </>

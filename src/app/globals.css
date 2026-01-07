@@ -1,5 +1,5 @@
 @import "tailwindcss";
-@import "tw-animate-css";
+/* @import "tw-animate-css"; */
 @import '../components/css/animation.css';
 
 @custom-variant dark (&:is(.dark *));
@@ -137,4 +137,24 @@
 
 .border-border {
   border-color: #e5e5e5;
+}
+
+
+.right-silde-wrap {
+  border-radius: "8px 0px 0px 0px";
+  height: calc(100vh - 50px);
+}
+@media (min-width: 0px) and (max-width: 768px) {
+  .right-silde-wrap {
+    border-radius: 0;
+    height: calc(100vh - 50px - 50px);
+  }
+
+  .left-silde-wrap {
+    display: none;
+  }
+
+  .mobile-wrap {
+    display: block;
+  }
 }

@@ -1,35 +1,13 @@
 "use client";
 import Link from "next/link";
 import style from "./componet.module.css";
-import { TvMinimalPlay, FolderClosed, FolderLock, FilePlusCorner } from "lucide-react";
+import { linkList  } from './data'
 import { usePathname } from "next/navigation";
 const App = () => {
     const pathname = usePathname();
-    const linkList = [
-        {
-            name: "返回主页",
-            href: "/",
-            icon: <TvMinimalPlay size={20} />,
-            active: false
-        },
-        {
-            name: "课程",
-            href: "/course",
-            icon: <FolderClosed size={20} />,
-        },
-        {
-            name: "我的课程",
-            href: "/my-course",
-            icon: <FolderLock size={20} />,
-        },
-        {
-            name: "创建课程",
-            href: "/create",
-            icon: <FilePlusCorner size={20} />,
-        },
-    ];
+    
     return (
-        <div className={`bg-[#fafafa] ${style.leftSider} p-2`}>
+        <div className={`bg-[#fafafa] ${style.leftSider} p-2 left-silde-wrap`}>
             {linkList.map((item) => {
                 const isActive = pathname.indexOf(item.href) === 0 && item.active !== false;
                 return (
