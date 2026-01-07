@@ -48,12 +48,12 @@ const App = (props) => {
                                     }
                                     alt="标题图片"
                                 />
-                                <div
+                                <h2
                                     className="item-title px-2 font-bold"
                                     style={{ height: "54px" }}
                                 >
                                     {item.title}
-                                </div>
+                                </h2>
                                 <div className="flex justify-between px-2 py-2 text-[12px] text-[#999]">
                                     <span>
                                         {dayjs(item.createdAt).format(

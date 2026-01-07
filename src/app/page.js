@@ -20,7 +20,7 @@ export default function HomePage() {
         <p className="hero-desc">
           一个帮助你通过 <span className="highlight-light">影子跟读</span>、
           <span className="highlight-light">逐字高亮</span>、
-          <span className="highlight-light">反复听读</span> 来快速提升英语口语能力的学习工具。
+          <span className="highlight-light">反复听读</span> 来快速提升口语、听力能力的学习工具。
         </p>
 
         <div className="hero-actions">

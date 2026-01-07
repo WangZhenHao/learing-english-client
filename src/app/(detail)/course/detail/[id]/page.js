@@ -14,7 +14,7 @@ export async function generateMetadata({ params }) {
         return { title: "课程不存在" };
     }
     const decodedTitle = he.decode(res.data.title);
-    return { title: decodedTitle };
+    return { title: `${decodedTitle} - ID: ${id}` , description: `这是关于课程 ${id} 的详细介绍`, };
 }
 const Home = async ({ params }) => {
     const { id } = await params; // params 已经解构，不需要再次 await

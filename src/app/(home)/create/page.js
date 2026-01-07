@@ -32,7 +32,7 @@ const App = () => {
     const router = useRouter();
     const [text, setText] = useState("");
     const [loading, setLoading] = useState(false);
-    const [open, setOpen] = useState(true);
+    const [open, setOpen] = useState(false);
     const [result, setResult] = useState({});
     const [targetLang, setTargetLang] = useState("en");
     const [owerLang, setOwerLang] = useState("zh");
