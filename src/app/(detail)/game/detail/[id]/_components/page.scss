@@ -1,9 +1,12 @@
 .sentent-wrap {
     font-size: 48px;
+    max-width: 1200px;
+    padding: 10px 30px;
+    // margin: auto;
 
     .item-word {
         height: 64px;
-        border-bottom-width: 2px;
+        border-bottom-width: 3px;
         min-width: 106px;
         
     }
@@ -11,5 +14,16 @@
     .active {
         border-color: var(--highlight);
         color: var(--highlight);
+
+        &::after {
+            content: "|";
+            animation: showHideCursor 1s steps(1) infinite
+        }
+    }
+}
+
+@keyframes showHideCursor {
+    50% {
+        visibility: hidden;
     }
 }

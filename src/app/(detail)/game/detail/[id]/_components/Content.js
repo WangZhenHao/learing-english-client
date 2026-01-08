@@ -9,12 +9,19 @@ const App = ({ contentData, audioSrc, subTitleDate = [] }) => {
     const inputRef = useRef(null);
 
     const skipSentenceWordIndex = (index, plus) => {
-        const item = subTitleDate[sentenceIndex][index];
+        const leng = subTitleDate[sentenceIndex].length;
+        const newIndex = index + plus;
+        
+        if(newIndex < 0 || newIndex >= leng) {
+            return index;
+        }
+
+        const item = subTitleDate[sentenceIndex][newIndex];
 
         if(item.boundaryType === 'WordBoundary') {
-            return index
+            return newIndex
         } else  {
-            return skipSentenceWordIndex(index + plus);
+            return skipSentenceWordIndex(newIndex, plus);
         }
     }
     useEffect(() => {
@@ -24,14 +31,12 @@ const App = ({ contentData, audioSrc, subTitleDate = [] }) => {
             }
             // e.preventDefault();
             if(e.key === "Enter") {
-                if(wordIndex < contentData.length - 1) {
-                    const newIndex = skipSentenceWordIndex(wordIndex + 1, 1);
+                    const newIndex = skipSentenceWordIndex(wordIndex, 1);
                     inputRef.current.value = writeWord[sentenceIndex][newIndex] || ""
                     setWordIndex(newIndex);
-                }
             } else if(e.key === "Backspace") {
-                if(wordIndex > 0 && !inputRef.current.value) {
-                    const newIndex = skipSentenceWordIndex(wordIndex - 1, -1);
+                if(!inputRef.current.value) {
+                    const newIndex = skipSentenceWordIndex(wordIndex , -1);
                     inputRef.current.value = writeWord[sentenceIndex][newIndex]
                     setWordIndex(newIndex);
                 }
@@ -85,7 +90,6 @@ const App = ({ contentData, audioSrc, subTitleDate = [] }) => {
                     ) : (
                         <div
                             key={index}
-                            className="ml-3"
                             dangerouslySetInnerHTML={{ __html: item.text }}
                         ></div>
                     );

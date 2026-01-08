@@ -34,11 +34,13 @@ const App = async ({ params }) => {
                 className="text-center pb-2 font-bold text-[18px] pt-2.5"
                 dangerouslySetInnerHTML={{ __html: res.data.title }}
             />
-            <Content
-                audioSrc={audioSrc}
-                contentData={res.data.content}
-                subTitleDate={res.data.subtitle}
-            />
+            <div className="flex justify-center items-center h-screen ">
+                <Content
+                    audioSrc={audioSrc}
+                    contentData={res.data.content}
+                    subTitleDate={res.data.subtitle}
+                />
+            </div>
         </>
     );
 };
