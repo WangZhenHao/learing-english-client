@@ -1,0 +1,15 @@
+.sentent-wrap {
+    font-size: 48px;
+
+    .item-word {
+        height: 64px;
+        border-bottom-width: 2px;
+        min-width: 106px;
+        
+    }
+
+    .active {
+        border-color: var(--highlight);
+        color: var(--highlight);
+    }
+}
