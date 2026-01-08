@@ -5,4 +5,5 @@ export const metadata = {
     icons: {
         icon: [{ url: "/logo2.png", type: "image/png", sizes: "64x64" }],
     },
+    robots: { index: true, follow: true }
 };

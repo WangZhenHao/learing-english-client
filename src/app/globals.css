@@ -18,6 +18,17 @@
   }
 } */
 
+:root {
+  --bg-main: #0f0e1a;
+  --purple-1: rgba(106, 90, 224, 0.3);
+  --purple-2: rgba(157, 107, 255, 0.2);
+  --highlight: #a68cff;
+  --highlight-light: #c7b3ff;
+  --text-light: rgba(255, 255, 255, 0.7);
+  --border-light: rgba(255, 255, 255, 0.1);
+}
+
+
 @theme inline {
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
