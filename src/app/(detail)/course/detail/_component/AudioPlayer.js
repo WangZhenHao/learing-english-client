@@ -29,6 +29,7 @@ export default forwardRef((props, ref) => {
     const [currentTime, setCurrentTime] = useState(0);
     const [isPlaying, setIsPlaying] = useState(false);
     const [loop, setLoop] = setReportStatus("isStorageLoop");
+    const controlled = typeof props.controlled === "boolean" ? props.controlled : true;
 
     const toSkip = (start, end = 0) => {
         audioRef.current.currentTime = start / 1000;
@@ -50,6 +51,9 @@ export default forwardRef((props, ref) => {
         return {
             audio: audioRef.current,
             toSkip,
+            isPlaying,
+            toPause,
+            toPlay
         };
     });
 
@@ -112,7 +116,11 @@ export default forwardRef((props, ref) => {
         audio.addEventListener("loadedmetadata", loadedmetadata);
         audio.addEventListener("play", handlePlay);
         audio.addEventListener("pause", handlePause);
-        document.addEventListener("keydown", keydown);
+
+        if(controlled) {
+            document.addEventListener("keydown", keydown);
+        }
+        
 
         audio.addEventListener("ratechange", handleRateChange);
         // Cleanup listener on unmount
@@ -161,7 +169,7 @@ export default forwardRef((props, ref) => {
         setLoop(!loop);
     };
     return (
-        <div>
+        <div className={`${controlled ? '' : 'hidden'}`}>
             <audio
                 ref={audioRef}
                 // src={src}

@@ -30,15 +30,14 @@ const App = async ({ params }) => {
         : "";
     return (
         <>
-            <h1
+            {/* <h1
                 className="text-center pb-2 font-bold text-[18px] pt-2.5"
                 dangerouslySetInnerHTML={{ __html: res.data.title }}
-            />
-            <div className="flex justify-center items-center h-screen ">
+            /> */}
+            <div className="">
                 <Content
                     audioSrc={audioSrc}
-                    contentData={res.data.content}
-                    subTitleDate={res.data.subtitle}
+                    data={res.data}
                 />
             </div>
         </>
