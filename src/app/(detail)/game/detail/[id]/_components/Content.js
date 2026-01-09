@@ -5,6 +5,7 @@ import { use, useEffect, useMemo, useRef, useState } from "react";
 import { addHideWord } from "./utils.js";
 import SettingNav from './SettingNav'
 import GameTips from './GameTips'
+
 const App = ({ data: { content, subtitle = [], title}, audioSrc  }) => {
     const audioPlayRef = useRef(null);
     const [sentenceIndex, setSentenceIndex] = useState(0);
@@ -13,7 +14,7 @@ const App = ({ data: { content, subtitle = [], title}, audioSrc  }) => {
     const inputRef = useRef(null);
     const [isFoused, setIsFoused] = useState(false);
     const [wordDataArrMap, setWordDataArrMap] = useState([])
-    console.log(subtitle, wordDataArrMap);
+    console.log(subtitle, content);
 
     useEffect(() => { 
         setWordDataArrMap(addHideWord(subtitle, 5))
@@ -82,9 +83,11 @@ const App = ({ data: { content, subtitle = [], title}, audioSrc  }) => {
             if (document.activeElement !== inputRef.current) {
                 return;
             }
-
+            const isPrimary = e.metaKey || e.ctrlKey; 
             const keyCode = e.key.toLowerCase();
-            console.log(keyCode);
+            
+
+            console.log(keyCode)
             if (keyCode === " ") {
                 const newIndex = skipSentenceWordIndex(wordIndex, 1);
                 inputRef.current.value =
@@ -100,8 +103,7 @@ const App = ({ data: { content, subtitle = [], title}, audioSrc  }) => {
                     }, 10);
                     setWordIndex(newIndex);
                 }
-            } else if (e.altKey && keyCode === "enter") {
-                // e.preventDefault();
+            } else if (isPrimary && keyCode === "enter") {
                 if (audioPlayRef.current.isPlaying) {
                     audioPlayRef.current.toPause();
                 } else {
@@ -111,9 +113,9 @@ const App = ({ data: { content, subtitle = [], title}, audioSrc  }) => {
                         sentent.offset + sentent.duration
                     );
                 }
-            } else if (e.altKey && keyCode === "n") {
+            } else if (isPrimary && keyCode === "arrowright") {
                 toSkipSentence(1);
-            } else if (e.altKey && keyCode === "p") {
+            } else if (isPrimary && keyCode === "arrowleft") {
                 toSkipSentence(-1);
             } else if (keyCode === "enter") {
                 playCurrentWorld(wordIndex);
