@@ -5,7 +5,7 @@ import { use, useEffect, useMemo, useRef, useState } from "react";
 import { addHideWord } from "./utils.js";
 import SettingNav from './SettingNav'
 import GameTips from './GameTips'
-const App = ({ data: { content, subtitle = []}, audioSrc  }) => {
+const App = ({ data: { content, subtitle = [], title}, audioSrc  }) => {
     const audioPlayRef = useRef(null);
     const [sentenceIndex, setSentenceIndex] = useState(0);
     const [wordIndex, setWordIndex] = useState(null);
