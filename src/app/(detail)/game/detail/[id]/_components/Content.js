@@ -1,25 +1,27 @@
 "use client";
 import AudioPlayer from "@/app/(detail)/course/detail/_component/AudioPlayer.js";
-import Process from './Process'
+import Process from "./Process";
 import { use, useEffect, useMemo, useRef, useState } from "react";
-import { addHideWord } from "./utils.js";
-import SettingNav from './SettingNav'
-import GameTips from './GameTips'
+import { addHideWord, checkRightWord } from "./utils.js";
+import SettingNav from "./SettingNav";
+import GameTips from "./GameTips";
 
-const App = ({ data: { content, subtitle = [], title}, audioSrc  }) => {
+const App = ({ data: { content, subtitle = [], title }, audioSrc }) => {
     const audioPlayRef = useRef(null);
     const [sentenceIndex, setSentenceIndex] = useState(0);
     const [wordIndex, setWordIndex] = useState(null);
     const [writeWord, setWriteWord] = useState([]);
     const inputRef = useRef(null);
     const [isFoused, setIsFoused] = useState(false);
-    const [wordDataArrMap, setWordDataArrMap] = useState([])
-    console.log(subtitle, content);
+    const [wordDataArrMap, setWordDataArrMap] = useState([]);
+    const contentMap = useRef({});
+    // console.log(subtitle, content);
 
-    useEffect(() => { 
-        setWordDataArrMap(addHideWord(subtitle, 5))
-    }, [subtitle])
-   
+    useEffect(() => {
+        const { content, totalCount } = addHideWord(subtitle, 5);
+        setWordDataArrMap(content);
+    }, [subtitle]);
+
     useEffect(() => {
         const foucshandle = () => {
             setIsFoused(true);
@@ -45,7 +47,7 @@ const App = ({ data: { content, subtitle = [], title}, audioSrc  }) => {
         }
 
         const item = subtitle[sentenceIndex][newIndex];
-        const randomItem =  wordDataArrMap[sentenceIndex][newIndex];
+        const randomItem = wordDataArrMap[sentenceIndex][newIndex];
 
         if (item.boundaryType === "WordBoundary" && randomItem.hideWord) {
             return newIndex;
@@ -55,7 +57,7 @@ const App = ({ data: { content, subtitle = [], title}, audioSrc  }) => {
     };
 
     const toSkipSentence = (plus) => {
-        const newIndex = sentenceIndex + plus
+        const newIndex = sentenceIndex + plus;
         if (newIndex > content.length - 1 || newIndex < 0) {
             return;
         } else {
@@ -78,16 +80,25 @@ const App = ({ data: { content, subtitle = [], title}, audioSrc  }) => {
             }
         }
     };
+    const checkSkipNextSentence = () => {
+        const result = checkRightWord(
+            wordDataArrMap[sentenceIndex],
+            writeWord[sentenceIndex] || []
+        );
+        wordDataArrMap[sentenceIndex] = result;
+        setWordDataArrMap([...wordDataArrMap]);
+        contentMap.current[sentenceIndex] = { check: true };
+        // console.log(result);
+    };
     useEffect(() => {
         const keydown = (e) => {
             if (document.activeElement !== inputRef.current) {
                 return;
             }
-            const isPrimary = e.metaKey || e.ctrlKey; 
+            const isPrimary = e.metaKey || e.ctrlKey;
             const keyCode = e.key.toLowerCase();
-            
 
-            console.log(keyCode)
+            console.log(keyCode);
             if (keyCode === " ") {
                 const newIndex = skipSentenceWordIndex(wordIndex, 1);
                 inputRef.current.value =
@@ -114,7 +125,11 @@ const App = ({ data: { content, subtitle = [], title}, audioSrc  }) => {
                     );
                 }
             } else if (isPrimary && keyCode === "arrowright") {
-                toSkipSentence(1);
+                if (!contentMap.current[sentenceIndex]?.check) {
+                    checkSkipNextSentence();
+                } else {
+                    toSkipSentence(1);
+                }
             } else if (isPrimary && keyCode === "arrowleft") {
                 toSkipSentence(-1);
             } else if (keyCode === "enter") {
@@ -154,22 +169,34 @@ const App = ({ data: { content, subtitle = [], title}, audioSrc  }) => {
             </div>
             <div className="relative flex flex-wrap justify-center gap-2 sentent-wrap">
                 {subtitle[sentenceIndex]?.map((item, index) => {
-                    const randomItem = wordDataArrMap[sentenceIndex]? wordDataArrMap[sentenceIndex][index]: {};
-                    return item.boundaryType === "WordBoundary" && randomItem.hideWord ? (
+                    const randomItem = wordDataArrMap[sentenceIndex]
+                        ? wordDataArrMap[sentenceIndex][index]
+                        : {};
+                    return item.boundaryType === "WordBoundary" &&
+                        randomItem.hideWord ? (
                         <div
                             key={index}
                             className={`item-word border-border flex items-center justify-center px-2.5 py-2 ${
                                 wordIndex === index && isFoused ? "active" : ""
+                            } ${
+                                randomItem.isRight === true
+                                    ? "right-word"
+                                    : randomItem.isRight === false
+                                    ? "wrong-word"
+                                    : ""
                             }`}
                             onClick={() => handleClickWord(item, index)}
                             // style={{minWidth: ''}}
                         >
-                            <span>
+                            <span className={`${randomItem.isRight === false ? "line-through" : ""}`}>
                                 {writeWord[sentenceIndex] &&
                                 writeWord[sentenceIndex][index]
                                     ? writeWord[sentenceIndex][index]
                                     : null}
                             </span>
+                            {randomItem.isRight === false && (
+                                <span className="pl-1">{item.text}</span>
+                            )}
                         </div>
                     ) : (
                         <div

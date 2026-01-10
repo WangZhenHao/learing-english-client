@@ -10,7 +10,6 @@
         min-width: 106px;
         
     }
-
     .active {
         border-color: var(--highlight);
         color: var(--highlight);
@@ -20,6 +19,16 @@
             animation: showHideCursor 1s steps(1) infinite
         }
     }
+    .right-word {
+        color: #2B9A66;
+        border-color: #2B9A66
+    }
+    .wrong-word {
+        color: #E03E2F;
+        border-color: #E03E2F
+    }
+
+   
 }
 
 .process-wrap {
