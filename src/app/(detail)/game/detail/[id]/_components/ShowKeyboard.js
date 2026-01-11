@@ -1,7 +1,7 @@
 import { keyBoardMap } from "./utils";
 const App = () => {
     return (
-        <div className="flex justify-center">
+        <div className="flex justify-center w-full" style={{marginTop: '100px'}}>
             <div className="grid grid-cols-3 gap-y-2 gap-x-3 flex-wrap justify-start">
                 {Object.keys(keyBoardMap).map((rowKey) => {
                     return (

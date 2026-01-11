@@ -1,6 +1,6 @@
 "use client";
 import { Button } from "@/components/ui/button";
-import { forwardRef, useImperativeHandle } from "react";
+// import { forwardRef, useImperativeHandle } from "react";
 import { toast } from "sonner";
 const toasterId = "GameTips";
 
@@ -34,12 +34,13 @@ const showTipsDetail = (wordLsit, showList, sentence = {}) => {
                 }}
             ></div>
             <div className="flex justify-end">
-                <Button onClick={() => toast.dismiss(targetToast)}>关闭（Commnd/alt + ↑/↓ ）</Button>
+                <Button onClick={() => toast.dismiss(targetToast)}>
+                    关闭（Commnd/alt + ↑/↓ ）
+                </Button>
             </div>
         </div>
     );
 };
-
 
 export default function showTips(wordLsit, showList, sentence) {
     // toast.custom(() => showTipsDetail(wordLsit, showList));
@@ -55,10 +56,11 @@ export default function showTips(wordLsit, showList, sentence) {
         duration: Infinity,
         toasterId,
         style: {
-            "--width": wordLsit.length === 1 ? '300px' : "1200px"
+            "--width": wordLsit.length === 1 ? "300px" : "1200px"
         }
     });
 }
+
 // const App = forwardRef(({ wordLsit, showList = [] }, ref) => {
 //     // ({ wordLsit, showList = [] }) => {
 //     const showTipsDetail = () => {

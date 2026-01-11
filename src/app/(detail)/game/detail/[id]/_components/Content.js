@@ -65,6 +65,7 @@ const App = ({ data: { content, subtitle = [], title }, audioSrc }) => {
         if (newIndex > content.length - 1 || newIndex < 0) {
             return;
         } else {
+            setWordIndex(null)
             setSentenceIndex(newIndex);
         }
     };
@@ -162,6 +163,14 @@ const App = ({ data: { content, subtitle = [], title }, audioSrc }) => {
         };
     }, [wordIndex, writeWord, sentenceIndex, wordDataArrMap]);
 
+    const resetAll = () => { 
+        const { content } = addHideWord(subtitle, 5);
+        setWordDataArrMap(content);
+        setScore(checkScore(content));
+        setSentenceIndex(0)
+        setWriteWord([])
+        contentMap({})
+    };
     // console.log(content, subtitle);
     const onTimeUpdate = () => {};
     const handleInput = (e) => {
@@ -182,66 +191,70 @@ const App = ({ data: { content, subtitle = [], title }, audioSrc }) => {
     };
     return (
         <>
+            <SettingNav title={title} score={score} />
+            <Process step={sentenceIndex + 1} total={content.length} />
+            <div className="flex flex-wrap">
+                <div className="relative flex flex-wrap justify-center gap-2 sentent-wrap">
+                    {subtitle[sentenceIndex]?.map((item, index) => {
+                        const randomItem = wordDataArrMap[sentenceIndex]
+                            ? wordDataArrMap[sentenceIndex][index]
+                            : {};
+                        return item.boundaryType === "WordBoundary" &&
+                            randomItem.hideWord ? (
+                            <div
+                                key={index}
+                                className={`item-word border-border flex items-center justify-center px-2.5 py-2 ${
+                                    wordIndex === index && isFoused
+                                        ? "active"
+                                        : ""
+                                } ${
+                                    randomItem.isRight === true
+                                        ? "right-word"
+                                        : randomItem.isRight === false
+                                        ? "wrong-word"
+                                        : ""
+                                }`}
+                                onClick={() => handleClickWord(item, index)}
+                                // style={{minWidth: ''}}
+                            >
+                                <span
+                                    className={`${
+                                        randomItem.isRight === false
+                                            ? "line-through"
+                                            : ""
+                                    }`}
+                                >
+                                    {writeWord[sentenceIndex] &&
+                                    writeWord[sentenceIndex][index]
+                                        ? writeWord[sentenceIndex][index]
+                                        : null}
+                                </span>
+                                {randomItem.isRight === false && (
+                                    <span className="pl-1">{item.text}</span>
+                                )}
+                            </div>
+                        ) : (
+                            <div
+                                key={index}
+                                dangerouslySetInnerHTML={{ __html: item.text }}
+                            ></div>
+                        );
+                    })}
+                    <input
+                        ref={inputRef}
+                        className="w-full h-full absolute opacity-0"
+                        style={{ zIndex: -1 }}
+                        onInput={handleInput}
+                    ></input>
+                </div>
+                <ShowKeyboard />
+            </div>
             <Toaster
-                style={{ "--width": "1200px" }}
                 visibleToasts="1"
+                style={{ "--width": "1200px" }}
                 position="top-center"
                 id="GameTips"
             />
-            <SettingNav title={title} score={score} />
-            <Process step={sentenceIndex + 1} total={content.length} />
-            <div className="relative flex flex-wrap justify-center gap-2 sentent-wrap">
-                {subtitle[sentenceIndex]?.map((item, index) => {
-                    const randomItem = wordDataArrMap[sentenceIndex]
-                        ? wordDataArrMap[sentenceIndex][index]
-                        : {};
-                    return item.boundaryType === "WordBoundary" &&
-                        randomItem.hideWord ? (
-                        <div
-                            key={index}
-                            className={`item-word border-border flex items-center justify-center px-2.5 py-2 ${
-                                wordIndex === index && isFoused ? "active" : ""
-                            } ${
-                                randomItem.isRight === true
-                                    ? "right-word"
-                                    : randomItem.isRight === false
-                                    ? "wrong-word"
-                                    : ""
-                            }`}
-                            onClick={() => handleClickWord(item, index)}
-                            // style={{minWidth: ''}}
-                        >
-                            <span
-                                className={`${
-                                    randomItem.isRight === false
-                                        ? "line-through"
-                                        : ""
-                                }`}
-                            >
-                                {writeWord[sentenceIndex] &&
-                                writeWord[sentenceIndex][index]
-                                    ? writeWord[sentenceIndex][index]
-                                    : null}
-                            </span>
-                            {randomItem.isRight === false && (
-                                <span className="pl-1">{item.text}</span>
-                            )}
-                        </div>
-                    ) : (
-                        <div
-                            key={index}
-                            dangerouslySetInnerHTML={{ __html: item.text }}
-                        ></div>
-                    );
-                })}
-                <input
-                    ref={inputRef}
-                    className="w-full h-full absolute opacity-0"
-                    style={{ zIndex: -1 }}
-                    onInput={handleInput}
-                ></input>
-            </div>
-            <ShowKeyboard />
             {/* <GameTips wordLsit={subtitle[sentenceIndex]} showList={wordDataArrMap[sentenceIndex]} /> */}
             {audioSrc && (
                 <AudioPlayer
