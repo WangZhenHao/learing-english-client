@@ -2,9 +2,11 @@
 import AudioPlayer from "@/app/(detail)/course/detail/_component/AudioPlayer.js";
 import Process from "./Process";
 import { use, useEffect, useMemo, useRef, useState } from "react";
-import { addHideWord, checkRightWord } from "./utils.js";
+import { addHideWord, checkRightWord, checkScore } from "./utils.js";
 import SettingNav from "./SettingNav";
-import GameTips from "./GameTips";
+import gameTips from "./GameTips";
+import { Toaster } from "sonner";
+import ShowKeyboard from "./ShowKeyboard";
 
 const App = ({ data: { content, subtitle = [], title }, audioSrc }) => {
     const audioPlayRef = useRef(null);
@@ -15,11 +17,13 @@ const App = ({ data: { content, subtitle = [], title }, audioSrc }) => {
     const [isFoused, setIsFoused] = useState(false);
     const [wordDataArrMap, setWordDataArrMap] = useState([]);
     const contentMap = useRef({});
+    const [score, setScore] = useState({});
     // console.log(subtitle, content);
 
     useEffect(() => {
-        const { content, totalCount } = addHideWord(subtitle, 5);
+        const { content } = addHideWord(subtitle, 5);
         setWordDataArrMap(content);
+        setScore(checkScore(content));
     }, [subtitle]);
 
     useEffect(() => {
@@ -81,20 +85,23 @@ const App = ({ data: { content, subtitle = [], title }, audioSrc }) => {
         }
     };
     const checkSkipNextSentence = () => {
-        const result = checkRightWord(
+        const { wordMapItem, rightCount } = checkRightWord(
             wordDataArrMap[sentenceIndex],
             writeWord[sentenceIndex] || []
         );
-        wordDataArrMap[sentenceIndex] = result;
-        setWordDataArrMap([...wordDataArrMap]);
+        wordDataArrMap[sentenceIndex] = wordMapItem;
         contentMap.current[sentenceIndex] = { check: true };
-        // console.log(result);
+        setWordDataArrMap([...wordDataArrMap]);
+        setScore({
+            ...score,
+            rightCount: (score.rightCount || 0) + rightCount,
+        });
     };
     useEffect(() => {
         const keydown = (e) => {
-            if (document.activeElement !== inputRef.current) {
-                return;
-            }
+            // if (document.activeElement !== inputRef.current) {
+            //     return;
+            // }
             const isPrimary = e.metaKey || e.ctrlKey;
             const keyCode = e.key.toLowerCase();
 
@@ -132,6 +139,18 @@ const App = ({ data: { content, subtitle = [], title }, audioSrc }) => {
                 }
             } else if (isPrimary && keyCode === "arrowleft") {
                 toSkipSentence(-1);
+            } else if (isPrimary && keyCode === "arrowup") {
+                gameTips(
+                    subtitle[sentenceIndex],
+                    wordDataArrMap[sentenceIndex],
+                    content[sentenceIndex]
+                );
+            } else if (isPrimary && keyCode === "arrowdown") {
+                typeof wordIndex === "number" &&
+                    gameTips(
+                        [subtitle[sentenceIndex][wordIndex]],
+                        [wordDataArrMap[sentenceIndex][wordIndex]]
+                    );
             } else if (keyCode === "enter") {
                 playCurrentWorld(wordIndex);
             }
@@ -141,7 +160,7 @@ const App = ({ data: { content, subtitle = [], title }, audioSrc }) => {
         return () => {
             document.removeEventListener("keydown", keydown);
         };
-    }, [wordIndex, writeWord, sentenceIndex]);
+    }, [wordIndex, writeWord, sentenceIndex, wordDataArrMap]);
 
     // console.log(content, subtitle);
     const onTimeUpdate = () => {};
@@ -163,10 +182,14 @@ const App = ({ data: { content, subtitle = [], title }, audioSrc }) => {
     };
     return (
         <>
-            <SettingNav title={title} />
-            <div className="p-2.5">
-                <Process step={sentenceIndex + 1} total={content.length} />
-            </div>
+            <Toaster
+                style={{ "--width": "1200px" }}
+                visibleToasts="1"
+                position="top-center"
+                id="GameTips"
+            />
+            <SettingNav title={title} score={score} />
+            <Process step={sentenceIndex + 1} total={content.length} />
             <div className="relative flex flex-wrap justify-center gap-2 sentent-wrap">
                 {subtitle[sentenceIndex]?.map((item, index) => {
                     const randomItem = wordDataArrMap[sentenceIndex]
@@ -188,7 +211,13 @@ const App = ({ data: { content, subtitle = [], title }, audioSrc }) => {
                             onClick={() => handleClickWord(item, index)}
                             // style={{minWidth: ''}}
                         >
-                            <span className={`${randomItem.isRight === false ? "line-through" : ""}`}>
+                            <span
+                                className={`${
+                                    randomItem.isRight === false
+                                        ? "line-through"
+                                        : ""
+                                }`}
+                            >
                                 {writeWord[sentenceIndex] &&
                                 writeWord[sentenceIndex][index]
                                     ? writeWord[sentenceIndex][index]
@@ -212,7 +241,8 @@ const App = ({ data: { content, subtitle = [], title }, audioSrc }) => {
                     onInput={handleInput}
                 ></input>
             </div>
-            <GameTips />
+            <ShowKeyboard />
+            {/* <GameTips wordLsit={subtitle[sentenceIndex]} showList={wordDataArrMap[sentenceIndex]} /> */}
             {audioSrc && (
                 <AudioPlayer
                     onTimeUpdate={onTimeUpdate}

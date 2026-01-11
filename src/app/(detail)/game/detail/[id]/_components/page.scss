@@ -2,7 +2,7 @@
     font-size: 48px;
     max-width: 1200px;
     padding: 10px 30px;
-    // margin: auto;
+    margin: 150px auto 20px;
 
     .item-word {
         height: 64px;
@@ -31,10 +31,21 @@
    
 }
 
+.game-wrap {
+    font-size: 18px;
+    margin: 0;
+    .item-word {
+        height: 26px;
+        border-bottom-width: 2px;
+        min-width: 50px;
+        
+    }
+}
+
 .process-wrap {
     height: 8px;
     border-radius: 8px;
-    .sentent-wrap {
+    .process {
         background-color: #2B9A66;
         transition: width 0.5s ease-in-out;
     }
