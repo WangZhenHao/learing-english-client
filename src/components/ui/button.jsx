@@ -85,7 +85,7 @@ function Button({
           </svg>
         </span>
       )}
-      <span>{children}</span>
+      <span className="flex items-center">{children}</span>
     </Comp>
   );
 }

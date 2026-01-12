@@ -1,12 +1,20 @@
 import { keyBoardMap } from "./utils";
-const App = () => {
+const App = ({ keydown }) => {
     return (
-        <div className="flex justify-center w-full" style={{marginTop: '100px'}}>
+        <div
+            className="flex justify-center w-full pb-2.5"
+            style={{ marginTop: "100px" }}
+        >
             <div className="grid grid-cols-3 gap-y-2 gap-x-3 flex-wrap justify-start">
                 {Object.keys(keyBoardMap).map((rowKey) => {
                     return (
                         <div key={rowKey}>
-                            <span className="bg-gray-100 px-2 py-1 rounded-md">
+                            <span
+                                className="bg-gray-100 px-2 py-1 rounded-md cursor-pointer"
+                                onClick={() =>
+                                    keydown(keyBoardMap[rowKey].event)
+                                }
+                            >
                                 {rowKey}
                             </span>
                             <span className="ml-1 text-[#666]">

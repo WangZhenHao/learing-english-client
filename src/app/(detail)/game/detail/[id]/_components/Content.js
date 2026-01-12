@@ -7,6 +7,7 @@ import SettingNav from "./SettingNav";
 import gameTips from "./GameTips";
 import { Toaster } from "sonner";
 import ShowKeyboard from "./ShowKeyboard";
+import GameResult from "./GameResult";
 
 const App = ({ data: { content, subtitle = [], title }, audioSrc }) => {
     const audioPlayRef = useRef(null);
@@ -18,6 +19,7 @@ const App = ({ data: { content, subtitle = [], title }, audioSrc }) => {
     const [wordDataArrMap, setWordDataArrMap] = useState([]);
     const contentMap = useRef({});
     const [score, setScore] = useState({});
+    const gameResultRef = useRef(null);
     // console.log(subtitle, content);
 
     useEffect(() => {
@@ -86,80 +88,87 @@ const App = ({ data: { content, subtitle = [], title }, audioSrc }) => {
         }
     };
     const checkSkipNextSentence = () => {
-        const { wordMapItem, rightCount } = checkRightWord(
+        const { wordMapItem, count } = checkRightWord(
             wordDataArrMap[sentenceIndex],
             writeWord[sentenceIndex] || []
         );
         wordDataArrMap[sentenceIndex] = wordMapItem;
         contentMap.current[sentenceIndex] = { check: true };
         setWordDataArrMap([...wordDataArrMap]);
-        setScore({
+        const newScore = {
             ...score,
-            rightCount: (score.rightCount || 0) + rightCount,
-        });
+            rightCount: (score.rightCount || 0) + count,
+        }
+        setScore(newScore);
+        console.log(newScore)
+        if(sentenceIndex === content.length - 1) {
+            console.log(newScore)
+            gameResultRef.current.init(newScore);
+        }
+    };
+    const keydownHandle = (e) => {
+        // if (document.activeElement !== inputRef.current) {
+        //     return;
+        // }
+        const isPrimary = e.metaKey || e.ctrlKey;
+        const keyCode = e.key.toLowerCase();
+
+        console.log(keyCode);
+        if (keyCode === " ") {
+            const newIndex = skipSentenceWordIndex(wordIndex, 1);
+            inputRef.current.value =
+                writeWord[sentenceIndex][newIndex] || "";
+            setWordIndex(newIndex);
+            // playCurrentWorld(newIndex);
+        } else if (keyCode === "backspace") {
+            if (!inputRef.current.value) {
+                const newIndex = skipSentenceWordIndex(wordIndex, -1);
+                setTimeout(() => {
+                    inputRef.current.value =
+                        writeWord[sentenceIndex][newIndex] || "";
+                }, 10);
+                setWordIndex(newIndex);
+            }
+        } else if (isPrimary && keyCode === "enter") {
+            if (audioPlayRef.current.isPlaying) {
+                audioPlayRef.current.toPause();
+            } else {
+                const sentent = content[sentenceIndex];
+                audioPlayRef.current.toSkip(
+                    sentent.offset,
+                    sentent.offset + sentent.duration
+                );
+            }
+        } else if (isPrimary && keyCode === "arrowright") {
+            if (!contentMap.current[sentenceIndex]?.check) {
+                checkSkipNextSentence();
+            } else {
+                toSkipSentence(1);
+            }
+        } else if (isPrimary && keyCode === "arrowleft") {
+            toSkipSentence(-1);
+        } else if (isPrimary && keyCode === "arrowup") {
+            gameTips(
+                subtitle[sentenceIndex],
+                wordDataArrMap[sentenceIndex],
+                content[sentenceIndex]
+            );
+        } else if (isPrimary && keyCode === "arrowdown") {
+            typeof wordIndex === "number" &&
+                gameTips(
+                    [subtitle[sentenceIndex][wordIndex]],
+                    [wordDataArrMap[sentenceIndex][wordIndex]]
+                );
+        } else if (keyCode === "enter") {
+            playCurrentWorld(wordIndex);
+        }
     };
     useEffect(() => {
-        const keydown = (e) => {
-            // if (document.activeElement !== inputRef.current) {
-            //     return;
-            // }
-            const isPrimary = e.metaKey || e.ctrlKey;
-            const keyCode = e.key.toLowerCase();
-
-            console.log(keyCode);
-            if (keyCode === " ") {
-                const newIndex = skipSentenceWordIndex(wordIndex, 1);
-                inputRef.current.value =
-                    writeWord[sentenceIndex][newIndex] || "";
-                setWordIndex(newIndex);
-                // playCurrentWorld(newIndex);
-            } else if (keyCode === "backspace") {
-                if (!inputRef.current.value) {
-                    const newIndex = skipSentenceWordIndex(wordIndex, -1);
-                    setTimeout(() => {
-                        inputRef.current.value =
-                            writeWord[sentenceIndex][newIndex] || "";
-                    }, 10);
-                    setWordIndex(newIndex);
-                }
-            } else if (isPrimary && keyCode === "enter") {
-                if (audioPlayRef.current.isPlaying) {
-                    audioPlayRef.current.toPause();
-                } else {
-                    const sentent = content[sentenceIndex];
-                    audioPlayRef.current.toSkip(
-                        sentent.offset,
-                        sentent.offset + sentent.duration
-                    );
-                }
-            } else if (isPrimary && keyCode === "arrowright") {
-                if (!contentMap.current[sentenceIndex]?.check) {
-                    checkSkipNextSentence();
-                } else {
-                    toSkipSentence(1);
-                }
-            } else if (isPrimary && keyCode === "arrowleft") {
-                toSkipSentence(-1);
-            } else if (isPrimary && keyCode === "arrowup") {
-                gameTips(
-                    subtitle[sentenceIndex],
-                    wordDataArrMap[sentenceIndex],
-                    content[sentenceIndex]
-                );
-            } else if (isPrimary && keyCode === "arrowdown") {
-                typeof wordIndex === "number" &&
-                    gameTips(
-                        [subtitle[sentenceIndex][wordIndex]],
-                        [wordDataArrMap[sentenceIndex][wordIndex]]
-                    );
-            } else if (keyCode === "enter") {
-                playCurrentWorld(wordIndex);
-            }
-        };
-        document.addEventListener("keydown", keydown);
+        // const keydown = 
+        document.addEventListener("keydown", keydownHandle);
 
         return () => {
-            document.removeEventListener("keydown", keydown);
+            document.removeEventListener("keydown", keydownHandle);
         };
     }, [wordIndex, writeWord, sentenceIndex, wordDataArrMap]);
 
@@ -169,7 +178,7 @@ const App = ({ data: { content, subtitle = [], title }, audioSrc }) => {
         setScore(checkScore(content));
         setSentenceIndex(0)
         setWriteWord([])
-        contentMap({})
+        contentMap.current = {}
     };
     // console.log(content, subtitle);
     const onTimeUpdate = () => {};
@@ -191,7 +200,13 @@ const App = ({ data: { content, subtitle = [], title }, audioSrc }) => {
     };
     return (
         <>
-            <SettingNav title={title} score={score} />
+            <Toaster
+                visibleToasts="1"
+                style={{ "--width": "1200px" }}
+                position="top-center"
+                id="GameTips"
+            />
+            <SettingNav title={title} score={score} reset={resetAll} />
             <Process step={sentenceIndex + 1} total={content.length} />
             <div className="flex flex-wrap">
                 <div className="relative flex flex-wrap justify-center gap-2 sentent-wrap">
@@ -247,14 +262,9 @@ const App = ({ data: { content, subtitle = [], title }, audioSrc }) => {
                         onInput={handleInput}
                     ></input>
                 </div>
-                <ShowKeyboard />
+                <ShowKeyboard keydown={keydownHandle} />
             </div>
-            <Toaster
-                visibleToasts="1"
-                style={{ "--width": "1200px" }}
-                position="top-center"
-                id="GameTips"
-            />
+            <GameResult ref={gameResultRef} />
             {/* <GameTips wordLsit={subtitle[sentenceIndex]} showList={wordDataArrMap[sentenceIndex]} /> */}
             {audioSrc && (
                 <AudioPlayer
