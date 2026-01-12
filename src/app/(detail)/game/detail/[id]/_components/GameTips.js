@@ -34,7 +34,10 @@ const showTipsDetail = (wordLsit, showList, sentence = {}) => {
                 }}
             ></div>
             <div className="flex justify-end">
-                <Button onClick={() => toast.dismiss(targetToast)}>
+                <Button onClick={() => {
+                    toast.dismiss(targetToast);
+                    targetToast = null;
+                }}>
                     关闭（Commnd/ctrl + ↑/↓ ）
                 </Button>
             </div>
