@@ -152,7 +152,7 @@
 
 
 .right-silde-wrap {
-  border-radius: "8px 0px 0px 0px";
+  border-radius: 8px 0px 0px 0px;
   height: calc(100vh - 50px);
 }
 @media (min-width: 0px) and (max-width: 768px) {
