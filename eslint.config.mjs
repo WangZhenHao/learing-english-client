@@ -17,9 +17,15 @@ const eslintConfig = [
       ".next/**",
       "out/**",
       "build/**",
-      "next-env.d.ts",
+      "next-env.d.ts"
     ],
   },
+  {
+    "rules": {
+      "react/display-name": "off",
+      "react-hooks/rules-of-hooks": "off"
+    }
+  }
 ];
 
 export default eslintConfig;

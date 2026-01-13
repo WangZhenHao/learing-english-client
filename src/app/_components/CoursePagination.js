@@ -6,6 +6,7 @@ import {
   PaginationLink,
   PaginationNext,
   PaginationPrevious,
+  PaginationEllipsis
 } from "@/components/ui/pagination";
 
 // lib/pagination.ts
