@@ -93,7 +93,7 @@ const App = () => {
             .then((res) => {
                 setOpen(false);
                 toast("生成文章成功");
-                router.push("/course");
+                router.push("/my-course");
             })
             .finally(() => {
                 setLoading(false);
@@ -171,7 +171,7 @@ const App = () => {
                         />
                     </Field>
                 </div>
-                { userInfo?.uid === 'admin' && (<div className="space-y-2  grid grid-cols-4 gap-4">
+                { ['admin', 'tester'].includes(userInfo?.uid) && (<div className="space-y-2  grid grid-cols-4 gap-4">
                     <Field>
                         <Label htmlFor="confirmPassword">分类</Label>
                         <SelectCatergory onChange={(e) =>{
@@ -192,7 +192,7 @@ const App = () => {
                 </div>
 
                 <Button loading={loading} className="mt-5" onClick={clickHandler}>
-                    {loading ? "生成中，请稍等..." : "生成文章"}
+                    {loading ? "生成中，1-2分钟完成，请稍等..." : "生成文章"}
                 </Button>
             </form>
             <Dialog open={open} onOpenChange={setOpen}>

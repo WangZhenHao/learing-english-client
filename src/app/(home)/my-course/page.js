@@ -13,6 +13,7 @@ const App = async ({ searchParams }) => {
                 {/* <Catergory categoryId={category} list={categoryList} /> */}
                 <Item
                     route="/my-course/detail"
+                     game="/my-game/detail"
                     canDelete={true}
                     data={data.list}
                 />

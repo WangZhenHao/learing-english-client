@@ -29,19 +29,21 @@ const App = ({ data: { content, subtitle = [], title }, audioSrc }) => {
     }, [subtitle]);
 
     useEffect(() => {
-        const foucshandle = () => {
-            setIsFoused(true);
-        };
-        const blurhandle = () => {
-            setIsFoused(false);
-        };
+        if (inputRef.current) {
+            const foucshandle = () => {
+                setIsFoused(true);
+            };
+            const blurhandle = () => {
+                setIsFoused(false);
+            };
 
-        inputRef.current.addEventListener("focus", foucshandle);
-        inputRef.current.addEventListener("blur", blurhandle);
+            inputRef.current.addEventListener("focus", foucshandle);
+            inputRef.current.addEventListener("blur", blurhandle);
 
-        return () => {
-            inputRef.current.removeEventListener("focus", foucshandle);
-        };
+            return () => {
+                inputRef.current && inputRef.current.removeEventListener("focus", foucshandle);
+            };
+        }
     }, []);
 
     const skipSentenceWordIndex = (index, plus) => {
@@ -67,7 +69,7 @@ const App = ({ data: { content, subtitle = [], title }, audioSrc }) => {
         if (newIndex > content.length - 1 || newIndex < 0) {
             return;
         } else {
-            setWordIndex(null)
+            setWordIndex(null);
             setSentenceIndex(newIndex);
         }
     };
@@ -98,11 +100,10 @@ const App = ({ data: { content, subtitle = [], title }, audioSrc }) => {
         const newScore = {
             ...score,
             rightCount: (score.rightCount || 0) + count,
-        }
+        };
         setScore(newScore);
-        console.log(newScore)
-        if(sentenceIndex === content.length - 1) {
-            console.log(newScore)
+        if (sentenceIndex === content.length - 1) {
+            console.log(newScore);
             gameResultRef.current.init(newScore);
         }
     };
@@ -116,8 +117,7 @@ const App = ({ data: { content, subtitle = [], title }, audioSrc }) => {
         console.log(keyCode);
         if (keyCode === " ") {
             const newIndex = skipSentenceWordIndex(wordIndex, 1);
-            inputRef.current.value =
-                writeWord[sentenceIndex][newIndex] || "";
+            inputRef.current.value = writeWord[sentenceIndex][newIndex] || "";
             setWordIndex(newIndex);
             // playCurrentWorld(newIndex);
         } else if (keyCode === "backspace") {
@@ -164,7 +164,7 @@ const App = ({ data: { content, subtitle = [], title }, audioSrc }) => {
         }
     };
     useEffect(() => {
-        // const keydown = 
+        // const keydown =
         document.addEventListener("keydown", keydownHandle);
 
         return () => {
@@ -172,13 +172,13 @@ const App = ({ data: { content, subtitle = [], title }, audioSrc }) => {
         };
     }, [wordIndex, writeWord, sentenceIndex, wordDataArrMap]);
 
-    const resetAll = () => { 
+    const resetAll = () => {
         const { content } = addHideWord(subtitle, 5);
         setWordDataArrMap(content);
         setScore(checkScore(content));
-        setSentenceIndex(0)
-        setWriteWord([])
-        contentMap.current = {}
+        setSentenceIndex(0);
+        setWriteWord([]);
+        contentMap.current = {};
     };
     // console.log(content, subtitle);
     const onTimeUpdate = () => {};

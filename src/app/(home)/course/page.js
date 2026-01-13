@@ -14,7 +14,11 @@ const App = async ({ searchParams, params }) => {
         <div className="h-full flex content-between flex-wrap">
             <div className="w-full">
                 <Catergory categoryId={category} list={categoryList} />
-                <Item route="/course/detail" data={data.list} />
+                <Item
+                    route="/course/detail"
+                    game="/game/detail"
+                    data={data.list}
+                />
                 {data.list.length <= 0 && <Empty />}
             </div>
             <div className="w-full justify-end flex py-2.5">

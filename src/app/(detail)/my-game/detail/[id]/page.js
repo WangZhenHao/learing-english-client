@@ -1,11 +1,11 @@
-import { getArticleId } from "@/api/server/course";
+import { getUserArticleId } from "@/api/server/course";
 import { notFound } from "next/navigation";
 import he from "he";
-import Content from "./_components/Content";
-import './_components/page.scss'
+import Content from "@/app/(detail)/game/detail/[id]/_components/Content";
+import '@/app/(detail)/game/detail/[id]/_components/page.scss'
 export async function generateMetadata({ params }) {
     const id = (await params).id;
-    let res = await getArticleId(id);
+    let res = await getUserArticleId(id);
 
     if (!res.data) {
         return { title: "课程不存在" };
@@ -19,7 +19,7 @@ export async function generateMetadata({ params }) {
 const App = async ({ params }) => {
     const { id } = await params; // params 已经解构，不需要再次 await
     const BASE_URL = process.env.API_URL;
-    let res = await getArticleId(id);
+    let res = await getUserArticleId(id);
 
     if (!res.data || res.data.status !== 1) {
         notFound();

@@ -6,6 +6,7 @@ import { deleteArticel } from "@/api/course";
 import { statusMap } from "./map";
 
 import "./page.scss";
+import { Button } from "@/components/ui/button";
 const App = (props) => {
     const list = props.data;
     const canDelete = props.canDelete;
@@ -24,8 +25,8 @@ const App = (props) => {
             <div className="item-wrap">
                 {list.map((item, index) => {
                     return (
-                        <Link href={`${props.route}/${item.id}`} key={index}>
-                            <div className="item border border-border relative">
+                        // <Link href={`${props.route}/${item.id}`} key={index}>
+                            <div className="item border border-border relative" key={index}>
                                 {item.status !== 1 && (
                                     <div className="absolute top-0 left-0 bg-white rounded-[6px] flex items-center">
                                         <span
@@ -54,6 +55,21 @@ const App = (props) => {
                                 >
                                     {item.title}
                                 </h2>
+                                <div className="pl-2">
+                                    <Link
+                                        href={`${props.route}/${item.id}`}
+                                    >
+                                        <Button size="sm" variant="outline">影子跟读模式</Button>
+                                        
+                                    </Link>
+                                    <Link
+                                        href={`${props.game}/${item.id}`}
+                                        className="ml-2"
+                                    >
+                                        <Button size="sm" variant="outline">听写模式</Button>
+                                    </Link>
+                                    
+                                </div>
                                 <div className="flex justify-between px-2 py-2 text-[12px] text-[#999]">
                                     <span>
                                         {dayjs(item.createdAt).format(
@@ -77,7 +93,7 @@ const App = (props) => {
                                     </div>
                                 ) : null}
                             </div>
-                        </Link>
+                        // </Link>
                     );
                 })}
             </div>

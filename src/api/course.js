@@ -2,7 +2,7 @@
 import { iget, ipost } from "@/lib/axios";
 
 export function optimize(data) {
-    return ipost("/article/optimize", data);
+    return ipost("/user/optimize", data);
 }
 
 export function createArticel(data) {
