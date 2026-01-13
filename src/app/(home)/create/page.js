@@ -52,6 +52,9 @@ const App = () => {
             toast("母语和目标语言不能相同");
             return;
         
+        } else if(text.length < 150) {
+            toast("请输入至少150个字符");
+            return;
         }
         // setOpen(true);
         setLoading(true);
@@ -185,7 +188,7 @@ const App = () => {
                         <Textarea
                             style={{ height: "60vh" }}
                             onInput={inputHandle}
-                            placeholder="请输入内容,最多3000个字符"
+                            placeholder="请输入内容,大概150-3000个字"
                             maxLength={3000}
                         />
                     </Field>
