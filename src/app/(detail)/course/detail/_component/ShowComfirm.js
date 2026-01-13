@@ -20,7 +20,7 @@ const App = ({ status, id }) => {
     const [loading, setLoading] = useState(false);
     useEffect(() => {
         if (status === 2) {
-            setOpen(true);
+            setOpen(false);
         }
     }, [status]);
     const confirmHanlde = () => {

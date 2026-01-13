@@ -7,6 +7,7 @@ import { statusMap } from "./map";
 
 import "./page.scss";
 import { Button } from "@/components/ui/button";
+import { langMap } from "../../create/_components/map";
 const App = (props) => {
     const list = props.data;
     const canDelete = props.canDelete;
@@ -26,20 +27,24 @@ const App = (props) => {
                 {list.map((item, index) => {
                     return (
                         // <Link href={`${props.route}/${item.id}`} key={index}>
-                            <div className="item border border-border relative" key={index}>
-                                {item.status !== 1 && (
-                                    <div className="absolute top-0 left-0 bg-white rounded-[6px] flex items-center">
-                                        <span
-                                            className={`text-[12px] py-1 px-1.5 ${
-                                                item.status === 0
-                                                    ? "text-yellow-500"
-                                                    : "text-red-500"
-                                            }`}
-                                        >
-                                            音频{statusMap[item.status]}
-                                        </span>
-                                    </div>
-                                )}
+                        <div
+                            className="item border border-border relative"
+                            key={index}
+                        >
+                            {item.status !== 1 && (
+                                <div className="absolute top-0 left-0 bg-white rounded-[6px] flex items-center">
+                                    <span
+                                        className={`text-[12px] py-1 px-1.5 ${
+                                            item.status === 0
+                                                ? "text-yellow-500"
+                                                : "text-red-500"
+                                        }`}
+                                    >
+                                        音频{statusMap[item.status]}
+                                    </span>
+                                </div>
+                            )}
+                            <Link className="block" href={`${props.route}/${item.id}`}>
                                 <img
                                     className="item-img w-full"
                                     src={
@@ -49,50 +54,54 @@ const App = (props) => {
                                     }
                                     alt="标题图片"
                                 />
-                                <h2
-                                    className="item-title px-2 font-bold"
-                                    style={{ height: "54px" }}
-                                >
+                            </Link>
+                            <h2
+                                className="item-title px-2 font-bold"
+                                style={{ height: "54px" }}
+                            >
+                                <Link href={`${props.route}/${item.id}`}>
                                     {item.title}
-                                </h2>
-                                <div className="pl-2">
-                                    <Link
-                                        href={`${props.route}/${item.id}`}
-                                    >
-                                        <Button size="sm" variant="outline">影子跟读模式</Button>
-                                        
-                                    </Link>
-                                    <Link
-                                        href={`${props.game}/${item.id}`}
-                                        className="ml-2"
-                                    >
-                                        <Button size="sm" variant="outline">听写模式</Button>
-                                    </Link>
-                                    
-                                </div>
-                                <div className="flex justify-between px-2 py-2 text-[12px] text-[#999]">
-                                    <span>
-                                        {dayjs(item.createdAt).format(
-                                            "YYYY-MM-DD HH:mm"
-                                        )}
-                                    </span>
-                                    {item.views ? (
+                                </Link>
+                            </h2>
+                            <div className="pl-2">
+                                <Link href={`${props.route}/${item.id}`}>
+                                    <Button size="sm" variant="outline">
+                                        影子跟读模式
+                                    </Button>
+                                </Link>
+                                <Link
+                                    href={`${props.game}/${item.id}`}
+                                    className="ml-2"
+                                >
+                                    <Button size="sm" variant="outline">
+                                        听写模式
+                                    </Button>
+                                </Link>
+                            </div>
+                            <div className="flex justify-between px-2 py-2 text-[12px] text-[#999]">
+                                <span>
+                                    {dayjs(item.createdAt).format(
+                                        "YYYY-MM-DD HH:mm"
+                                    )}
+                                </span>
+                                <span>学习：{langMap[item.targetLang]}</span>
+                                {/* {item.views ? (
                                         <span>浏览量：{item.views}</span>
                                     ) : (
                                         ""
-                                    )}
-                                </div>
-                                {canDelete ? (
-                                    <div
-                                        className="absolute delete-wrap bg-white rounded-[6px]"
-                                        onClick={(e) =>
-                                            deleteArticelHadnle(e, item)
-                                        }
-                                    >
-                                        <Trash2 size={20} />
-                                    </div>
-                                ) : null}
+                                    )} */}
                             </div>
+                            {canDelete ? (
+                                <div
+                                    className="absolute delete-wrap bg-white rounded-[6px]"
+                                    onClick={(e) =>
+                                        deleteArticelHadnle(e, item)
+                                    }
+                                >
+                                    <Trash2 size={20} />
+                                </div>
+                            ) : null}
+                        </div>
                         // </Link>
                     );
                 })}
