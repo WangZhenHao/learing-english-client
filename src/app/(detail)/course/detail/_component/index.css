@@ -16,3 +16,11 @@
     max-width: 1200px;
     margin: 0 auto;
 }
+
+@media (min-width: 0px) and (max-width: 768px) {
+    .audio-btn-wrap {
+        .pr-8 {
+            padding-right: 15px;
+        }
+    }
+}

@@ -28,6 +28,7 @@ import MySelect from "./_components/select";
 import { langMap, charaterMap, speakRateMap } from "./_components/map";
 import SelectCatergory from "./_components/SelectCatergory";
 import useAuth from "@/app/(auth)/_component/useAuth";
+import './_components/index.scss'
 const App = () => {
     const router = useRouter();
     const [text, setText] = useState("");
@@ -107,7 +108,7 @@ const App = () => {
     };
     return (
         <>
-            <form>
+            <form className="create">
                 <div className="space-y-2 grid grid-cols-4 gap-4">
                     <Field>
                         <FieldLabel htmlFor="city">我的母语</FieldLabel>

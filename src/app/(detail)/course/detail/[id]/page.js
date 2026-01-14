@@ -18,16 +18,17 @@ export async function generateMetadata({ params }) {
 }
 const Home = async ({ params }) => {
     const { id } = await params; // params 已经解构，不需要再次 await
-    const BASE_URL = process.env.API_URL;
+    // const BASE_URL = process.env.API_URL;
     let res = await getArticleId(id);
 
     if (!res.data) {
         notFound();
     }
     // 构造完整的音频 URL
-    const audioSrc = res.data.url
-        ? BASE_URL + "/" + res.data.url.split(".")[0] + "/index.m3u8"
-        : "";
+    // const audioSrc = res.data.url
+    //     ?  BASE_URL + "/" + res.data.url.split(".")[0] + "/index.m3u8"
+    //     : "";
+    const audioSrc = res.data.url || null
 
     return (
         <>

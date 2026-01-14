@@ -66,7 +66,7 @@ const App = (props) => {
                             <div className="pl-2">
                                 <Link href={`${props.route}/${item.id}`}>
                                     <Button size="sm" variant="outline">
-                                        影子跟读模式
+                                        跟读模式
                                     </Button>
                                 </Link>
                                 <Link
@@ -81,7 +81,7 @@ const App = (props) => {
                             <div className="flex justify-between px-2 py-2 text-[12px] text-[#999]">
                                 <span>
                                     {dayjs(item.createdAt).format(
-                                        "YYYY-MM-DD HH:mm"
+                                        "YYYY-MM-DD"
                                     )}
                                 </span>
                                 <span>学习：{langMap[item.targetLang]}</span>
