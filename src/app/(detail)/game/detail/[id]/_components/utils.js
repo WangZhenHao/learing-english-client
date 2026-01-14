@@ -5,12 +5,24 @@ export function addHideWord(arr, N) {
         const count = Math.min(N, list.length);
         totalCount += count;
         // 随机打乱索引
-        const indexes = list
-            .filter((item) => item.boundaryType === "WordBoundary")
-            .map((_, i) => i)
+        // const indexes = list
+        //     .filter((item) => item.boundaryType === "WordBoundary")
+        //     .map((_, i) => i)
+        //     .sort(() => Math.random() - 0.5)
+        //     .slice(0, count);
+        const indexes = []
+        const newMessArr = list
+            .map((item, i) => {
+              return  { index: i, boundaryType: item.boundaryType}
+            })
             .sort(() => Math.random() - 0.5)
-            .slice(0, count);
 
+        for(let i = 0; i <= newMessArr.length - 1; i++) {
+          if(newMessArr[i].boundaryType === "WordBoundary" && indexes.length < count) {
+            indexes.push(newMessArr[i].index)
+          }
+          
+        }
         // 给选中的对象加 hideWord
         return list.map((item, index) => {
             if (indexes.includes(index)) {
