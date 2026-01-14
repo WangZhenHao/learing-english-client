@@ -6,7 +6,7 @@ import { langMap } from "./(home)/create/_components/map";
 export default function HomePage() {
     const langArr = Object.keys(langMap);
     return (
-        <>
+        <div>
             <main className="home-container">
                 {/* Background Gradient */}
                 <div className="bg-layer bg-main"></div>
@@ -50,6 +50,6 @@ export default function HomePage() {
                   <h3 className="text-[#999] mt-2.5">{langArr.map(key => langMap[key]).join('，')}</h3>
             </div>
             <BottomFooter />
-        </>
+        </div>
     );
 }
