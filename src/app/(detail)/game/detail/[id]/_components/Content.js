@@ -147,6 +147,7 @@ const App = ({ data: { content, subtitle = [], title }, audioSrc }) => {
             }
         } else if (isPrimary && keyCode === "arrowleft") {
             toSkipSentence(-1);
+            e.preventDefault && e.preventDefault();
         } else if (isPrimary && keyCode === "arrowup") {
             gameTips(
                 subtitle[sentenceIndex],

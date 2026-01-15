@@ -29,7 +29,8 @@ export default forwardRef((props, ref) => {
     const [currentTime, setCurrentTime] = useState(0);
     const [isPlaying, setIsPlaying] = useState(false);
     const [loop, setLoop] = setReportStatus("isStorageLoop");
-    const controlled = typeof props.controlled === "boolean" ? props.controlled : true;
+    const controlled =
+        typeof props.controlled === "boolean" ? props.controlled : true;
 
     const toSkip = (start, end = 0) => {
         audioRef.current.currentTime = start / 1000;
@@ -53,7 +54,7 @@ export default forwardRef((props, ref) => {
             toSkip,
             isPlaying,
             toPause,
-            toPlay
+            toPlay,
         };
     });
 
@@ -65,7 +66,6 @@ export default forwardRef((props, ref) => {
         const audio = audioRef.current;
         if (!audio) return;
 
-        
         const updateTime = () => {
             const currentTimeMs = audio.currentTime * 1000;
             if (currentTimeMs >= endTimeRef.current && endTimeRef.current) {
@@ -117,10 +117,9 @@ export default forwardRef((props, ref) => {
         audio.addEventListener("play", handlePlay);
         audio.addEventListener("pause", handlePause);
 
-        if(controlled) {
+        if (controlled) {
             document.addEventListener("keydown", keydown);
         }
-        
 
         audio.addEventListener("ratechange", handleRateChange);
         // Cleanup listener on unmount
@@ -137,15 +136,34 @@ export default forwardRef((props, ref) => {
     useEffect(() => {
         const audio = audioRef.current;
 
-        if (audio && props.src && Hls.isSupported()) {
-            const hls = new Hls();
-            hlsRef.current = hls;
+        if (audio && props.src) {
+            let hls = null;
+            const src = props.src;
 
-            // 绑定事件和加载源
-            hls.attachMedia(audio);
-            hls.on(Hls.Events.MEDIA_ATTACHED, function () {
-                hls.loadSource(props.src);
-            });
+            const m3u8Url =
+                process.env.NEXT_PUBLIC_API_URL +
+                "/" +
+                src.split(".")[0] +
+                "/index.m3u8";
+            const url = process.env.NEXT_PUBLIC_API_URL + "/" + src;
+
+            if (Hls.isSupported()) {
+                // alert("HLS")
+                hls = new Hls();
+                hlsRef.current = hls;
+                // 绑定事件和加载源
+                hls.attachMedia(audio);
+                hls.on(Hls.Events.MEDIA_ATTACHED, function () {
+                    hls.loadSource(m3u8Url);
+                });
+                // audio.src = url;
+            } else if (audio.canPlayType("application/vnd.apple.mpegurl")) {
+                // alert("mpegurl")
+                audio.src = m3u8Url;
+            } else {
+                // alert("origin")
+                audio.src = url;
+            }
 
             // 可以在这里监听 HLS 事件，例如 HLS_LEVEL_LOADED 来确认加载完成
 
@@ -169,7 +187,7 @@ export default forwardRef((props, ref) => {
         setLoop(!loop);
     };
     return (
-        <div className={`${controlled ? '' : 'hidden'}`}>
+        <div className={`${controlled ? "" : "hidden"}`}>
             <audio
                 ref={audioRef}
                 // src={src}
@@ -190,7 +208,7 @@ export default forwardRef((props, ref) => {
                         }}
                     ></div>
                 </div>
-                <div className="w-full h-full flex items-center justify-center">
+                <div className="w-full h-full flex items-center justify-center audio-btn-wrap">
                     <div className="flex">
                         {props.controller ? props.controller : null}
                         <div
@@ -206,22 +224,25 @@ export default forwardRef((props, ref) => {
                         >
                             <RotateCcw />
                         </div>
-                        <ChevronsLeft
-                            className="cursor-pointer"
-                            onClick={() => toSkip(currentTime - 1500)}
-                        />
-                        <div className="px-8 cursor-pointer">
+                        <div className="pr-8 cursor-pointer">
+                            <ChevronsLeft
+                                onClick={() => toSkip(currentTime - 1500)}
+                            />
+                        </div>
+                        <div className="pr-8 cursor-pointer">
                             {isPlaying ? (
                                 <Pause onClick={toPause} />
                             ) : (
                                 <Play onClick={toPlay} />
                             )}
                         </div>
-                        <ChevronsRight
-                            className="cursor-pointer"
-                            onClick={() => toSkip(currentTime + 1500)}
-                        />
-                        <div className="pl-8">
+                        <div className="pr-8 cursor-pointer">
+                            <ChevronsRight
+                                className=""
+                                onClick={() => toSkip(currentTime + 1500)}
+                            />
+                        </div>
+                        <div>
                             {mstoMinute(currentTime)}/{resTotalTime}
                         </div>
                     </div>

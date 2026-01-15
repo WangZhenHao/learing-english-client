@@ -202,6 +202,10 @@
 }
 
 @media (min-width: 0px) and (max-width: 768px) {
+    .btn-start {
+        padding: 8px 30px;
+        font-size: 16px;
+    }
     .home-container {
         position: relative;
         min-height: 70vh;
@@ -212,6 +216,11 @@
 
     .hero-desc {
         font-size: 16px;
+    }
+
+    .bg-purple-1 {
+        // top: 100px;
+        height: 80px;
     }
 
     .section-2 {
