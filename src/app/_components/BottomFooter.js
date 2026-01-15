@@ -1,12 +1,12 @@
 const BottomFooter = () => {
     return (
-        <footer className=" section-wrap text-white py-4">
+        <footer className=" section-wrap text-white py-4 footer-wrap">
             <div className="container mx-auto px-4">
                 <div className="flex flex-col md:flex-row justify-between items-center">
                     <div className="mb-4 md:mb-0">
                         <h3 className="text-lg font-semibold">关于我们</h3>
                         <p className="mt-2 max-w-md">
-                            我们致力于为您提供优质的英语学习体验，帮助您提升语言技能，实现个人目标。
+                            致力于为您提供优质的英语学习体验，帮助您提升语言技能，实现个人目标。
                         </p>
                     </div>
                     
