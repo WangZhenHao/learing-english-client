@@ -3,8 +3,9 @@
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { optimize, createArticel } from "@/api/course";
+import { getUserInfo } from "@/api/login";
 import {
     Dialog,
     DialogContent,
@@ -29,6 +30,8 @@ import { langMap, charaterMap, speakRateMap } from "./_components/map";
 import SelectCatergory from "./_components/SelectCatergory";
 import useAuth from "@/app/(auth)/_component/useAuth";
 import "./_components/index.scss";
+const deespeekCount = 3;
+const uidList = ["admin", "tester"];
 const App = () => {
     const router = useRouter();
     const [text, setText] = useState("");
@@ -40,12 +43,17 @@ const App = () => {
     const [character, setCharater] = useState("female");
     const [speakRate, setSpeakRate] = useState("0.8");
     const [categoryId, setCategoryId] = useState("other");
-    const { userInfo } = useAuth();
+    const { userInfo, setLocalValue } = useAuth();
 
     const loginHanlder = (e) => {
         e.preventDefault();
-        router.push('/login?callback=' + encodeURIComponent('/create'));
+        router.push("/login?callback=" + encodeURIComponent("/create"));
     };
+    useEffect(() => {
+        if(userInfo?.id) {
+            getUser();
+        }
+    }, [userInfo])
     // console.log(result.sentences.map(item => item.sentence).join('\n'));
     const clickHandler = (e) => {
         e.preventDefault();
@@ -71,6 +79,11 @@ const App = () => {
             .finally(() => {
                 setLoading(false);
             });
+    };
+    const getUser = () => {
+        getUserInfo().then((res) => {
+            setLocalValue(res.data);
+        });
     };
     const submitHandler = (e) => {
         e.preventDefault(); // Prevent default form submission
@@ -102,6 +115,7 @@ const App = () => {
                 setOpen(false);
                 toast("生成文章成功");
                 router.push("/my-course");
+                getUser();
             })
             .finally(() => {
                 setLoading(false);
@@ -109,6 +123,51 @@ const App = () => {
     };
     const inputHandle = (e) => {
         setText(e.target.value);
+    };
+    const ButtonFunc = () => {
+        if (userInfo?.id) {
+            // return (
+            //     <Button
+            //         loading={loading}
+            //         className="mt-5"
+            //         onClick={clickHandler}
+            //     >
+            //         {loading
+            //             ? "生成中，1-2分钟完成，请稍等..."
+            //             : `生成语音文章`}
+            //     </Button>
+            // );
+            return uidList.includes(userInfo.uid) ? (
+                <Button
+                    loading={loading}
+                    className="mt-5"
+                    onClick={clickHandler}
+                >
+                    {loading
+                        ? "生成中，1-2分钟完成，请稍等..."
+                        : `生成语音文章`}
+                </Button>
+            ) : (
+                <Button
+                    loading={loading}
+                    className="mt-5"
+                    onClick={clickHandler}
+                    disabled={deespeekCount - userInfo.deepseekCount === 0}
+                >
+                    {loading
+                        ? "生成中，1-2分钟完成，请稍等..."
+                        : `生成语音文章, 今天剩余次数${
+                              deespeekCount - userInfo.deepseekCount
+                          }`}
+                </Button>
+            );
+        } else {
+            return (
+                <Button className="mt-5" onClick={loginHanlder}>
+                    去登录
+                </Button>
+            );
+        }
     };
     return (
         <>
@@ -179,7 +238,7 @@ const App = () => {
                         />
                     </Field>
                 </div>
-                {["admin", "tester"].includes(userInfo?.uid) && (
+                {uidList.includes(userInfo?.uid) && (
                     <div className="space-y-2  grid grid-cols-4 gap-4">
                         <Field>
                             <Label htmlFor="confirmPassword">分类</Label>
@@ -203,21 +262,8 @@ const App = () => {
                         />
                     </Field>
                 </div>
-                {userInfo?.uid ? (
-                    <Button
-                        loading={loading}
-                        className="mt-5"
-                        onClick={clickHandler}
-                    >
-                        {loading
-                            ? "生成中，1-2分钟完成，请稍等..."
-                            : "生成语音文章"}
-                    </Button>
-                ) : (
-                    <Button className="mt-5" onClick={loginHanlder}>
-                        去登录
-                    </Button>
-                )}
+
+                <ButtonFunc />
             </form>
             <Dialog open={open} onOpenChange={setOpen}>
                 <DialogContent style={{ "--container-lg": "720px" }}>

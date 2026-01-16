@@ -19,3 +19,7 @@ export function getImgCaptcha() {
 export function forget(data) {
     return ipost("/user/forget", data);
 }
+
+export function getUserInfo() {
+    return iget("/user/getInfo");
+}
