@@ -28,7 +28,7 @@ import MySelect from "./_components/select";
 import { langMap, charaterMap, speakRateMap } from "./_components/map";
 import SelectCatergory from "./_components/SelectCatergory";
 import useAuth from "@/app/(auth)/_component/useAuth";
-import './_components/index.scss'
+import "./_components/index.scss";
 const App = () => {
     const router = useRouter();
     const [text, setText] = useState("");
@@ -40,7 +40,12 @@ const App = () => {
     const [character, setCharater] = useState("female");
     const [speakRate, setSpeakRate] = useState("0.8");
     const [categoryId, setCategoryId] = useState("other");
-    const { userInfo } = useAuth()
+    const { userInfo } = useAuth();
+
+    const loginHanlder = (e) => {
+        e.preventDefault();
+        router.push('/login?callback=' + encodeURIComponent('/create'));
+    };
     // console.log(result.sentences.map(item => item.sentence).join('\n'));
     const clickHandler = (e) => {
         e.preventDefault();
@@ -49,11 +54,10 @@ const App = () => {
                 // duration: 1000000,
             });
             return;
-        } else if(owerLang === targetLang) {
+        } else if (owerLang === targetLang) {
             toast("母语和目标语言不能相同");
             return;
-        
-        } else if(text.length < 150) {
+        } else if (text.length < 150) {
             toast("请输入至少150个字符");
             return;
         }
@@ -79,7 +83,7 @@ const App = () => {
             return;
         }
 
-        if(targetLang === owerLang) {
+        if (targetLang === owerLang) {
             toast("母语和目标语言不能相同");
             return;
         }
@@ -92,7 +96,7 @@ const App = () => {
             character,
             speakRate,
             owerLang,
-            categoryId
+            categoryId,
         })
             .then((res) => {
                 setOpen(false);
@@ -175,14 +179,19 @@ const App = () => {
                         />
                     </Field>
                 </div>
-                { ['admin', 'tester'].includes(userInfo?.uid) && (<div className="space-y-2  grid grid-cols-4 gap-4">
-                    <Field>
-                        <Label htmlFor="confirmPassword">分类</Label>
-                        <SelectCatergory onChange={(e) =>{
-                            setCategoryId(e);
-                        }} value={categoryId} />
-                    </Field>
-                </div>)}
+                {["admin", "tester"].includes(userInfo?.uid) && (
+                    <div className="space-y-2  grid grid-cols-4 gap-4">
+                        <Field>
+                            <Label htmlFor="confirmPassword">分类</Label>
+                            <SelectCatergory
+                                onChange={(e) => {
+                                    setCategoryId(e);
+                                }}
+                                value={categoryId}
+                            />
+                        </Field>
+                    </div>
+                )}
                 <div className="py-2">
                     <Field>
                         <Label htmlFor="confirmPassword">内容</Label>
@@ -194,10 +203,21 @@ const App = () => {
                         />
                     </Field>
                 </div>
-
-                <Button loading={loading} className="mt-5" onClick={clickHandler}>
-                    {loading ? "生成中，1-2分钟完成，请稍等..." : "生成文章"}
-                </Button>
+                {userInfo?.uid ? (
+                    <Button
+                        loading={loading}
+                        className="mt-5"
+                        onClick={clickHandler}
+                    >
+                        {loading
+                            ? "生成中，1-2分钟完成，请稍等..."
+                            : "生成语音文章"}
+                    </Button>
+                ) : (
+                    <Button className="mt-5" onClick={loginHanlder}>
+                        去登录
+                    </Button>
+                )}
             </form>
             <Dialog open={open} onOpenChange={setOpen}>
                 <DialogContent style={{ "--container-lg": "720px" }}>

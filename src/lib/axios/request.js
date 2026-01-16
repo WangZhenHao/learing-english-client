@@ -98,12 +98,12 @@ Axios.interceptors.response.use(
     },
     (error) => {
         const response = error.response;
-        const data = response.data;
+        const data = response?.data;
         
         if (error.message.includes('timeout')) {
             Toast(requestError(504) || '服务器异常');
         } else {
-            Toast(data && data.message ? data.message : requestError(response.status));
+            Toast(data && data.message ? data.message : requestError(response?.status));
         }
         return Promise.reject(error);
     }
