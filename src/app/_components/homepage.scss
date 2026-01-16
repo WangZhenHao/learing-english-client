@@ -181,7 +181,7 @@
 }
 .text-gradient {
     background: radial-gradient(
-        circle 262px at 30% -180%,
+        circle 120px at 30% -180%,
         var(--purple-2) 0%,
         #ffffff 100%
     );
@@ -208,7 +208,7 @@
     }
     .home-container {
         position: relative;
-        min-height: 70vh;
+        min-height: 80vh;
     }
     .hero-title {
         font-size: 32px;
@@ -232,5 +232,9 @@
         h3 {
             font-size: 14px;
         }
+    }
+
+    .footer-wrap {
+        text-align: center;
     }
 }
