@@ -25,9 +25,10 @@ const App = async ({ params }) => {
         notFound();
     }
     // 构造完整的音频 URL
-    const audioSrc = res.data.url
-        ? BASE_URL + "/" + res.data.url.split(".")[0] + "/index.m3u8"
-        : "";
+    // const audioSrc = res.data.url
+    //     ? BASE_URL + "/" + res.data.url.split(".")[0] + "/index.m3u8"
+    //     : "";
+    const audioSrc = res.data.url || null
     return (
         <>
             {/* <h1
