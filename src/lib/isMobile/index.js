@@ -6,6 +6,6 @@ export async function isMobileServer() {
   const userAgent = headersList.get('user-agent') || '';
  
   const result  = /mobile|android|iphone|ipad/i.test(userAgent)
-  console.log('userAgent', result);
+  // console.log('userAgent', result);
   return result;
 }

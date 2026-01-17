@@ -6,7 +6,7 @@ const whiteList = ["/login", "/register", "/forget"];
 export function middleware(request) {
     const token = request.cookies.get("Bearer")?.value;
     const pathname = request.nextUrl.pathname;
-    console.log(pathname)
+    // console.log(pathname)
 
     if(needLoogin.includes(pathname) && !token) {
         return NextResponse.redirect(new URL("/login?callback=" + pathname, request.url));

@@ -103,7 +103,7 @@ const App = ({ data: { content, subtitle = [], title }, audioSrc }) => {
         };
         setScore(newScore);
         if (sentenceIndex === content.length - 1) {
-            console.log(newScore);
+            // console.log(newScore);
             gameResultRef.current.init(newScore);
         }
     };
@@ -114,7 +114,7 @@ const App = ({ data: { content, subtitle = [], title }, audioSrc }) => {
         const isPrimary = e.metaKey || e.ctrlKey;
         const keyCode = e.key.toLowerCase();
 
-        console.log(keyCode);
+        // console.log(keyCode);
         if (keyCode === " ") {
             const newIndex = skipSentenceWordIndex(wordIndex, 1);
             inputRef.current.value = writeWord[sentenceIndex][newIndex] || "";

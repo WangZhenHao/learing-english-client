@@ -54,7 +54,7 @@ const LoginPage = () => {
             }
 
             const result = await login({ email, password });
-            console.log(result);
+            // console.log(result);
             setValue(result.data.token);
             setLocalValue(result.data.user);
             router.push(callback ? callback : "/course"); // Redirect after login

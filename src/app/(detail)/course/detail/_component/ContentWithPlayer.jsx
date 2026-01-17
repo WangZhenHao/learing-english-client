@@ -84,7 +84,7 @@ const ContentWithPlayer = ({ contentData, audioSrc, subTitleDate = [] }) => {
     };
     const onTimeUpdate = (currentTime) => {
         const sentenceIndex = updateActiveSentence(currentTime);
-        console.log(sentenceIndex, activeSentenceIndexRef.current);
+        // console.log(sentenceIndex, activeSentenceIndexRef.current);
         // debugger
         if (sentenceIndex !== activeSentenceIndexRef.current) {
             activeSentenceIndexRef.current = sentenceIndex;
