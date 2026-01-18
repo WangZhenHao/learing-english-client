@@ -68,7 +68,7 @@ export default function HomePage() {
                     </h2>
                 </div>
                 <h3 className="text-[#999] mt-2.5">
-                    {langArr.map((key) => languageMap(key)).join("，")}
+                    {langArr.map((key) => languageMap(key)).join("、")}
                 </h3>
             </div>
             <BottomFooter />
