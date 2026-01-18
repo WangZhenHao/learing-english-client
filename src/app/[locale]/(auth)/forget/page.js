@@ -19,6 +19,7 @@ import Code from "../register/_components/Code";
 import { isEmailSimple } from "@/lib/validate";
 // import useAuth from "../_component/useAuth";
 import { forget, getImgCaptcha } from "@/api/login";
+import { Link } from "@/i18n/routing";
 
 const RegisterPage = () => {
     const [email, setEmail] = useState("");
@@ -207,12 +208,12 @@ const RegisterPage = () => {
                         <div className="text-center text-sm">
                             <p>
                                 已有账户？{" "}
-                                <a
+                                <Link
                                     href={backHerf}
                                     className="text-blue-600 hover:underline"
                                 >
                                     登录
-                                </a>
+                                </Link>
                             </p>
                         </div>
                     </CardFooter>

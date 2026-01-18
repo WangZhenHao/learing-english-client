@@ -62,18 +62,22 @@ export default function middleware(request) {
     // 这样无论访问 /zh/my-course 还是 /my-course，purePath 都是 /my-course
     const localePrefixRegex = /^\/(zh|en)(\/|$)/;
     const purePath = pathname.replace(localePrefixRegex, '/');
+    const match = pathname.match(localePrefixRegex);
+    const currentLocale = match ? match[1] : routing.defaultLocale;
 
     const token = request.cookies.get("Bearer")?.value;
 
     // 2. 鉴权逻辑
     const isNeedAuth = needLogin.some(path => purePath.startsWith(path));
-    const isWhiteList = whiteList.some(path => purePath === path);
+    const isWhiteList = whiteList.some(path => purePath.startsWith(path));
 
     if (isNeedAuth && !token) {
         // --- 核心改动点 ---
         // 关键：跳转到一个不带语言的路径，由后面的 i18nMiddleware 补全
         const url = request.nextUrl.clone();
-        url.pathname = '/login';
+        const prefix = (currentLocale === routing.defaultLocale) ? '' : `/${currentLocale}`;
+
+        url.pathname = prefix + '/login';
         url.searchParams.set('callback', pathname);
         
         // 我们重定向到 /login，但此时 request 还是旧的

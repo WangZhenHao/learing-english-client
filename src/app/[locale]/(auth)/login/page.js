@@ -17,6 +17,8 @@ import { Separator } from "@/components/ui/separator";
 import { toast } from "sonner";
 import { login } from "@/api/login";
 import useAuth from "../_component/useAuth";
+import { Link } from "@/i18n/routing";
+
 // import { useCookieState, useLocalStorageState } from "ahooks";
 const LoginPage = () => {
     const [email, setEmail] = useState("");
@@ -98,12 +100,12 @@ const LoginPage = () => {
                         </div>
                         <div className="space-y-2 text-sm">
                             忘记密码？
-                            <a
+                            <Link
                                 href={forgetHref}
                                 className="text-blue-600 hover:underline"
                             >
                                 立即找回
-                            </a>
+                            </Link>
                         </div>
                     </CardContent>
                     <CardFooter className="flex flex-col">
@@ -119,12 +121,12 @@ const LoginPage = () => {
                         <div className="text-center text-sm">
                             <p>
                                 还没有账户？{" "}
-                                <a
+                                <Link
                                     href={registerHref}
                                     className="text-blue-600 hover:underline"
                                 >
                                     注册
-                                </a>
+                                </Link>
                             </p>
                         </div>
                     </CardFooter>

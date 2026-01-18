@@ -9,7 +9,7 @@ const App = () => {
     return (
         <div className={`bg-[#fafafa] ${style.leftSider} p-2 left-silde-wrap`}>
             {linkList.map((item) => {
-                const isActive = pathname.indexOf(item.href) === 0 && item.active !== false;
+                const isActive = pathname.indexOf(item.href) > -1 && item.active !== false;
                 return (
                     <Link
                         key={item.name}

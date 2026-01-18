@@ -19,6 +19,7 @@ import Code from "./_components/Code";
 import { isEmailSimple } from "@/lib/validate";
 import useAuth from "../_component/useAuth";
 import { register } from '@/api/login'
+import { Link } from "@/i18n/routing";
 
 
 const RegisterPage = () => {
@@ -151,12 +152,12 @@ const RegisterPage = () => {
                         <div className="text-center text-sm">
                             <p>
                                 已有账户？{" "}
-                                <a
+                                <Link
                                     href="/login"
                                     className="text-blue-600 hover:underline"
                                 >
                                     登录
-                                </a>
+                                </Link>
                             </p>
                         </div>
                     </CardFooter>
