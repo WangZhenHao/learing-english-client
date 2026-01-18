@@ -181,7 +181,7 @@
 }
 .text-gradient {
     background: radial-gradient(
-        circle 120px at 30% -180%,
+        circle 240px at 30% -180%,
         var(--purple-2) 0%,
         #ffffff 100%
     );
@@ -222,7 +222,13 @@
         // top: 100px;
         height: 80px;
     }
+    .text-gradient {
+        background: unset;
+        text-shadow: unset;
+        -webkit-text-fill-color: unset;
+        // text-fill-color: unset;
 
+    }
     .section-2 {
         padding: 0 20px 100px 20px;
         h2 {

@@ -29,8 +29,8 @@ export default function HomePage() {
                     <h1 className="hero-title">
                         <span className="highlight">{t("title")}</span>
                         <span
-                            className="text-gradient"
-                            style={{ "--purple-2": "#ae9ee1" }}
+                            // className="text-gradient"
+                            // style={{ "--purple-2": "#ae9ee1" }}
                         >
                             {t("subTitle")}
                         </span>
