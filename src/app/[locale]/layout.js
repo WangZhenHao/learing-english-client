@@ -37,7 +37,8 @@ export const viewport = {
 export default async function RootLayout({ children, params }) {
     const locale = (await params).locale;
     // console.log("locale", locale);
-    const messages = await getMessages({ locale });
+    const messages = await getMessages();
+    // console.log("messages", messages);
     return (
         <html lang={locale}>
             <body>

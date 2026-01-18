@@ -1,5 +1,50 @@
 {
     "home": {
-        "title": "学习英语"
+        "title": "Shadowing Practice",
+        "subTitle": " AI-Powered Tool",
+        "statButton": "Get Started",
+        "stat": {
+            "title": "Helping You Succeed Through",
+            "features": [
+                "Shadowing Practice",
+                "Word-by-Word Highlighting",
+                "Repeated Listening & Speaking"
+            ],
+            "end": " a learning tool designed to rapidly improve your speaking and listening skills."
+        },
+        "section1": {
+            "surrpot": "Supports learning in {count} languages"
+        },
+        "footer": {
+            "about": "About Us",
+            "aboutDetail": "We are dedicated to providing a high-quality English learning experience, helping you improve your language skills and achieve your personal goals.",
+            "contact": "Contact Us",
+            "emailName": "email",
+            "email": "1471047476@qq.com"
+        }
+    },
+    "language": {
+        "zh": "Chinese",
+        "en": "English",
+        "ja": "Japanese",
+        "ko": "Korean",
+        "fr": "French",
+        "de": "German",
+        "es": "Spanish",
+        "it": "Italian",
+        "ru": "Russian",
+        "th": "Thai",
+        "vi": "Vietnamese"
+    },
+    "character": {
+        "female": "Female",
+        "male": "Male"
+    },
+    "speakRate": {
+        "half": "x0.5",
+        "pointEight": "x0.8 (Recommended)",
+        "one": "x1 (Normal)",
+        "oneTwo": "x1.2",
+        "oneFive": "x1.5"
     }
 }

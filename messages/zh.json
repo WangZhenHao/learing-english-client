@@ -1,5 +1,50 @@
 {
     "home": {
-        "title": "学习英语"
+        "title": "影子跟读",
+        "subTitle": "AI学习工具",
+        "statButton": "开始使用",
+        "stat": {
+            "title": "帮助你通过",
+            "features": [
+                "影子跟读",
+                "逐字高亮",
+                "反复听读"
+            ],
+            "end": "来快速提升口语、听力的学习工具。"
+        },
+        "section1": {
+            "surrpot": "支持{count}种语言的学习"
+        },
+        "footer": {
+            "about": "关于我们",
+            "aboutDetail": "致力于为您提供优质的英语学习体验，帮助您提升语言技能，实现个人目标。",
+            "contact": "联系我们",
+            "emailName": "邮箱",
+            "email": "1471047476@qq.com"
+        }
+    },
+    "language": {
+        "zh": "中文",
+        "en": "英文",
+        "ja": "日语",
+        "ko": "韩语",
+        "fr": "法语",
+        "de": "德语",
+        "es": "西班牙语",
+        "it": "意大利语",
+        "ru": "俄语",
+        "th": "泰语",
+        "vi": "越南语"
+    },
+    "character": {
+        "female": "女性",
+        "male": "男性"
+    },
+    "speakRate": {
+        "half": "x0.5",
+        "pointEight": "x0.8(推荐)",
+        "one": "x1(正常)",
+        "oneTwo": "x1.2",
+        "oneFive": "x1.5"
     }
 }
