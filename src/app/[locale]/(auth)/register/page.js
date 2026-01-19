@@ -18,11 +18,13 @@ import { toast } from "sonner";
 import Code from "./_components/Code";
 import { isEmailSimple } from "@/lib/validate";
 import useAuth from "../_component/useAuth";
-import { register } from '@/api/login'
+import { register } from '@/api/login';
 import { Link } from "@/i18n/routing";
-
+import { useTranslations } from "next-intl";
 
 const RegisterPage = () => {
+    const t = useTranslations('register'); // ✅ ADDED: Register namespace
+    
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
@@ -31,43 +33,42 @@ const RegisterPage = () => {
     const router = useRouter();
     const searchParams = useSearchParams();
     const callback = searchParams.get("callback");
-    const { setCookie, setLocalValue  } = useAuth()  
+    const { setCookie, setLocalValue } = useAuth();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        
+        // ✅ REPLACED: Error messages with translations
         if (!email) {
-            toast.error("请输入邮箱");
+            toast.error(t('errors.emailRequired'));
             return;
         } else if(!isEmailSimple(email)) {
-            toast.error("请输入正确的邮箱");
-            return
+            toast.error(t('errors.emailInvalid'));
+            return;
         } else if (password !== confirmPassword) {
-            toast.error("两次输入的密码不一致");
+            toast.error(t('errors.passwordNotMatch'));
             return;
         } else if (password.length < 6) {
-            toast.error("密码长度至少为6位");
+            toast.error(t('errors.passwordTooShort'));
             return;
         } else if(!code) {
-            toast.error("请输入验证码");
-            return
+            toast.error(t('errors.codeRequired'));
+            return;
         } else if(code.length !== 6) {
-            toast.error("验证码长度为6位");
-            return
+            toast.error(t('errors.codeLength'));
+            return;
         }
         
         setIsLoading(true);
 
         try {
-            // TODO: Implement actual registration logic
-            // console.log("Registration attempt with:", { email, password });
-
             const result = await register({ email, password, code, confirmPassword });
             setCookie(result.data.token);
             setLocalValue(result.data.user);
             router.push(callback ? callback : "/course");
-            toast.success("注册成功！");
+            toast.success(t('success')); // ✅ REPLACED: Success message
         } catch (error) {
-            console.error("注册失败:", error);
+            console.error("Registration failed:", error);
         } finally {
             setIsLoading(false);
         }
@@ -77,19 +78,19 @@ const RegisterPage = () => {
         <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-indigo-100 p-4">
             <Card className="w-full max-w-md shadow-xl">
                 <CardHeader className="text-center space-y-2">
-                    <CardTitle className="text-2xl font-bold">
-                        注册影跟读账号
-                    </CardTitle>
-                    <CardDescription>创建您的账户</CardDescription>
+                    {/* ✅ REPLACED: Card title and description */}
+                    <CardTitle className="text-2xl font-bold">{t('title')}</CardTitle>
+                    <CardDescription>{t('description')}</CardDescription>
                 </CardHeader>
                 <form onSubmit={handleSubmit}>
                     <CardContent className="space-y-4">
                         <div className="space-y-2">
-                            <Label htmlFor="email">邮箱</Label>
+                            {/* ✅ REPLACED: Email label and placeholder */}
+                            <Label htmlFor="email">{t('emailLabel')}</Label>
                             <Input
                                 id="email"
                                 type="email"
-                                placeholder="请输入您的邮箱"
+                                placeholder={t('emailPlaceholder')}
                                 value={email}
                                 onChange={(e) => setEmail(e.target.value)}
                                 required
@@ -97,12 +98,13 @@ const RegisterPage = () => {
                             />
                         </div>
                         <div className="space-y-2">
-                            <Label htmlFor="email">邮箱验证码</Label>
+                            {/* ✅ REPLACED: Code label and placeholder */}
+                            <Label htmlFor="email">{t('codeLabel')}</Label>
                             <div className="flex items-center">
                                 <Input
                                     id="code"
                                     type="code"
-                                    placeholder="请输入您的邮箱验证码"
+                                    placeholder={t('codePlaceholder')}
                                     required
                                     onChange={(e) => setCode(e.target.value)}
                                     maxLength={6}
@@ -111,11 +113,12 @@ const RegisterPage = () => {
                             </div>
                         </div>
                         <div className="space-y-2">
-                            <Label htmlFor="password">密码</Label>
+                            {/* ✅ REPLACED: Password label and placeholder */}
+                            <Label htmlFor="password">{t('passwordLabel')}</Label>
                             <Input
                                 id="password"
                                 type="password"
-                                placeholder="密码"
+                                placeholder={t('passwordPlaceholder')}
                                 value={password}
                                 onChange={(e) => setPassword(e.target.value)}
                                 required
@@ -124,15 +127,14 @@ const RegisterPage = () => {
                             />
                         </div>
                         <div className="space-y-2">
-                            <Label htmlFor="confirmPassword">确认密码</Label>
+                            {/* ✅ REPLACED: Confirm password label and placeholder */}
+                            <Label htmlFor="confirmPassword">{t('confirmPasswordLabel')}</Label>
                             <Input
                                 id="confirmPassword"
                                 type="password"
-                                placeholder="二次确认密码"
+                                placeholder={t('confirmPasswordPlaceholder')}
                                 value={confirmPassword}
-                                onChange={(e) =>
-                                    setConfirmPassword(e.target.value)
-                                }
+                                onChange={(e) => setConfirmPassword(e.target.value)}
                                 required
                                 maxLength={20}
                             />
@@ -144,19 +146,21 @@ const RegisterPage = () => {
                             type="submit"
                             className="w-full mt-5"
                             size="lg"
-                            loading={isLoading}
+                            disabled={isLoading}
                         >
-                            {isLoading ? "注册中..." : "注册"}
+                            {/* ✅ REPLACED: Submit button text */}
+                            {isLoading ? t('submitting') : t('submit')}
                         </Button>
                         <Separator className="my-4" />
                         <div className="text-center text-sm">
                             <p>
-                                已有账户？{" "}
+                                {/* ✅ REPLACED: Footer text and login link */}
+                                {t('footer.hasAccount')}{" "}
                                 <Link
                                     href="/login"
                                     className="text-blue-600 hover:underline"
                                 >
-                                    登录
+                                    {t('footer.login')}
                                 </Link>
                             </p>
                         </div>
