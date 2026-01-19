@@ -30,6 +30,7 @@ import { langMap, charaterMap, speakRateMap } from "./_components/map";
 import SelectCatergory from "./_components/SelectCatergory";
 import useAuth from "@app/(auth)/_component/useAuth";
 import "./_components/index.scss";
+import { useTranslations } from "next-intl";
 const deespeekCount = 3;
 const uidList = ["admin", "tester"];
 const App = () => {
@@ -44,29 +45,30 @@ const App = () => {
     const [speakRate, setSpeakRate] = useState("0.8");
     const [categoryId, setCategoryId] = useState("other");
     const { userInfo, setLocalValue } = useAuth();
+    const t = useTranslations("create");
 
     const loginHanlder = (e) => {
         e.preventDefault();
         router.push("/login?callback=" + encodeURIComponent("/create"));
     };
     useEffect(() => {
-        if(userInfo?.id) {
+        if (userInfo?.id) {
             getUser();
         }
-    }, [userInfo])
+    }, [userInfo]);
     // console.log(result.sentences.map(item => item.sentence).join('\n'));
     const clickHandler = (e) => {
         e.preventDefault();
         if (!text) {
-            toast("请输入内容", {
+            toast(t('check.textError'), {
                 // duration: 1000000,
             });
             return;
         } else if (owerLang === targetLang) {
-            toast("母语和目标语言不能相同");
+            toast(t('check.langError'));
             return;
         } else if (text.length < 150) {
-            toast("请输入至少150个字符");
+            toast(t('check.textLengError'));
             return;
         }
         // setOpen(true);
@@ -97,7 +99,7 @@ const App = () => {
         }
 
         if (targetLang === owerLang) {
-            toast("母语和目标语言不能相同");
+            toast(t('check.langError'));
             return;
         }
 
@@ -113,7 +115,7 @@ const App = () => {
         })
             .then((res) => {
                 setOpen(false);
-                toast("生成文章成功");
+                toast(t('check.sumbitSuccess'));
                 router.push("/my-course");
                 getUser();
             })
@@ -143,9 +145,7 @@ const App = () => {
                     className="mt-5"
                     onClick={clickHandler}
                 >
-                    {loading
-                        ? "生成中，1-2分钟完成，请稍等..."
-                        : `生成语音文章`}
+                    {loading ? t("submitting") : t("submit")}
                 </Button>
             ) : (
                 <Button
@@ -154,17 +154,22 @@ const App = () => {
                     onClick={clickHandler}
                     disabled={deespeekCount - userInfo.deepseekCount === 0}
                 >
-                    {loading
-                        ? "生成中，1-2分钟完成，请稍等..."
-                        : `生成语音文章, 今天剩余次数${
-                              deespeekCount - userInfo.deepseekCount
-                          }`}
+                    {
+                        loading
+                            ? t("submitting")
+                            : t("submitCount", {
+                                  count: deespeekCount - userInfo.deepseekCount,
+                              })
+                        // `生成语音文章, 今天剩余次数${
+                        //       deespeekCount - userInfo.deepseekCount
+                        //   }`
+                    }
                 </Button>
             );
         } else {
             return (
                 <Button className="mt-5" onClick={loginHanlder}>
-                    去登录
+                    {t('tologin')}
                 </Button>
             );
         }
@@ -174,13 +179,15 @@ const App = () => {
             <form className="create">
                 <div className="space-y-2 grid grid-cols-4 gap-4">
                     <Field>
-                        <FieldLabel htmlFor="city">我的母语</FieldLabel>
+                        <FieldLabel htmlFor="city">
+                            {t("owerLangLabel")}
+                        </FieldLabel>
                         <MySelect
                             onChange={(e) => {
                                 setOwerLang(e);
                             }}
                             value={owerLang}
-                            placeholder="请选择我的母语"
+                            placeholder={`${t("owerLangLabel")}`}
                             list={Object.keys(langMap).map((item) => {
                                 return {
                                     value: item,
@@ -190,12 +197,14 @@ const App = () => {
                         />
                     </Field>
                     <Field>
-                        <FieldLabel htmlFor="zip">学习目标语言</FieldLabel>
+                        <FieldLabel htmlFor="zip">
+                            {t("targetLangLabel")}
+                        </FieldLabel>
                         <MySelect
                             onChange={(e) => {
                                 setTargetLang(e);
                             }}
-                            placeholder="请选择学习目标语言"
+                            placeholder={t("targetLangLabel")}
                             value={targetLang}
                             list={Object.keys(langMap).map((item) => {
                                 return {
@@ -206,12 +215,14 @@ const App = () => {
                         />
                     </Field>
                     <Field>
-                        <FieldLabel htmlFor="zip">发音人物</FieldLabel>
+                        <FieldLabel htmlFor="zip">
+                            {t("characterLabel")}
+                        </FieldLabel>
                         <MySelect
                             onChange={(e) => {
                                 setCharater(e);
                             }}
-                            placeholder="请选择发音人物"
+                            placeholder={t("characterLabel")}
                             value={character}
                             list={Object.keys(charaterMap).map((item) => {
                                 return {
@@ -222,13 +233,15 @@ const App = () => {
                         />
                     </Field>
                     <Field>
-                        <FieldLabel htmlFor="zip">说话速度</FieldLabel>
+                        <FieldLabel htmlFor="zip">
+                            {t("speakRateLabel")}
+                        </FieldLabel>
                         <MySelect
                             onChange={(e) => {
                                 setSpeakRate(e);
                             }}
                             value={speakRate}
-                            placeholder="请选择说话速度"
+                            placeholder={t("speakRateLabel")}
                             list={Object.keys(speakRateMap).map((item) => {
                                 return {
                                     value: item,
@@ -241,8 +254,11 @@ const App = () => {
                 {uidList.includes(userInfo?.uid) && (
                     <div className="space-y-2  grid grid-cols-4 gap-4">
                         <Field>
-                            <Label htmlFor="confirmPassword">分类</Label>
+                            <Label htmlFor="confirmPassword">
+                                {t("categoryLabel")}
+                            </Label>
                             <SelectCatergory
+                                placeholder={t("categoryLabel")}
                                 onChange={(e) => {
                                     setCategoryId(e);
                                 }}
@@ -253,11 +269,13 @@ const App = () => {
                 )}
                 <div className="py-2">
                     <Field>
-                        <Label htmlFor="confirmPassword">内容</Label>
+                        <Label htmlFor="confirmPassword">
+                            {t("dialogSentenceLabel")}
+                        </Label>
                         <Textarea
                             style={{ height: "60vh" }}
                             onInput={inputHandle}
-                            placeholder="请输入内容,大概150-3000个字"
+                            placeholder={t("areaPlaceholder")}
                             maxLength={3000}
                         />
                     </Field>
@@ -268,12 +286,12 @@ const App = () => {
             <Dialog open={open} onOpenChange={setOpen}>
                 <DialogContent style={{ "--container-lg": "720px" }}>
                     <DialogHeader>
-                        <DialogTitle>确认内容</DialogTitle>
+                        <DialogTitle>{t("dialogContent")}</DialogTitle>
                     </DialogHeader>
                     <form>
                         <FieldGroup>
                             <Field>
-                                <FieldLabel>文章标题</FieldLabel>
+                                <FieldLabel>{t("dialogTitleLabel")}</FieldLabel>
                                 <Input
                                     placeholder="标题"
                                     required
@@ -287,7 +305,9 @@ const App = () => {
                                 />
                             </Field>
                             <Field>
-                                <FieldLabel>内容</FieldLabel>
+                                <FieldLabel>
+                                    {t("dialogSentenceLabel")}
+                                </FieldLabel>
                                 <Textarea
                                     readOnly
                                     style={{ height: "400px" }}
@@ -309,7 +329,7 @@ const App = () => {
                                 onClick={submitHandler}
                                 loading={loading}
                             >
-                                生成语音文章
+                                {t("dialogSubmit")}
                             </Button>
                         </DialogFooter>
                     </form>

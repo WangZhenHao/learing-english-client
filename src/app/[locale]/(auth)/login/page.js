@@ -18,9 +18,12 @@ import { toast } from "sonner";
 import { login } from "@/api/login";
 import useAuth from "../_component/useAuth";
 import { Link } from "@/i18n/routing";
+import { useTranslations } from "next-intl";
 
 // import { useCookieState, useLocalStorageState } from "ahooks";
 const LoginPage = () => {
+    const t = useTranslations();
+    // const loyout = useTranslations('layout')
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [isLoading, setIsLoading] = useState(false);
@@ -71,40 +74,46 @@ const LoginPage = () => {
         <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-indigo-100 p-4">
             <Card className="w-full max-w-md shadow-xl">
                 <CardHeader className="text-center space-y-2">
-                    <CardTitle className="text-2xl font-bold">影跟读</CardTitle>
+                    <CardTitle className="text-2xl font-bold">
+                        {t("layout.name")}
+                    </CardTitle>
                     {/* <CardDescription>请输入您的登录信息</CardDescription> */}
                 </CardHeader>
                 <form onSubmit={handleSubmit}>
                     <CardContent className="space-y-4">
                         <div className="space-y-2">
-                            <Label htmlFor="email">邮箱</Label>
+                            <Label htmlFor="email">
+                                {t("login.emailLabel")}
+                            </Label>
                             <Input
                                 id="email"
                                 type="email"
-                                placeholder="请输入邮箱"
+                                placeholder={t("login.emailLabel")}
                                 value={email}
                                 onChange={(e) => setEmail(e.target.value)}
                                 required
                             />
                         </div>
                         <div className="space-y-2">
-                            <Label htmlFor="password">密码</Label>
+                            <Label htmlFor="password">
+                                {t("login.passwordLabel")}
+                            </Label>
                             <Input
                                 id="password"
                                 type="password"
-                                placeholder="请输入密码"
+                                placeholder={t("login.passwordLabel")}
                                 value={password}
                                 onChange={(e) => setPassword(e.target.value)}
                                 required
                             />
                         </div>
                         <div className="space-y-2 text-sm">
-                            忘记密码？
+                            {t("login.forgetPassword")}
                             <Link
                                 href={forgetHref}
                                 className="text-blue-600 hover:underline"
                             >
-                                立即找回
+                                {t("login.inmmidateFound")}
                             </Link>
                         </div>
                     </CardContent>
@@ -115,17 +124,17 @@ const LoginPage = () => {
                             disabled={isLoading}
                             size="lg"
                         >
-                            {isLoading ? "登录中..." : "登录"}
+                            {isLoading ? t("login.logining") : t("login.login")}
                         </Button>
                         <Separator className="my-4" />
                         <div className="text-center text-sm">
                             <p>
-                                还没有账户？{" "}
+                                {t("login.dontHavaAccount")}{" "}
                                 <Link
                                     href={registerHref}
                                     className="text-blue-600 hover:underline"
                                 >
-                                    注册
+                                    {t("login.register")}
                                 </Link>
                             </p>
                         </div>

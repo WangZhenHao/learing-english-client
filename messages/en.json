@@ -1,4 +1,51 @@
 {
+    "layout": {
+        "name": "Shadow Reading",
+        "lefeSlide": {
+            "home": "Back to Home",
+            "course": "Courses",
+            "my-course": "My Courses",
+            "create": "Create Course"
+        },
+        "category": {
+            "all": "All",
+            "other": "Other"
+        }
+    },
+    "course": {
+        "speakingMode": "Shadowing Mode",
+        "writringMode": "Dictation Mode",
+        "study": "Study",
+        "confirmTitle": "Are you sure you want to delete this?",
+        "status": {
+            "0": "Generating",
+            "1": "Success",
+            "2": "Generation Failed"
+        }
+    },
+    "create": {
+        "owerLangLabel": "My Native Language",
+        "targetLangLabel": "Target Language",
+        "characterLabel": "Voice Character",
+        "speakRateLabel": "Speaking Speed",
+        "categoryLabel": "Category",
+        "areaPlaceholder": "Please enter the content (approximately 150–3000 characters)",
+        "submit": "Generate Audio Article",
+        "submitting": "Generating, this may take 1–2 minutes. Please wait...",
+        "submitCount": "Generate audio article, remaining attempts today: {count}",
+        "dialogContent": "Confirm Content",
+        "dialogTitleLabel": "Article Title",
+        "dialogSentenceLabel": "Content",
+        "dialogSubmit": "Generate Audio Article",
+        "tologin": "Go to Login",
+        "check": {
+            "textError": "Please enter content",
+            "langError": "The native language and target language cannot be the same",
+            "textLengError": "Please enter at least 150 characters",
+            "sumbitSuccess": "Article created successfully"
+        }
+    },
+    
     "home": {
         "title": "Shadowing Practice",
         "subTitle": " AI-Powered Tool",

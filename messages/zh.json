@@ -1,4 +1,89 @@
 {
+    "login": {
+        "emailLabel": "邮箱",
+        "pleaseInput": "请输入",
+        "passwordLabel": "密码",
+        "forgetPassword": "忘记密码？",
+        "inmmidateFound": "立即找回",
+        "login": "登录",
+        "logining": "登录中...",
+        "dontHavaAccount": "还没有账号？",
+        "register": "注册"
+    },
+    "register": {
+        "title": "注册影跟读账号",
+        "description": "创建您的账户",
+        "emailLabel": "邮箱",
+        "emailPlaceholder": "请输入您的邮箱",
+        "codeLabel": "邮箱验证码",
+        "codePlaceholder": "请输入您的邮箱验证码",
+        "passwordLabel": "密码",
+        "passwordPlaceholder": "密码",
+        "confirmPasswordLabel": "确认密码",
+        "confirmPasswordPlaceholder": "二次确认密码",
+        "submit": "注册",
+        "submitting": "注册中...",
+        "success": "注册成功！",
+        "errors": {
+            "emailRequired": "请输入邮箱",
+            "emailInvalid": "请输入正确的邮箱",
+            "passwordNotMatch": "两次输入的密码不一致",
+            "passwordTooShort": "密码长度至少为6位",
+            "codeRequired": "请输入验证码",
+            "codeLength": "验证码长度为6位"
+        },
+        "footer": {
+            "hasAccount": "已有账户？",
+            "login": "登录"
+        }
+    },
+    "forget": {},
+    "layout": {
+        "name": "影跟读",
+        "lefeSlide": {
+            "home": "返回主页",
+            "course": "课程",
+            "my-course": "我的课程",
+            "create": "创建课程"
+        },
+        "category": {
+            "all": "全部",
+            "other": "其他"
+        }
+    },
+    "course": {
+        "speakingMode": "跟读模式",
+        "writringMode": "听写模式",
+        "study": "学习",
+        "confirmTitle": "确定要删除吗？",
+        "status": {
+            "0": "生成中",
+            "1": "成功",
+            "2": "生成失败"
+        }
+    },
+    "create": {
+        "owerLangLabel": "我的母语",
+        "targetLangLabel": "学习目标语言",
+        "characterLabel": "发音人物",
+        "speakRateLabel": "说话速度",
+        "categoryLabel": "分类",
+        "areaPlaceholder": "请输入内容,大概150-3000个字",
+        "submit": "生成语音文章",
+        "submitting": "生成中，1-2分钟完成，请稍等...",
+        "submitCount": "生成语音文章, 今天剩余次数{count}",
+        "dialogContent": "确认内容",
+        "dialogTitleLabel": "文章标题",
+        "dialogSentenceLabel": "内容",
+        "dialogSubmit": "生成语音文章",
+        "tologin": "去登录",
+        "check": {
+            "textError": "请输入内容",
+            "langError": "母语和目标语言不能相同",
+            "textLengError": "请输入至少150个字符",
+            "sumbitSuccess": "创建文章成功"
+        }
+    },
     "home": {
         "title": "影子跟读",
         "subTitle": "AI学习工具",

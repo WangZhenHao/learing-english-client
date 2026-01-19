@@ -1,5 +1,5 @@
 "use client";
-import { Link } from '@/i18n/routing';
+import { Link } from "@/i18n/routing";
 import dayjs from "dayjs";
 import { Trash2 } from "lucide-react";
 import { deleteArticel } from "@/api/course";
@@ -8,14 +8,16 @@ import { statusMap } from "./map";
 import "./page.scss";
 import { Button } from "@/components/ui/button";
 import { langMap } from "../../create/_components/map";
+import { useTranslations } from "next-intl";
 const App = (props) => {
     const list = props.data;
     const canDelete = props.canDelete;
+    const t = useTranslations("course");
     // const deleteArticel = props.deleteArticel || function(){}
     const deleteArticelHadnle = async (event, item) => {
         event.preventDefault();
         try {
-            if (confirm("确定要删除吗？")) {
+            if (confirm(t('confirmTitle'))) {
                 await deleteArticel(item.id);
                 window.location.reload();
             }
@@ -40,11 +42,15 @@ const App = (props) => {
                                                 : "text-red-500"
                                         }`}
                                     >
-                                        音频{statusMap[item.status]}
+                                        {/* {statusMap[item.status]} */}
+                                        {t(`status.${item.status}`)}
                                     </span>
                                 </div>
                             )}
-                            <Link className="block" href={`${props.route}/${item.id}`}>
+                            <Link
+                                className="block"
+                                href={`${props.route}/${item.id}`}
+                            >
                                 <img
                                     className="item-img w-full"
                                     src={
@@ -66,7 +72,8 @@ const App = (props) => {
                             <div className="pl-2">
                                 <Link href={`${props.route}/${item.id}`}>
                                     <Button size="sm" variant="outline">
-                                        跟读模式
+                                        {/* 跟读模式 */}
+                                        {t("speakingMode")}
                                     </Button>
                                 </Link>
                                 <Link
@@ -74,17 +81,16 @@ const App = (props) => {
                                     className="ml-2"
                                 >
                                     <Button size="sm" variant="outline">
-                                        听写模式
+                                        {/* 听写模式 */}
+                                        {t("writringMode")}
                                     </Button>
                                 </Link>
                             </div>
                             <div className="flex justify-between px-2 py-2 text-[12px] text-[#999]">
                                 <span>
-                                    {dayjs(item.createdAt).format(
-                                        "YYYY-MM-DD"
-                                    )}
+                                    {dayjs(item.createdAt).format("YYYY-MM-DD")}
                                 </span>
-                                <span>学习：{langMap[item.targetLang]}</span>
+                                <span>{t("study")}：{langMap[item.targetLang]}</span>
                                 {/* {item.views ? (
                                         <span>浏览量：{item.views}</span>
                                     ) : (

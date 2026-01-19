@@ -24,7 +24,7 @@ export default function SelectCatergory(props) {
     return (
         <Select onValueChange={props.onChange} value={props.value}>
             <SelectTrigger>
-                <SelectValue placeholder="选择分类" />
+                <SelectValue placeholder={props.placeholder} />
             </SelectTrigger>
             <SelectContent>
                 {catergory.map((item, index) => {

@@ -1,15 +1,18 @@
 "use client";
-import { Link } from '@/i18n/routing';
+import { Link } from "@/i18n/routing";
 import style from "./componet.module.css";
-import { linkList  } from './data'
+import { linkList } from "./data";
 import { usePathname } from "next/navigation";
+import { useTranslations } from "next-intl";
 const App = () => {
     const pathname = usePathname();
-    
+    const t = useTranslations("layout");
+
     return (
         <div className={`bg-[#fafafa] ${style.leftSider} p-2 left-silde-wrap`}>
             {linkList.map((item) => {
-                const isActive = pathname.indexOf(item.href) > -1 && item.active !== false;
+                const isActive =
+                    pathname.indexOf(item.href) > -1 && item.active !== false;
                 return (
                     <Link
                         key={item.name}
@@ -20,7 +23,7 @@ const App = () => {
                         }`}
                         href={item.href}
                     >
-                        {item.icon} <span className="pl-2">{item.name}</span>
+                        {item.icon} <span className="pl-2">{t(`lefeSlide.${item.id}`)}</span>
                     </Link>
                 );
             })}
