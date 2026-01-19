@@ -1,4 +1,42 @@
 {
+    "login": {
+        "emailLabel": "Email",
+        "pleaseInput": "Please enter",
+        "passwordLabel": "Password",
+        "forgetPassword": "Forgot password?",
+        "inmmidateFound": "Recover now",
+        "login": "Log in",
+        "logining": "Logging in...",
+        "dontHaveAccount": "Don’t have an account?",
+        "register": "Sign up"
+    },
+    "register": {
+        "title": "Create a Shadow Reading Account",
+        "description": "Create your account",
+        "emailLabel": "Email",
+        "emailPlaceholder": "Enter your email",
+        "codeLabel": "Email verification code",
+        "codePlaceholder": "Enter the verification code",
+        "passwordLabel": "Password",
+        "passwordPlaceholder": "Password",
+        "confirmPasswordLabel": "Confirm password",
+        "confirmPasswordPlaceholder": "Re-enter your password",
+        "submit": "Sign up",
+        "submitting": "Signing up...",
+        "success": "Registration successful!",
+        "errors": {
+            "emailRequired": "Please enter your email",
+            "emailInvalid": "Please enter a valid email address",
+            "passwordNotMatch": "The passwords do not match",
+            "passwordTooShort": "Password must be at least 6 characters",
+            "codeRequired": "Please enter the verification code",
+            "codeLength": "The verification code must be 6 digits"
+        },
+        "footer": {
+            "hasAccount": "Already have an account?",
+            "login": "Log in"
+        }
+    },
     "layout": {
         "name": "Shadow Reading",
         "lefeSlide": {
@@ -45,7 +83,6 @@
             "sumbitSuccess": "Article created successfully"
         }
     },
-    
     "home": {
         "title": "Shadowing Practice",
         "subTitle": " AI-Powered Tool",

@@ -129,7 +129,7 @@ const LoginPage = () => {
                         <Separator className="my-4" />
                         <div className="text-center text-sm">
                             <p>
-                                {t("login.dontHavaAccount")}{" "}
+                                {t("login.dontHaveAccount")}{" "}
                                 <Link
                                     href={registerHref}
                                     className="text-blue-600 hover:underline"
