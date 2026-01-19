@@ -24,3 +24,11 @@ export const speakRateMap = {
     '1.2': 'x1.2',
     '1.5': 'x1.5',
 }
+
+export const transtlateRateMap = {
+    '0.5': 'half',
+    '0.8': 'pointEight',
+    '1': 'one',
+    '1.2': 'oneTwo',
+    '1.5': 'oneFive',
+}

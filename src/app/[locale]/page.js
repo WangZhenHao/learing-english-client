@@ -5,15 +5,22 @@ import { Link } from "@/i18n/routing";
 import BottomFooter from "./_components/BottomFooter";
 import { langMap } from "./(home)/create/_components/map";
 import { useTranslations } from "next-intl";
+import LangSwitch from "./_components/LangSwitch";
 export default function HomePage() {
     const langArr = Object.keys(langMap);
     const t = useTranslations("home");
-    const languageMap = useTranslations('language')
+    const languageMap = useTranslations("language");
     // console.log(languageMap('zh'))
     // debugger
     return (
         <div>
             <main className="home-container">
+                <div
+                    className="absolute"
+                    style={{ right: "10px", top: "10px", zIndex: 100 }}
+                >
+                    <LangSwitch />
+                </div>
                 {/* Background Gradient */}
                 <div className="bg-layer bg-main"></div>
                 <div className="bg-layer bg-purple-1"></div>
@@ -29,19 +36,27 @@ export default function HomePage() {
                     <h1 className="hero-title">
                         <span className="highlight">{t("title")}</span>
                         <span
-                            // className="text-gradient"
-                            // style={{ "--purple-2": "#ae9ee1" }}
+                        // className="text-gradient"
+                        // style={{ "--purple-2": "#ae9ee1" }}
                         >
                             {t("subTitle")}
                         </span>
                     </h1>
 
                     <p className="hero-desc">
-                        {t('stat.title')}{" "}
-                        <span className="highlight-light">{t('stat.features.0')}</span>、
-                        <span className="highlight-light">{t('stat.features.1')}</span>、
-                        <span className="highlight-light">{t('stat.features.2')}</span>{" "}
-                        {t('stat.end')}
+                        {t("stat.title")}{" "}
+                        <span className="highlight-light">
+                            {t("stat.features.0")}
+                        </span>
+                        、
+                        <span className="highlight-light">
+                            {t("stat.features.1")}
+                        </span>
+                        、
+                        <span className="highlight-light">
+                            {t("stat.features.2")}
+                        </span>{" "}
+                        {t("stat.end")}
                     </p>
 
                     <div className="hero-actions">
@@ -64,7 +79,7 @@ export default function HomePage() {
                 <div className="flex justify-center">
                     <h2 className="px-2.5 text-gradient">
                         {/* 支持{langArr.length}种语言的学习 */}
-                        {t('section1.surrpot', { count: langArr.length })}
+                        {t("section1.surrpot", { count: langArr.length })}
                     </h2>
                 </div>
                 <h3 className="text-[#999] mt-2.5">

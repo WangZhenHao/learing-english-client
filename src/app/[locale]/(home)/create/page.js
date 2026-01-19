@@ -26,7 +26,7 @@ import { Input } from "@/components/ui/input";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import MySelect from "./_components/select";
-import { langMap, charaterMap, speakRateMap } from "./_components/map";
+import { langMap, charaterMap, speakRateMap, transtlateRateMap } from "./_components/map";
 import SelectCatergory from "./_components/SelectCatergory";
 import useAuth from "@app/(auth)/_component/useAuth";
 import "./_components/index.scss";
@@ -46,6 +46,9 @@ const App = () => {
     const [categoryId, setCategoryId] = useState("other");
     const { userInfo, setLocalValue } = useAuth();
     const t = useTranslations("create");
+    const languageMap = useTranslations('language');
+    const characterMap = useTranslations('character')
+    const speakEnRateMap = useTranslations('speakRate')
 
     const loginHanlder = (e) => {
         e.preventDefault();
@@ -191,7 +194,8 @@ const App = () => {
                             list={Object.keys(langMap).map((item) => {
                                 return {
                                     value: item,
-                                    label: langMap[item],
+                                    // label: langMap[item],
+                                    label: languageMap(item)
                                 };
                             })}
                         />
@@ -209,7 +213,8 @@ const App = () => {
                             list={Object.keys(langMap).map((item) => {
                                 return {
                                     value: item,
-                                    label: langMap[item],
+                                    // label: langMap[item],
+                                    label: languageMap(item)
                                 };
                             })}
                         />
@@ -227,7 +232,8 @@ const App = () => {
                             list={Object.keys(charaterMap).map((item) => {
                                 return {
                                     value: item,
-                                    label: charaterMap[item],
+                                    // label: charaterMap[item],
+                                    label: characterMap(item)
                                 };
                             })}
                         />
@@ -245,7 +251,8 @@ const App = () => {
                             list={Object.keys(speakRateMap).map((item) => {
                                 return {
                                     value: item,
-                                    label: speakRateMap[item],
+                                    // label: speakRateMap[item],
+                                    label: speakEnRateMap(transtlateRateMap[item])
                                 };
                             })}
                         />
