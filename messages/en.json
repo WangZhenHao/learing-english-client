@@ -41,6 +41,13 @@
         "register": "Sign up"
     },
     "register": {
+        "sendCode": {
+            "success": "Verification code sent, please check your email",
+            "button": {
+                "sent": "Sent ({count})",
+                "send": "Send Code"
+            }
+        },
         "title": "Create a Shadow Reading Account",
         "description": "Create your account",
         "emailLabel": "Email",

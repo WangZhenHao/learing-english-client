@@ -11,6 +11,13 @@
         "register": "注册"
     },
     "register": {
+        "sendCode": {
+            "success": "验证码已发送，请查收",
+            "button": {
+                "sent": "已发送({count})",
+                "send": "发送验证码"
+            }
+        },
         "title": "注册影跟读账号",
         "description": "创建您的账户",
         "emailLabel": "邮箱",
