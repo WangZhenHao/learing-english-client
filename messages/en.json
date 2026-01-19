@@ -1,4 +1,34 @@
 {
+    "forget": {
+        "title": "Recover Your Shadow Reading Account",
+        "description": "Recover your account",
+        "emailLabel": "Email",
+        "emailPlaceholder": "Enter your email",
+        "emailCodeLabel": "Email verification code",
+        "emailCodePlaceholder": "Enter the verification code",
+        "passwordLabel": "Password",
+        "passwordPlaceholder": "Password",
+        "confirmPasswordLabel": "Confirm password",
+        "confirmPasswordPlaceholder": "Re-enter your password",
+        "imageCodeLabel": "Image verification code",
+        "imageCodePlaceholder": "Enter the image verification code",
+        "submit": "Confirm",
+        "success": "Password updated successfully!",
+        "errors": {
+            "emailRequired": "Please enter your email",
+            "emailInvalid": "Please enter a valid email address",
+            "passwordNotMatch": "The passwords do not match",
+            "passwordTooShort": "Password must be at least 6 characters",
+            "codeRequired": "Please enter the verification code",
+            "codeLength": "The verification code must be 6 digits",
+            "captchaNotFetched": "Please get the verification code first",
+            "captchaRequired": "Please enter the image verification code"
+        },
+        "footer": {
+            "hasAccount": "Already have an account?",
+            "login": "Log in"
+        }
+    },
     "login": {
         "emailLabel": "Email",
         "pleaseInput": "Please enter",

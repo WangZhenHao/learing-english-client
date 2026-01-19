@@ -37,7 +37,36 @@
             "login": "登录"
         }
     },
-    "forget": {},
+    "forget": {
+        "title": "找回影跟读账号",
+        "description": "找回您的账户",
+        "emailLabel": "邮箱",
+        "emailPlaceholder": "请输入您的邮箱",
+        "emailCodeLabel": "邮箱验证码",
+        "emailCodePlaceholder": "请输入您的邮箱验证码",
+        "passwordLabel": "密码",
+        "passwordPlaceholder": "密码",
+        "confirmPasswordLabel": "确认密码",
+        "confirmPasswordPlaceholder": "二次确认密码",
+        "imageCodeLabel": "图形验证码",
+        "imageCodePlaceholder": "请输入您的图形验证码",
+        "submit": "确定",
+        "success": "修改密码成功！",
+        "errors": {
+            "emailRequired": "请输入邮箱",
+            "emailInvalid": "请输入正确的邮箱",
+            "passwordNotMatch": "两次输入的密码不一致",
+            "passwordTooShort": "密码长度至少为6位",
+            "codeRequired": "请输入验证码",
+            "codeLength": "验证码长度为6位",
+            "captchaNotFetched": "请先获取验证码",
+            "captchaRequired": "请输入图形验证码"
+        },
+        "footer": {
+            "hasAccount": "已有账户？",
+            "login": "登录"
+        }
+    },
     "layout": {
         "name": "影跟读",
         "lefeSlide": {
