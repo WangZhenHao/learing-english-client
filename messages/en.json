@@ -85,7 +85,8 @@
         "category": {
             "all": "All",
             "other": "Other"
-        }
+        },
+        "logout": "log out"
     },
     "course": {
         "speakingMode": "Shadowing Mode",

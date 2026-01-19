@@ -85,7 +85,8 @@
         "category": {
             "all": "全部",
             "other": "其他"
-        }
+        },
+        "logout": "退出登录"
     },
     "course": {
         "speakingMode": "跟读模式",
