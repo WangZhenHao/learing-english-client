@@ -16,6 +16,12 @@ const { data } = await getList();
     // changeFrequency: 'weekly', // 告诉爬虫更新频率
     priority: 0.8, // 权重
   }))
+  const courseEnUrls = data.list.map((item) => ({
+    url: `${baseUrl}/en/course/detail/${item.id}`,
+    lastModified: new Date(),
+    // changeFrequency: 'weekly', // 告诉爬虫更新频率
+    priority: 0.8, // 权重
+  }))
 
   // 3. 合并静态页面
   return [
@@ -30,6 +36,13 @@ const { data } = await getList();
     //   changeFrequency: 'daily',
       priority: 0.9,
     },
+    {
+      url: `${baseUrl}/en/course`,
+      lastModified: new Date(),
+    //   changeFrequency: 'daily',
+      priority: 0.9,
+    },
     ...courseUrls,
+    ...courseEnUrls
   ]
 }
