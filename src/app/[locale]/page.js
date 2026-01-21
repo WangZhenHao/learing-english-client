@@ -17,7 +17,7 @@ export default function HomePage() {
             <main className="home-container">
                 <div
                     className="absolute"
-                    style={{ right: "10px", top: "10px", zIndex: 100 }}
+                    style={{ right: "10px", top: "10px", zIndex: 10 }}
                 >
                     <LangSwitch />
                 </div>
