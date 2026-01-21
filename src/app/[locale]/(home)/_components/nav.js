@@ -12,6 +12,7 @@ import {
 import useAuth from "@app/(auth)/_component/useAuth";
 import LangSwitch from "@app/_components/LangSwitch";
 import { useTranslations } from "next-intl";
+import style from './componet.module.css'
 
 const App = () => {
     const {
@@ -60,7 +61,7 @@ const App = () => {
                 {userInfo?.id && (
                     <Popover>
                         <PopoverTrigger className="flex items-center cursor-pointer text-[#666]">
-                            <div className="pr-2">
+                            <div className={`pr-2 ${style.navEemilWrap}`}>
                                 {hideSomething(userInfo.email, 3, 4)}
                             </div>
                             <div>
