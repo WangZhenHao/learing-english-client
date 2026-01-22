@@ -6,7 +6,6 @@ const App = ({ keydown }) => {
     return (
         <div
             className="flex justify-center w-full pb-2.5 show-keyboard-wrap"
-            style={{ marginTop: "100px" }}
         >
             <div className="grid grid-cols-3 gap-y-2 gap-x-3 flex-wrap justify-start">
                 {Object.keys(keyBoardMap).map((rowKey) => {

@@ -8,7 +8,6 @@
         height: 64px;
         border-bottom-width: 3px;
         min-width: 106px;
-        
     }
     .active {
         border-color: var(--highlight);
@@ -16,24 +15,23 @@
 
         &::after {
             content: "|";
-            animation: showHideCursor 1s steps(1) infinite
+            animation: showHideCursor 1s steps(1) infinite;
         }
     }
     .right-word {
-        color: #2B9A66;
-        border-color: #2B9A66
+        color: #2b9a66;
+        border-color: #2b9a66;
     }
     .wrong-word {
-        color: #E03E2F;
-        border-color: #E03E2F
+        color: #e03e2f;
+        border-color: #e03e2f;
     }
-
-   
 }
 
 .show-keyboard-wrap {
+    margin-top: 100px;
     .green-btn {
-        background-color: #2B9A66;
+        background-color: #2b9a66;
         color: #fff;
     }
 }
@@ -45,7 +43,6 @@
         height: 26px;
         border-bottom-width: 2px;
         min-width: 50px;
-        
     }
 }
 
@@ -53,14 +50,43 @@
     height: 8px;
     border-radius: 8px;
     .process {
-        background-color: #2B9A66;
+        background-color: #2b9a66;
         transition: width 0.5s ease-in-out;
     }
-    
 }
 
 @keyframes showHideCursor {
     50% {
         visibility: hidden;
+    }
+}
+
+@media (min-width: 0px) and (max-width: 768px) {
+    .sentent-wrap {
+        margin: 30px auto 20px;
+        font-size: 20px;
+
+        .item-word {
+            height: 30px;
+            border-bottom-width: 2px;
+            min-width: 46px;
+        }
+    }
+    .show-keyboard-wrap {
+        padding: 10px;
+        font-size: 14px;
+        margin-top: 30px;
+        .grid-cols-3 {
+            grid-template-columns: repeat(2, 1fr);
+        }
+    }
+
+    .setting-nav-wrap {
+        .setting-nav-title {
+            display: none;
+        }
+        .nav-score-detail {
+            max-width: 150px;
+        }
     }
 }

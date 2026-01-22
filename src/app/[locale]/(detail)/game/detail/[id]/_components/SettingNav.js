@@ -118,11 +118,11 @@ const App = ({
     return (
         <>
             <div
-                className="flex items-center p-2.5 border-b border-border justify-between"
+                className="flex items-center p-2.5 border-b border-border justify-between setting-nav-wrap"
                 style={{ height: "64px" }}
             >
                 <div
-                    className="font-bold"
+                    className="font-bold setting-nav-title"
                     dangerouslySetInnerHTML={{ __html: title }}
                 ></div>
                 <div className="pl-2.5 flex items-center">
@@ -139,7 +139,7 @@ const App = ({
                         <RefreshCcwDot />
                         <span className="pl-1.5">{t("reset")}</span>
                     </Button>
-                    <div>
+                    <div className="nav-score-detail">
                         {/* 总分100分，共{score.totalCount}填空，每个
                         {score.perScore}分 */}
                         {t("gameScoreDetail", {
