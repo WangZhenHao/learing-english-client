@@ -89,7 +89,7 @@ export const keyBoardMap = {
   "Command/ctrl + enter": { name: '整句发音', event: { ctrlKey: 'ctrl', key: "enter" } },
   "Command/ctrl + ↑": { name: '隐藏/查看全部答案', event: { ctrlKey: 'ctrl', key: "arrowup" } },
   "Command/ctrl + ↓": { name: '隐藏/查看单词答案', event: { ctrlKey: 'ctrl', key: "arrowdown" } },
-  "Command/ctrl + →": { name: '下一题', event: { ctrlKey: 'ctrl', key: "arrowright" }},
+  "Command/ctrl + →": { name: '校验/下一题', className: 'green-btn', event: { ctrlKey: 'ctrl', key: "arrowright" }},
   "Command/ctrl + ←": { name: '上一题', event: { ctrlKey: 'ctrl', key: "arrowleft" } },
   // "Command/alt + ↓": { name: '查看答案' },
 }

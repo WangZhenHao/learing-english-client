@@ -1,4 +1,33 @@
 {
+    "game": {
+        "keyboard": {
+            "space": "下一个单词",
+            "enter": "单词发音",
+            "Command/ctrl + enter": "整句发音",
+            "Command/ctrl + ↑": "隐藏/查看全部答案",
+            "Command/ctrl + ↓": "隐藏/查看单词答案",
+            "Command/ctrl + →": "校验/下一题",
+            "Command/ctrl + ←": "上一题"
+        },
+        "dictationEum": {
+            "100": "全部",
+            "unit": "个"
+        },
+        "setting": {
+            "selectHide": "默写",
+            "reset": "重置",
+            "gameScoreDetail": "总分100分,共{totalCount}填空，每个{perScore}分",
+            "dialgoTip": "提示",
+            "dialgoDesription": "确定重置当前听写吗？",
+            "dialgoConfirm": "确定",
+            "dialgoCancel": "取消",
+            "close": "关闭",
+            "resultTip": "恭喜，完成所有题目！",
+            "resultScore": "得分",
+            "resultScoreDetail": "正确: {rightCount}个，正确率",
+            "process": "进度"
+        }
+    },
     "login": {
         "emailLabel": "邮箱",
         "pleaseInput": "请输入",

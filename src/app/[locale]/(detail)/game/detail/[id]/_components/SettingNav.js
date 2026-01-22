@@ -21,6 +21,7 @@ import {
     SelectValue,
 } from "@/components/ui/select";
 import { useState } from "react";
+import { useTranslations } from "next-intl";
 const selectOptions = [
     {
         value: "100",
@@ -73,6 +74,8 @@ const App = ({
     reset,
     handleSelectWord = function () {},
 }) => {
+    const t = useTranslations("game.setting");
+    const dictationEum = useTranslations("game.dictationEum");
     const [open, setOpen] = useState(false);
     const [word, setWord] = useState("5");
     const showResePoptHandle = () => {
@@ -97,7 +100,10 @@ const App = ({
                 <SelectContent>
                     {selectOptions.map((item) => (
                         <SelectItem key={item.value} value={item.value}>
-                            {item.label}
+                            {item.value !== '100' && item.value}&nbsp;&nbsp;
+                            {dictationEum.has(item.value)
+                                ? dictationEum(item.value)
+                                : dictationEum("unit")}
                         </SelectItem>
                     ))}
                     {/* <SelectItem value="1">1</SelectItem> */}
@@ -121,7 +127,7 @@ const App = ({
                 ></div>
                 <div className="pl-2.5 flex items-center">
                     <div className="flex items-center mr-2">
-                        <span>默写：</span>
+                        <span>{t("selectHide")}：</span>
                         <SelectCom />
                     </div>
                     <Button
@@ -131,11 +137,15 @@ const App = ({
                         onClick={showResePoptHandle}
                     >
                         <RefreshCcwDot />
-                        <span className="pl-1.5">重置</span>
+                        <span className="pl-1.5">{t("reset")}</span>
                     </Button>
                     <div>
-                        总分100分，共{score.totalCount}填空，每个
-                        {score.perScore}分
+                        {/* 总分100分，共{score.totalCount}填空，每个
+                        {score.perScore}分 */}
+                        {t("gameScoreDetail", {
+                            totalCount: score.totalCount,
+                            perScore: score.perScore,
+                        })}
                     </div>
                 </div>
             </div>
@@ -143,16 +153,18 @@ const App = ({
                 {/* <AlertDialogTrigger>Open</AlertDialogTrigger> */}
                 <AlertDialogContent>
                     <AlertDialogHeader>
-                        <AlertDialogTitle>提示</AlertDialogTitle>
+                        <AlertDialogTitle>{t("dialgoTip")}</AlertDialogTitle>
                         <AlertDialogDescription>
-                            确定重置当前听写吗？
+                            {t("dialgoDesription")}
                         </AlertDialogDescription>
                     </AlertDialogHeader>
                     <AlertDialogFooter>
                         <AlertDialogCancel onClick={() => setOpen(false)}>
-                            取消
+                            {t("dialgoCancel")}
                         </AlertDialogCancel>
-                        <Button onClick={resetHandle}>确定</Button>
+                        <Button onClick={resetHandle}>
+                            {t("dialgoConfirm")}
+                        </Button>
                     </AlertDialogFooter>
                 </AlertDialogContent>
             </AlertDialog>

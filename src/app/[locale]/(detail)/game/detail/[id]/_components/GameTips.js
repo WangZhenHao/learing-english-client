@@ -2,10 +2,14 @@
 import { Button } from "@/components/ui/button";
 // import { forwardRef, useImperativeHandle } from "react";
 import { toast } from "sonner";
+import { useTranslations } from "next-intl";
+
 const toasterId = "GameTips";
 
 let targetToast;
 const showTipsDetail = (wordLsit, showList, sentence = {}) => {
+    const t = useTranslations("game.setting");
+
     return (
         <div>
             <div className="relative flex flex-wrap justify-center gap-1 sentent-wrap game-wrap">
@@ -34,11 +38,13 @@ const showTipsDetail = (wordLsit, showList, sentence = {}) => {
                 }}
             ></div>
             <div className="flex justify-end">
-                <Button onClick={() => {
-                    toast.dismiss(targetToast);
-                    targetToast = null;
-                }}>
-                    关闭（Commnd/ctrl + ↑/↓ ）
+                <Button
+                    onClick={() => {
+                        toast.dismiss(targetToast);
+                        targetToast = null;
+                    }}
+                >
+                    {t("close")}（Commnd/ctrl + ↑/↓ ）
                 </Button>
             </div>
         </div>
@@ -59,8 +65,8 @@ export default function showTips(wordLsit, showList, sentence) {
         duration: Infinity,
         toasterId,
         style: {
-            "--width": wordLsit.length === 1 ? "300px" : "1200px"
-        }
+            "--width": wordLsit.length === 1 ? "300px" : "1200px",
+        },
     });
 }
 

@@ -1,4 +1,33 @@
 {
+    "game": {
+        "keyboard": {
+            "space": "Next Word",
+            "enter": "Word Pronunciation",
+            "Command/ctrl + enter": "Sentence Pronunciation",
+            "Command/ctrl + ↑": "Hide/Show All Answers",
+            "Command/ctrl + ↓": "Hide/Show Word Answer",
+            "Command/ctrl + →": "Check/Next Question",
+            "Command/ctrl + ←": "Previous Question"
+        },
+        "dictationEum": {
+            "100": "All",
+            "unit": "Word"
+        },
+        "setting": {
+            "selectHide": "Dictation",
+            "reset": "Reset",
+            "gameScoreDetail": "Total: 100 points, {totalCount} blanks, {perScore} points each",
+            "dialgoTip": "Hint",
+            "dialgoDesription": "Are you sure you want to reset the current dictation?",
+            "dialgoConfirm": "Confirm",
+            "dialgoCancel": "Cancel",
+            "close": "Close",
+            "resultTip": "Congratulations, you've completed all questions!",
+            "resultScore": "Score",
+            "resultScoreDetail": "Correct: {rightCount}, Accuracy",
+            "process": "Progress"
+        }
+    },
     "forget": {
         "title": "Recover Your Shadow Reading Account",
         "description": "Recover your account",

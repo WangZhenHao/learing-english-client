@@ -1,8 +1,11 @@
+import { useTranslations } from "next-intl";
 import { keyBoardMap } from "./utils";
 const App = ({ keydown }) => {
+    const t = useTranslations("game.keyboard");
+
     return (
         <div
-            className="flex justify-center w-full pb-2.5"
+            className="flex justify-center w-full pb-2.5 show-keyboard-wrap"
             style={{ marginTop: "100px" }}
         >
             <div className="grid grid-cols-3 gap-y-2 gap-x-3 flex-wrap justify-start">
@@ -10,7 +13,11 @@ const App = ({ keydown }) => {
                     return (
                         <div key={rowKey}>
                             <span
-                                className="bg-gray-100 px-2 py-1 rounded-md cursor-pointer"
+                                className={`bg-gray-100 px-2 py-1 rounded-md cursor-pointer ${
+                                    keyBoardMap[rowKey].className
+                                        ? keyBoardMap[rowKey].className
+                                        : ""
+                                }`}
                                 onClick={() =>
                                     keydown(keyBoardMap[rowKey].event)
                                 }
@@ -18,7 +25,8 @@ const App = ({ keydown }) => {
                                 {rowKey}
                             </span>
                             <span className="ml-1 text-[#666]">
-                                {keyBoardMap[rowKey].name}
+                                {/* {keyBoardMap[rowKey].name} */}
+                                {t(`${rowKey}`)}
                             </span>
                         </div>
                     );
