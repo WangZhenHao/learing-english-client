@@ -173,8 +173,12 @@ const App = ({ data: { content, subtitle = [], title }, audioSrc }) => {
         };
     }, [wordIndex, writeWord, sentenceIndex, wordDataArrMap]);
 
-    const resetAll = () => {
-        const { content } = addHideWord(subtitle, 5);
+    const handleSelectWord = (val) => {
+        resetAll(val)
+    }
+
+    const resetAll = (val) => {
+        const { content } = addHideWord(subtitle, val);
         setWordDataArrMap(content);
         setScore(checkScore(content));
         setSentenceIndex(0);
@@ -207,7 +211,7 @@ const App = ({ data: { content, subtitle = [], title }, audioSrc }) => {
                 position="top-center"
                 id="GameTips"
             />
-            <SettingNav title={title} score={score} reset={resetAll} />
+            <SettingNav title={title} score={score} reset={resetAll} handleSelectWord={handleSelectWord} />
             <Process step={sentenceIndex + 1} total={content.length} />
             <div className="flex flex-wrap">
                 <div className="relative flex flex-wrap justify-center gap-2 sentent-wrap">

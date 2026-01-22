@@ -12,12 +12,103 @@ import {
     AlertDialogTitle,
     AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
+import {
+    Select,
+    SelectContent,
+    SelectGroup,
+    SelectItem,
+    SelectTrigger,
+    SelectValue,
+} from "@/components/ui/select";
 import { useState } from "react";
-const App = ({ title = "", score, reset }) => {
+const selectOptions = [
+    {
+        value: "100",
+        label: "全部",
+    },
+    {
+        value: "1",
+        label: "1个",
+    },
+    {
+        value: "2",
+        label: "2个",
+    },
+    {
+        value: "3",
+        label: "3个",
+    },
+    {
+        value: "4",
+        label: "4个",
+    },
+    {
+        value: "5",
+        label: "5个",
+    },
+    {
+        value: "6",
+        label: "6个",
+    },
+    {
+        value: "7",
+        label: "7个",
+    },
+    {
+        value: "8",
+        label: "8个",
+    },
+    {
+        value: "9",
+        label: "9个",
+    },
+    {
+        value: "10",
+        label: "10个",
+    },
+];
+const App = ({
+    title = "",
+    score,
+    reset,
+    handleSelectWord = function () {},
+}) => {
     const [open, setOpen] = useState(false);
-    const resetHandle = () => {
+    const [word, setWord] = useState("5");
+    const showResePoptHandle = () => {
         setOpen(true);
     };
+    const selectWordHandle = (value) => {
+        setWord(value);
+        handleSelectWord(Number(value));
+    };
+
+    const resetHandle = () => {
+        reset(Number(word));
+        setOpen(false);
+    };
+
+    const SelectCom = () => {
+        return (
+            <Select onValueChange={selectWordHandle} value={word}>
+                <SelectTrigger>
+                    <SelectValue placeholder="请选择" />
+                </SelectTrigger>
+                <SelectContent>
+                    {selectOptions.map((item) => (
+                        <SelectItem key={item.value} value={item.value}>
+                            {item.label}
+                        </SelectItem>
+                    ))}
+                    {/* <SelectItem value="1">1</SelectItem> */}
+                    {/* <SelectItem value="2">2</SelectItem>
+                    <SelectItem value="3">3</SelectItem>
+                    <SelectItem value="4">4</SelectItem> */}
+                </SelectContent>
+            </Select>
+        );
+    };
+
     return (
         <>
             <div
@@ -29,11 +120,15 @@ const App = ({ title = "", score, reset }) => {
                     dangerouslySetInnerHTML={{ __html: title }}
                 ></div>
                 <div className="pl-2.5 flex items-center">
+                    <div className="flex items-center mr-2">
+                        <span>默写：</span>
+                        <SelectCom />
+                    </div>
                     <Button
                         className="flex items-center mr-2"
                         variant="outline"
                         size="sm"
-                        onClick={resetHandle}
+                        onClick={showResePoptHandle}
                     >
                         <RefreshCcwDot />
                         <span className="pl-1.5">重置</span>
@@ -57,14 +152,7 @@ const App = ({ title = "", score, reset }) => {
                         <AlertDialogCancel onClick={() => setOpen(false)}>
                             取消
                         </AlertDialogCancel>
-                        <Button
-                            onClick={() => {
-                                reset();
-                                setOpen(false);
-                            }}
-                        >
-                            确定
-                        </Button>
+                        <Button onClick={resetHandle}>确定</Button>
                     </AlertDialogFooter>
                 </AlertDialogContent>
             </AlertDialog>

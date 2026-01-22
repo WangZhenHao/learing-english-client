@@ -1,4 +1,4 @@
-export function addHideWord(arr, N) {
+export function addHideWord(arr, N = 5) {
     let totalCount = 0;
     const newArr = arr.map((list) => {
         // 防止 N 大于当前数组长度
