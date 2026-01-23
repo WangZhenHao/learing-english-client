@@ -52,7 +52,7 @@ import { routing } from "./i18n/routing";
 
 const i18nMiddleware = createMiddleware(routing);
 
-const needLogin = ["/my-course", "/my-course/detail"];
+const needLogin = ["/my-course", "/my-course/detail", '/my-game/detail'];
 const whiteList = ["/login", "/register", "/forget"];
 
 export default function middleware(request) {

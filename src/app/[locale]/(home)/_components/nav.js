@@ -12,7 +12,8 @@ import {
 import useAuth from "@app/(auth)/_component/useAuth";
 import LangSwitch from "@app/_components/LangSwitch";
 import { useTranslations } from "next-intl";
-import style from './componet.module.css'
+import style from "./componet.module.css";
+import { Link } from "@/i18n/routing";
 
 const App = () => {
     const {
@@ -20,7 +21,7 @@ const App = () => {
         setCookie: setToken,
         setLocalValue: setUserInfo,
     } = useAuth();
-    const t = useTranslations('layout')
+    const t = useTranslations("layout");
     // const [userInfo, setUserInfo] = useLocalStorageState("userInfo", {
     //     defaultValue: {},
     // });
@@ -50,10 +51,17 @@ const App = () => {
 
     return (
         <header className="relative z-20 flex h-[50px] items-center justify-between bg-[#fafafa] px-3 dark:border-gray-800/50 dark:bg-black">
-            <div className="flex items-center">
-                <img src="/logo2.png" alt="logo" style={{ width: "32px" }} />
-                <span className="pl-2 font-bold">{t('name')}</span>
-            </div>
+            <Link href="/">
+                <div className="flex items-center">
+                    <img
+                        src="/logo2.png"
+                        alt="logo"
+                        style={{ width: "32px" }}
+                    />
+                    <span className="pl-2 font-bold">{t("name")}</span>
+                </div>
+            </Link>
+
             <div className="flex items-center">
                 <div>
                     <LangSwitch />
@@ -70,7 +78,7 @@ const App = () => {
                         </PopoverTrigger>
                         <PopoverContent>
                             <div className="cursor-pointer" onClick={logout}>
-                                {t('logout')}
+                                {t("logout")}
                             </div>
                         </PopoverContent>
                     </Popover>
