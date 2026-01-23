@@ -3,7 +3,7 @@ import { useTranslations } from "next-intl";
 const BottomFooter = () => {
     const t = useTranslations('home');
     return (
-        <footer className=" section-wrap text-white py-4 footer-wrap">
+        <footer className=" section-wrap text-white py-4 footer-wrap text-[14px]">
             <div className="container mx-auto px-4">
                 <div className="flex flex-col md:flex-row justify-between items-center">
                     <div className="mb-4 md:mb-0">
@@ -22,8 +22,8 @@ const BottomFooter = () => {
                     </div>
                 </div>
                 
-                <div className=" mt-6 pt-6 text-center text-[#999]">
-                    <p><a href="https://beian.miit.gov.cn/" target="_blank" rel="noopener noreferrer">粤ICP备2026008243号</a></p>
+                <div className=" mt-6 pt-6 text-center text-[#999] text-[12px]">
+                    <p>Copyright © {new Date().getFullYear()} 极刻拓新 <a href="https://beian.miit.gov.cn/" target="_blank" rel="noopener noreferrer">粤ICP备2026008243号</a></p>
                 </div>
             </div>
         </footer>
