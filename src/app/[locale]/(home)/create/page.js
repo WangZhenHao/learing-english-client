@@ -121,7 +121,7 @@ const App = () => {
                 toast(t('check.sumbitSuccess'));
                 setTimeout(() => {
                     router.push("/my-course");
-                }, 100)
+                }, 10)
                 getUser();
             })
             .finally(() => {

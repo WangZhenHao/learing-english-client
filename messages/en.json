@@ -166,7 +166,7 @@
             "end": " a learning tool designed to rapidly improve your speaking and listening skills."
         },
         "section1": {
-            "surrpot": "Supports learning in {count} languages"
+            "surrpot": "Supports {count} languages"
         },
         "footer": {
             "about": "About Us",
