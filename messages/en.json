@@ -104,6 +104,8 @@
         }
     },
     "layout": {
+        "notfound": "page not found",
+        "loading": "loading",
         "name": "Shadow Reading",
         "lefeSlide": {
             "home": "Back to Home",

@@ -104,6 +104,8 @@
         }
     },
     "layout": {
+        "notfound": "页面不存在",
+        "loading": "加载中",
         "name": "影跟读",
         "lefeSlide": {
             "home": "返回主页",
