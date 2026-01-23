@@ -119,7 +119,9 @@ const App = () => {
             .then((res) => {
                 setOpen(false);
                 toast(t('check.sumbitSuccess'));
-                router.push("/my-course");
+                setTimeout(() => {
+                    router.push("/my-course");
+                }, 100)
                 getUser();
             })
             .finally(() => {

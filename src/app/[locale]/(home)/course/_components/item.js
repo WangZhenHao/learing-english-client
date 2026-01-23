@@ -13,6 +13,7 @@ const App = (props) => {
     const list = props.data;
     const canDelete = props.canDelete;
     const t = useTranslations("course");
+    const languageMap = useTranslations('language');
     // const deleteArticel = props.deleteArticel || function(){}
     const deleteArticelHadnle = async (event, item) => {
         event.preventDefault();
@@ -90,7 +91,12 @@ const App = (props) => {
                                 <span>
                                     {dayjs(item.createdAt).format("YYYY-MM-DD")}
                                 </span>
-                                <span>{t("study")}：{langMap[item.targetLang]}</span>
+                                <span>
+                                    {t("study")}：
+                                    {/* {langMap[item.targetLang]} */}
+                                    {languageMap(item.targetLang)}
+
+                                </span>
                                 {/* {item.views ? (
                                         <span>浏览量：{item.views}</span>
                                     ) : (
