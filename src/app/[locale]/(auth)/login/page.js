@@ -61,16 +61,20 @@ const LoginPage = () => {
 
             const result = await login({ email, password });
             const token = result.data.token;
-            const res = NextResponse.json({ success: true });
-            // console.log(result);
-            res.cookies.set("Bearer", token, {
-                path: "/",
-                expires: (() =>
-                    new Date(+new Date() + 6 * 24 * 60 * 60 * 1000))(),
-            });
+            // const res = NextResponse.json({ success: true });
+            // // console.log(result);
+            // res.cookies.set("Bearer", token, {
+            //     httpOnly: true,
+            //     path: "/",
+            //     expires: (() =>
+            //         new Date(+new Date() + 6 * 24 * 60 * 60 * 1000))(),
+            // });
             setCookie(token);
             setLocalValue(result.data.user);
-            router.push(callback ? callback : "/course"); // Redirect after login
+            // router.push(callback ? callback : "/course"); // Redirect after login
+            setTimeout(() => {
+                window.location.href = callback ? callback : "/course";
+            }, 100)
         } catch (error) {
             // toast.error("登录失败，请检查您的凭据");
         } finally {

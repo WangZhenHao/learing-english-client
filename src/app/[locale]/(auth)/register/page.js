@@ -65,17 +65,22 @@ const RegisterPage = () => {
         try {
             const result = await register({ email, password, code, confirmPassword });
             const token = result.data.token;
-            const res = NextResponse.json({ success: true });
-            // console.log(result);
-            res.cookies.set("Bearer", token, {
-                path: "/",
-                expires: (() =>
-                    new Date(+new Date() + 6 * 24 * 60 * 60 * 1000))(),
-            });
+            // const res = NextResponse.json({ success: true });
+            // // console.log(result);
+            // res.cookies.set("Bearer", token, {
+            //     httpOnly: true,
+            //     path: "/",
+            //     expires: (() =>
+            //         new Date(+new Date() + 6 * 24 * 60 * 60 * 1000))(),
+            // });
             setCookie(token);
             // setCookie(result.data.token);
             setLocalValue(result.data.user);
-            router.push(callback ? callback : "/course");
+            // router.push(callback ? callback : "/course");
+            setTimeout(() => {
+                window.location.href = callback ? callback : "/course";
+            }, 100)
+            
             toast.success(t('success')); // ✅ REPLACED: Success message
         } catch (error) {
             console.error("Registration failed:", error);
