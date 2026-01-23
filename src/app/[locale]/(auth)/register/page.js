@@ -21,6 +21,7 @@ import useAuth from "../_component/useAuth";
 import { register } from '@/api/login';
 import { Link } from "@/i18n/routing";
 import { useTranslations } from "next-intl";
+import { NextResponse } from "next/server";
 
 const RegisterPage = () => {
     const t = useTranslations('register'); // ✅ ADDED: Register namespace
@@ -63,7 +64,16 @@ const RegisterPage = () => {
 
         try {
             const result = await register({ email, password, code, confirmPassword });
-            setCookie(result.data.token);
+            const token = result.data.token;
+            const res = NextResponse.json({ success: true });
+            // console.log(result);
+            res.cookies.set("Bearer", token, {
+                path: "/",
+                expires: (() =>
+                    new Date(+new Date() + 6 * 24 * 60 * 60 * 1000))(),
+            });
+            setCookie(token);
+            // setCookie(result.data.token);
             setLocalValue(result.data.user);
             router.push(callback ? callback : "/course");
             toast.success(t('success')); // ✅ REPLACED: Success message

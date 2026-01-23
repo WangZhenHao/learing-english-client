@@ -19,6 +19,7 @@ import { login } from "@/api/login";
 import useAuth from "../_component/useAuth";
 import { Link } from "@/i18n/routing";
 import { useTranslations } from "next-intl";
+import { NextResponse } from "next/server";
 
 // import { useCookieState, useLocalStorageState } from "ahooks";
 const LoginPage = () => {
@@ -36,9 +37,9 @@ const LoginPage = () => {
     const forgetHref = `/forget${
         searchParams.toString() ? `?${searchParams.toString()}` : ""
     }`;
-    const { setCookie: setValue, setLocalValue } = useAuth();
+    const { setCookie, setLocalValue } = useAuth();
 
-    // const [, setValue] = useCookieState("Bearer", {
+    // const [, setCookie] = useCookieState("Bearer", {
     //     defaultValue: "",
     //     path: "/",
     //     expires: (() => new Date(+new Date() + 6 * 24 * 60 * 60 * 1000))(),
@@ -59,8 +60,15 @@ const LoginPage = () => {
             }
 
             const result = await login({ email, password });
+            const token = result.data.token;
+            const res = NextResponse.json({ success: true });
             // console.log(result);
-            setValue(result.data.token);
+            res.cookies.set("Bearer", token, {
+                path: "/",
+                expires: (() =>
+                    new Date(+new Date() + 6 * 24 * 60 * 60 * 1000))(),
+            });
+            setCookie(token);
             setLocalValue(result.data.user);
             router.push(callback ? callback : "/course"); // Redirect after login
         } catch (error) {
