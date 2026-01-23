@@ -158,7 +158,7 @@
 @media (min-width: 0px) and (max-width: 768px) {
   .right-silde-wrap {
     border-radius: 0;
-    height: calc(100vh - 50px - 50px);
+    height: calc(100dvh - 50px - 50px);
   }
 
   .left-silde-wrap {
