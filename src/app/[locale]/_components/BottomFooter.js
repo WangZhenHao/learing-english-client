@@ -22,8 +22,8 @@ const BottomFooter = () => {
                     </div>
                 </div>
                 
-                <div className="border-t border-gray-700 mt-6 pt-6 text-center text-[#999]">
-                    <p>&copy; {new Date().getFullYear()} 英语学习平台. 保留所有权利.</p>
+                <div className=" mt-6 pt-6 text-center text-[#999]">
+                    <p><a href="https://beian.miit.gov.cn/" target="_blank" rel="noopener noreferrer">粤ICP备2026008243号</a></p>
                 </div>
             </div>
         </footer>
