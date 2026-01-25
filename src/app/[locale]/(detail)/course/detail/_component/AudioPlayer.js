@@ -150,7 +150,7 @@ export default forwardRef((props, ref) => {
             if (Hls.isSupported()) {
                 // alert("HLS")
                 hls = new Hls({
-                    enableWorker: false
+                    enableWorker: false,
                 });
                 hlsRef.current = hls;
                 // 绑定事件和加载源
@@ -206,7 +206,10 @@ export default forwardRef((props, ref) => {
                     <div
                         className={`h-full ${style.progressBar}`}
                         style={{
-                            width: (currentTime / totalDuration) * 100 + "%",
+                            width:
+                                currentTime === 0
+                                    ? 0
+                                    : (currentTime / totalDuration) * 100 + "%",
                         }}
                     ></div>
                 </div>
