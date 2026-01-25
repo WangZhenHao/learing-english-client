@@ -1,7 +1,13 @@
+"use client"
 import { useTranslations } from "next-intl";
+import { useEffect, useState } from "react";
 
 const BottomFooter = () => {
     const t = useTranslations('home');
+    const [year, setYear] = useState()
+    useEffect(() => {
+        setYear(new Date().getFullYear())
+    }, [])
     return (
         <footer className=" section-wrap text-white py-4 footer-wrap text-[14px]">
             <div className="container mx-auto px-4">
@@ -23,7 +29,7 @@ const BottomFooter = () => {
                 </div>
                 
                 <div className=" mt-6 pt-6 text-center text-[#999] text-[12px]">
-                    <p>Copyright © {new Date().getFullYear()} 极刻拓新 <a href="https://beian.miit.gov.cn/" target="_blank" rel="noopener noreferrer">粤ICP备2026008243号</a></p>
+                    <p>Copyright © {year} 极刻拓新 <a href="https://beian.miit.gov.cn/" target="_blank" rel="noopener noreferrer">粤ICP备2026008243号</a></p>
                 </div>
             </div>
         </footer>

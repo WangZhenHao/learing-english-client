@@ -40,7 +40,7 @@ export default async function RootLayout({ children, params }) {
     const messages = await getMessages();
     // console.log("messages", messages);
     return (
-        <html lang={locale}>
+        <html lang={locale} suppressHydrationWarning>
             <body>
                 <Toaster position="top-center" />
                 <NextIntlClientProvider locale={locale} messages={messages}>

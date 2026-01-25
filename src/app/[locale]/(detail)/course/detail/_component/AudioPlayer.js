@@ -149,7 +149,9 @@ export default forwardRef((props, ref) => {
 
             if (Hls.isSupported()) {
                 // alert("HLS")
-                hls = new Hls();
+                hls = new Hls({
+                    enableWorker: false
+                });
                 hlsRef.current = hls;
                 // 绑定事件和加载源
                 hls.attachMedia(audio);
