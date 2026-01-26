@@ -117,7 +117,7 @@ const ContentWithPlayer = ({ contentData, audioSrc, subTitleDate = [] }) => {
     return (
         <>
             {/* 2. 渲染内容和按钮 */}
-            <div className="content-wrap text-[#333] pb-5">
+            <div className="content-wrap text-[#333] pb-5" id="courseDetail">
                 {sentenceDate.map((item, index) => {
                     const isActive = index === activeSentenceIndex;
                     return (

@@ -39,7 +39,7 @@ According to the deal, the algorithm will be retrained on US user data only, whi
                 <Input onChange={(e) => setText(e.target.value)} />
                 <Button onClick={toTranslate}>点击</Button>
             </div>
-            <TranslatePop />
+            <TranslatePop areaId="#test" language="english" />
         </>
     );
 };

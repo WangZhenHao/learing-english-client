@@ -120,6 +120,8 @@
         "logout": "log out"
     },
     "course": {
+        "examples": "example",
+        "definition": "definition",
         "speakingMode": "Speaking",
         "writringMode": "Writing",
         "study": "Study",
@@ -128,7 +130,9 @@
             "0": "Generating",
             "1": "Success",
             "2": "Generation Failed"
-        }
+        },
+        "confirmBtn": "Confirm",
+        "search": "Search"
     },
     "create": {
         "owerLangLabel": "My Native Language",

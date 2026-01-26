@@ -13,6 +13,7 @@ const useSelectWord = (id, listener) => {
 
     useEffect(() => {
         const areaDom = document.querySelector(id);
+        if(!areaDom) return;
         areaDom.addEventListener("mouseup", fn);
 
         return () => document.removeEventListener("mouseup", fn);

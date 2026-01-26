@@ -120,6 +120,8 @@
         "logout": "退出登录"
     },
     "course": {
+        "examples": "示例",
+        "definition": "定义",
         "speakingMode": "跟读模式",
         "writringMode": "听写模式",
         "study": "学习",
@@ -128,7 +130,9 @@
             "0": "生成中",
             "1": "成功",
             "2": "生成失败"
-        }
+        },
+        "confirmBtn": "确定",
+        "search": "搜索"
     },
     "create": {
         "owerLangLabel": "我的母语",
