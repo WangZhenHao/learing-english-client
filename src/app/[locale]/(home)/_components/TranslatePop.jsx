@@ -101,6 +101,7 @@ const TranslatePop = (props) => {
         //     setIsOpen(true);
         //     setEntries(res.data);
         // });
+        setIsOpen(true);
         toSeacher(text);
     });
 
