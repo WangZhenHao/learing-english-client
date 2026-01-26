@@ -32,7 +32,7 @@ const Home = () => {
             <div>
                 你好，首页
                 <div id="test">
-                ByteDance had initially refused to part with its prized formula - a stance backed by the Chinese government. But last September, Beijing's top cybersecurity regulator signalled that Beijing could allow ByteDance to license the algorithm to a US company owner.
+                ByteDance had initially refused to part with its prized formula - a stance backed by the Chinese government. But last September, 
 
 According to the deal, the algorithm will be retrained on US user data only, which will be protected to meet American regulations.
                 </div>
