@@ -2,6 +2,7 @@
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages } from "next-intl/server";
 import { Toaster } from "@/components/ui/sonner";
+import Script from "next/script";
 // import { Toaster, toast } from 'sonner';
 import "./globals.css";
 export { metadata } from "@app/_components/metadata";
@@ -41,6 +42,23 @@ export default async function RootLayout({ children, params }) {
     // console.log("messages", messages);
     return (
         <html lang={locale} suppressHydrationWarning>
+            <head>
+                <Script
+                    id="baidu-analytics"
+                    strategy="afterInteractive"
+                    dangerouslySetInnerHTML={{
+                        __html: `
+                        var _hmt = _hmt || [];
+                        (function() {
+                        var hm = document.createElement("script");
+                        hm.src = "https://hm.baidu.com/hm.js?d07f8604a2437e21c0570f9e5c3d1f8d";
+                        var s = document.getElementsByTagName("script")[0];
+                        s.parentNode.insertBefore(hm, s);
+                        })();
+                    `,
+                    }}
+                ></Script>
+            </head>
             <body>
                 <Toaster position="top-center" />
                 <NextIntlClientProvider locale={locale} messages={messages}>
