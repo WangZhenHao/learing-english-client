@@ -5,6 +5,8 @@ import ContentWithPlayer from "@app/(detail)/course/detail/_component/ContentWit
 import { notFound } from "next/navigation";
 import he from 'he';
 import ShowComfirm from "@app/(detail)/course/detail/_component/ShowComfirm";
+import TranslatePop from "@app/(home)/_components/TranslatePop";
+
 // 移除不需要的 Hls 导入和注释掉的 Hooks
 export async function generateMetadata({ params }) {
     const id = (await params).id;
@@ -43,7 +45,10 @@ const Home = async ({ params }) => {
                 subTitleDate={res.data.subtitle}
             />
 
-            
+            <TranslatePop
+                areaId="#courseDetail"
+                language={res.data.targetLang}
+            />
         </>
     );
 };

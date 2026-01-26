@@ -86,7 +86,9 @@ const TranslatePop = (props) => {
     const t = useTranslations("course");
     const [isOpen, setIsOpen] = useState(false);
     const [loading, setLoading] = useState(false);
-    const [entries, setEntries] = useState({});
+    const [entries, setEntries] = useState({
+        word: ''
+    });
     const language = LanguageList.find(
         (item) => item.code.toLowerCase() === props.language.toLowerCase()
     );
@@ -102,6 +104,10 @@ const TranslatePop = (props) => {
         //     setEntries(res.data);
         // });
         setIsOpen(true);
+        setEntries({
+            ...entries,
+            word: text
+        })
         toSeacher(text);
     });
 
@@ -165,10 +171,10 @@ const TranslatePop = (props) => {
                         </DialogTitle>
                     </DialogHeader>
                     <div className="text-[14px] text-left text-[#666]">
-                        {entries.entries?.map((item) => {
+                        {entries.entries?.map((item, itemIndex) => {
                             return (
                                 // <>
-                                <div key={item.partOfSpeech}>
+                                <div key={itemIndex}>
                                     <div>
                                         <i>{item.partOfSpeech}</i>
                                         <strong className="pl-2.5">
@@ -187,7 +193,7 @@ const TranslatePop = (props) => {
                                                             <strong
                                                                 style={{
                                                                     minWidth:
-                                                                        "40px",
+                                                                        "44px",
                                                                 }}
                                                             >
                                                                 {t(
@@ -195,7 +201,7 @@ const TranslatePop = (props) => {
                                                                 )}
                                                                 :{" "}
                                                             </strong>
-                                                            <div className="font-bold">
+                                                            <div className="font-bold flex-1">
                                                                 {
                                                                     sense.definition
                                                                 }
@@ -205,13 +211,13 @@ const TranslatePop = (props) => {
                                                             <strong
                                                                 style={{
                                                                     minWidth:
-                                                                        "40px",
+                                                                        "44px",
                                                                 }}
                                                             >
                                                                 {t("examples")}:{" "}
                                                             </strong>
 
-                                                            <div>
+                                                            <div className="flex-1">
                                                                 {filterSensence(
                                                                     sense.examples,
                                                                     2
