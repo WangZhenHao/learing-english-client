@@ -4,8 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import Hls from "hls.js";
 import { useEffect, useState } from "react";
-import useSelectWord from "../../(detail)/course/detail/_component/useSelectWord";
-
+import TranslatePop from '@app/(home)/_components/TranslatePop'
 const Home = () => {
     const [text, setText] = useState("");
     const [move, setMove] = useState([]);
@@ -27,20 +26,20 @@ const Home = () => {
             clearTimeout(tiemr);
         };
     }, [text]);
-    useSelectWord('#test', (text) => {
-        console.log(text);
-    })
+    
     return (
         <>
             <div>
                 你好，首页
                 <div id="test">
-                    China was still enforcing its decades-long one-child rule at
-                    that time
+                ByteDance had initially refused to part with its prized formula - a stance backed by the Chinese government. But last September, Beijing's top cybersecurity regulator signalled that Beijing could allow ByteDance to license the algorithm to a US company owner.
+
+According to the deal, the algorithm will be retrained on US user data only, which will be protected to meet American regulations.
                 </div>
                 <Input onChange={(e) => setText(e.target.value)} />
                 <Button onClick={toTranslate}>点击</Button>
             </div>
+            <TranslatePop />
         </>
     );
 };

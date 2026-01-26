@@ -6,6 +6,7 @@ const useSelectWord = (id, listener) => {
     const fn = () => {
         const val = getSelectedText();
         if(val) {
+            console.log(val)
             listener(val);
         }
     };

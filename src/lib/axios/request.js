@@ -81,11 +81,27 @@ Axios.interceptors.request.use(
     }
 );
 
+
+const tranApi = 'https://freedictionaryapi.com/api/v1/entries'
+
+// 过去第三方接口
+Axios.interceptors.response.use(res => {
+    const url = res.request.responseURL
+    if(url.indexOf(tranApi) > -1) {
+        res.data = {
+            data: res.data,
+            statusCode: '000000'
+        }
+    }
+
+    return res;
+}, (error) => error)
+
 Axios.interceptors.response.use(
     (res) => {
         const data = res.data;
         const userConfig = res.config.userConfig;
-
+        // debugger
         if (data.statusCode === '000000') {
             return decryptedData(data);
         } else {

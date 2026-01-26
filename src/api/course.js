@@ -9,11 +9,11 @@ export function createArticel(data) {
     return ipost("/user/create", data);
 }
 export function deleteArticel(id) {
-    return iget("/user/delete/"  + id);
+    return iget("/user/delete/" + id);
 }
 
 export function regenerate(id) {
-    return iget("/user/regenerate/"  + id);
+    return iget("/user/regenerate/" + id);
 }
 
 export function getCatergory() {
@@ -21,5 +21,9 @@ export function getCatergory() {
 }
 
 export function toTranslate(data) {
-   return iget('https://freedictionaryapi.com/api/v1/entries/en/hello?pretty=true&translations=false')
+    const language = data.language;
+    const word = data.word;
+    return iget(
+        `https://freedictionaryapi.com/api/v1/entries/${language}/${word}?pretty=true&translations=false`
+    );
 }
