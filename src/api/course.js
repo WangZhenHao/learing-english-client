@@ -19,3 +19,7 @@ export function regenerate(id) {
 export function getCatergory() {
     return iget("/catergory/list");
 }
+
+export function toTranslate(data) {
+   return iget('https://freedictionaryapi.com/api/v1/entries/en/hello?pretty=true&translations=false')
+}

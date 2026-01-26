@@ -1,5 +1,5 @@
 "use client";
-import AudioPlayer from "@app/(detail)/course/detail/_component/AudioPlayer.js";
+import AudioPlayer from "@app/(detail)/course/detail/_component/AudioPlayer";
 import Process from "./Process";
 import { use, useEffect, useMemo, useRef, useState } from "react";
 import { addHideWord, checkRightWord, checkScore } from "./utils.js";
