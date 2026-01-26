@@ -181,7 +181,7 @@ const TranslatePop = (props) => {
                                             {item.pronunciations[0]?.text}
                                         </strong>
                                     </div>
-                                    <div className="pt-1.5">
+                                    <div className="pt-1.5 pl-2.5">
                                         {filterSensence(item.senses).map(
                                             (sense, index) => {
                                                 return sense.examples.length ? (
