@@ -5,7 +5,7 @@ import { Toaster } from "@/components/ui/sonner";
 import Script from "next/script";
 // import { Toaster, toast } from 'sonner';
 import "./globals.css";
-export { metadata } from "@app/_components/metadata";
+export { generateMetadata } from "@app/_components/metadata";
 // const geistSans = Geist({
 //   variable: "--font-geist-sans",
 //   subsets: ["latin"],
