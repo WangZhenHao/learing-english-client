@@ -3,7 +3,7 @@ import { getArticleId } from "@/api/server/course";
 // 导入新的客户端组件
 import ContentWithPlayer from "../_component/ContentWithPlayer";
 import { notFound } from "next/navigation";
-import he from "he";
+// import he from "he";
 import ShowComfirm from "../_component/ShowComfirm";
 import TranslatePop from "@app/(home)/_components/TranslatePop";
 // 移除不需要的 Hls 导入和注释掉的 Hooks
@@ -14,7 +14,7 @@ export async function generateMetadata({ params }) {
     if (!res.data) {
         return { title: "课程不存在" };
     }
-    const decodedTitle = he.decode(res.data.title);
+    const decodedTitle = res.data.title;
     return {
         title: `${decodedTitle} - ID: ${id}`,
         description: `这是关于课程 ${id} 的详细介绍`,

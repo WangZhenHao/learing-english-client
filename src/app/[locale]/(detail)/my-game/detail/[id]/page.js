@@ -1,6 +1,6 @@
 import { getUserArticleId } from "@/api/server/course";
 import { notFound } from "next/navigation";
-import he from "he";
+// import he from "he";
 import Content from "@app/(detail)/game/detail/[id]/_components/Content";
 import '@app/(detail)/game/detail/[id]/_components/page.scss'
 export async function generateMetadata({ params }) {
@@ -10,7 +10,7 @@ export async function generateMetadata({ params }) {
     if (!res.data) {
         return { title: "课程不存在" };
     }
-    const decodedTitle = he.decode(res.data.title);
+    const decodedTitle = res.data.title;
     return {
         title: `${decodedTitle} - ID: ${id}`,
         description: `这是关于课程 ${id} 的详细介绍`,
