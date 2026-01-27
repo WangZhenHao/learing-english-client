@@ -48,11 +48,11 @@ const SEO = {
 };
 
 export async function generateMetadata({ params }) {
-    const locale = (await params).locale ?? "zh";
-    const seo = SEO[locale];
+    let locale = (await params).locale ?? "zh";
+    const seo = SEO[locale] || {};
 
     const domain = process.env.DOMAIN;
-
+    // console.log(seo, locale,'------------>')
     return {
         title: seo.title,
         description: seo.description,
