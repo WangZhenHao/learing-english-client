@@ -6,6 +6,8 @@ export default getRequestConfig(async ({ requestLocale }) => {
     // const locale = store.get('locale')?.value || 'zh';
     // Static for now, we'll change this later
     let locale = await requestLocale;
+
+    locale = locale || "zh";
     // const locale1 = "en";
     // console.log("locale", locale);
     return {
