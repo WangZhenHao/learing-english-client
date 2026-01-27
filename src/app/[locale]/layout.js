@@ -58,6 +58,7 @@ export default async function RootLayout({ children, params }) {
                     `,
                     }}
                 ></Script>
+                <meta name="baidu-site-verification" content="codeva-fdTqNlZGWe" />
             </head>
             <body>
                 <Toaster position="top-center" />
