@@ -33,14 +33,17 @@ import "./_components/index.scss";
 import { useTranslations } from "next-intl";
 import { useLocalStorageState } from "ahooks";
 import { useRouter } from "@/i18n/routing";
+import { useLocale } from "next-intl";
+
 const deespeekCount = 3;
 const uidList = ["admin", "tester"];
-const App = () => {
+const CreatePage = () => {
     const router = useRouter();
     const [text, setText] = useState("");
     const [loading, setLoading] = useState(false);
     const [open, setOpen] = useState(false);
     const [result, setResult] = useState({});
+    const currentLocale = useLocale();
     // const [targetLang, setTargetLang] = useState("en");
     // const [owerLang, setOwerLang] = useState("zh");
     // const [character, setCharater] = useState("female");
@@ -70,13 +73,14 @@ const App = () => {
     }
     const loginHanlder = (e) => {
         e.preventDefault();
-        router.push("/login?callback=" + encodeURIComponent("/create"));
+        const callback = currentLocale === 'zh' ? '/create' : `/${currentLocale}/create` 
+        router.push("/login?callback=" + encodeURIComponent(callback));
     };
     useEffect(() => {
         if (userInfo?.id) {
             getUser();
         }
-        console.log(createParams)
+        console.log(currentLocale)
     }, [userInfo]);
     // console.log(result.sentences.map(item => item.sentence).join('\n'));
     const clickHandler = (e) => {
@@ -390,4 +394,4 @@ const App = () => {
     );
 };
 
-export default App;
+export default CreatePage;
