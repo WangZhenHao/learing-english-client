@@ -24,7 +24,7 @@ import {
 } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import { toast } from "sonner";
-import { useRouter } from "next/navigation";
+// import { useRouter } from "next/navigation";
 import MySelect from "./_components/select";
 import { langMap, charaterMap, speakRateMap, transtlateRateMap } from "./_components/map";
 import SelectCatergory from "./_components/SelectCatergory";
@@ -32,6 +32,7 @@ import useAuth from "@app/(auth)/_component/useAuth";
 import "./_components/index.scss";
 import { useTranslations } from "next-intl";
 import { useLocalStorageState } from "ahooks";
+import { useRouter } from "@/i18n/routing";
 const deespeekCount = 3;
 const uidList = ["admin", "tester"];
 const App = () => {
