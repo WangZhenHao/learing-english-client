@@ -118,7 +118,11 @@
             "other": "Other",
             "academic": "Academic",
             "general": "General Training",
-            "ielts": "IELTS"
+            "ielts": "IELTS",
+            "language": "Language",
+            "ja": "Japanese",
+            "ko": "Korean",
+            "fr": "French"
         },
         "logout": "log out"
     },

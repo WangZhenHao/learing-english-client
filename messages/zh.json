@@ -118,7 +118,11 @@
             "other": "其他",
             "academic": "A类",
             "general": "G类",
-            "ielts": "雅思"
+            "ielts": "雅思",
+            "language": "语种",
+            "ja": "日语",
+            "ko": "韩语",
+            "fr": "法语"
         },
         "logout": "退出登录"
     },

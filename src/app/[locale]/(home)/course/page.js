@@ -7,7 +7,7 @@ import Empty from "./_components/Empty";
 const App = async ({ searchParams, params }) => {
     const { category } = await params;
     const { page = 1 } = await searchParams;
-    const { data } = await getList({ page, categoryId: category });
+    const { data } = await getList({ page, categoryId: category, size: 20 });
     const { data: categoryList } = await getCatergory();
     // console.log(category)
     return (
