@@ -4,7 +4,7 @@ import LeftSlide from "./_components/leftSlide";
 import "../globals.css";
 import { isMobileServer } from "@/lib/isMobile";
 import MobilTab from "./_components/MobilTab";
-export { metadata } from '@app/_components/metadata'
+export { generateMetadata } from '@app/_components/metadata'
 // import { Toaster } from "@/components/ui/sonner";
 
 // const geistSans = Geist({
