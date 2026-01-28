@@ -80,7 +80,7 @@ const CreatePage = () => {
         if (userInfo?.id) {
             getUser();
         }
-        console.log(currentLocale)
+        // console.log(currentLocale)
     }, [userInfo]);
     // console.log(result.sentences.map(item => item.sentence).join('\n'));
     const clickHandler = (e) => {
@@ -154,6 +154,7 @@ const CreatePage = () => {
         })
             .then((res) => {
                 setOpen(false);
+                setText('')
                 toast(t('check.sumbitSuccess'));
                 setTimeout(() => {
                     router.push("/my-course");
