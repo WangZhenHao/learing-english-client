@@ -12,14 +12,20 @@ import {
 const App = (props) => {
     const list = props.list || [];
     return (
-        <Select onValueChange={props.onChange} value={props.value}>
+        <Select
+            disabled={props.disabled}
+            onValueChange={props.onChange}
+            value={props.value}
+        >
             <SelectTrigger>
                 <SelectValue placeholder={props.placeholder} />
             </SelectTrigger>
             <SelectContent>
                 <SelectGroup>
                     {list.map((item) => (
-                        <SelectItem value={item.value} key={item.value}>{item.label}</SelectItem>
+                        <SelectItem value={item.value} key={item.value}>
+                            {item.label}
+                        </SelectItem>
                     ))}
                 </SelectGroup>
             </SelectContent>

@@ -22,7 +22,7 @@ export default function SelectCatergory(props) {
     }, []);
 
     return (
-        <Select onValueChange={props.onChange} value={props.value}>
+        <Select disabled={props.disabled} onValueChange={props.onChange} value={props.value}>
             <SelectTrigger>
                 <SelectValue placeholder={props.placeholder} />
             </SelectTrigger>

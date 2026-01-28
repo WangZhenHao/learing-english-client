@@ -31,6 +31,7 @@ import SelectCatergory from "./_components/SelectCatergory";
 import useAuth from "@app/(auth)/_component/useAuth";
 import "./_components/index.scss";
 import { useTranslations } from "next-intl";
+import { useLocalStorageState } from "ahooks";
 const deespeekCount = 3;
 const uidList = ["admin", "tester"];
 const App = () => {
@@ -39,17 +40,33 @@ const App = () => {
     const [loading, setLoading] = useState(false);
     const [open, setOpen] = useState(false);
     const [result, setResult] = useState({});
-    const [targetLang, setTargetLang] = useState("en");
-    const [owerLang, setOwerLang] = useState("zh");
-    const [character, setCharater] = useState("female");
-    const [speakRate, setSpeakRate] = useState("0.8");
-    const [categoryId, setCategoryId] = useState("other");
+    // const [targetLang, setTargetLang] = useState("en");
+    // const [owerLang, setOwerLang] = useState("zh");
+    // const [character, setCharater] = useState("female");
+    // const [speakRate, setSpeakRate] = useState("0.8");
+    // const [categoryId, setCategoryId] = useState("other");
     const { userInfo, setLocalValue } = useAuth();
+    const [createParams, setCreateParams] = useLocalStorageState('createParams', {
+        defaultValue: {
+            categoryId: "other",
+            character: "female",
+            speakRate: "0.8",
+            targetLang: "en",
+            owerLang: "zh"
+        }
+    })
+
     const t = useTranslations("create");
     const languageMap = useTranslations('language');
     const characterMap = useTranslations('character')
     const speakEnRateMap = useTranslations('speakRate')
 
+    const setValueHanlde = (key, value) => {
+        setCreateParams({
+            ...createParams,
+            [key]: value
+        })
+    }
     const loginHanlder = (e) => {
         e.preventDefault();
         router.push("/login?callback=" + encodeURIComponent("/create"));
@@ -58,10 +75,16 @@ const App = () => {
         if (userInfo?.id) {
             getUser();
         }
+        console.log(createParams)
     }, [userInfo]);
     // console.log(result.sentences.map(item => item.sentence).join('\n'));
     const clickHandler = (e) => {
         e.preventDefault();
+        const {
+            targetLang,
+            owerLang,
+        } = createParams;
+
         if (!text) {
             toast(t('check.textError'), {
                 // duration: 1000000,
@@ -100,6 +123,14 @@ const App = () => {
             form.reportValidity();
             return;
         }
+
+        const {
+            targetLang,
+            character,
+            speakRate,
+            owerLang,
+            categoryId,
+        } = createParams;
 
         if (targetLang === owerLang) {
             toast(t('check.langError'));
@@ -188,10 +219,12 @@ const App = () => {
                             {t("owerLangLabel")}
                         </FieldLabel>
                         <MySelect
+                            disabled={loading}
                             onChange={(e) => {
-                                setOwerLang(e);
+                                // setOwerLang(e);
+                                setValueHanlde('owerLang', e)
                             }}
-                            value={owerLang}
+                            value={createParams.owerLang}
                             placeholder={`${t("owerLangLabel")}`}
                             list={Object.keys(langMap).map((item) => {
                                 return {
@@ -207,11 +240,13 @@ const App = () => {
                             {t("targetLangLabel")}
                         </FieldLabel>
                         <MySelect
+                            disabled={loading}
                             onChange={(e) => {
-                                setTargetLang(e);
+                                // setTargetLang(e);
+                                setValueHanlde('targetLang', e)
                             }}
                             placeholder={t("targetLangLabel")}
-                            value={targetLang}
+                            value={createParams.targetLang}
                             list={Object.keys(langMap).map((item) => {
                                 return {
                                     value: item,
@@ -227,10 +262,12 @@ const App = () => {
                         </FieldLabel>
                         <MySelect
                             onChange={(e) => {
-                                setCharater(e);
+                                // setCharater(e);
+                                setValueHanlde('character', e)
                             }}
+                            disabled={loading}
                             placeholder={t("characterLabel")}
-                            value={character}
+                            value={createParams.character}
                             list={Object.keys(charaterMap).map((item) => {
                                 return {
                                     value: item,
@@ -246,9 +283,11 @@ const App = () => {
                         </FieldLabel>
                         <MySelect
                             onChange={(e) => {
-                                setSpeakRate(e);
+                                // setSpeakRate(e);
+                                setValueHanlde('speakRate', e)
                             }}
-                            value={speakRate}
+                            disabled={loading}
+                            value={createParams.speakRate}
                             placeholder={t("speakRateLabel")}
                             list={Object.keys(speakRateMap).map((item) => {
                                 return {
@@ -267,11 +306,13 @@ const App = () => {
                                 {t("categoryLabel")}
                             </Label>
                             <SelectCatergory
+                                disabled={loading}
                                 placeholder={t("categoryLabel")}
                                 onChange={(e) => {
-                                    setCategoryId(e);
+                                    // setCategoryId(e);
+                                    setValueHanlde('categoryId', e)
                                 }}
-                                value={categoryId}
+                                value={createParams.categoryId}
                             />
                         </Field>
                     </div>
@@ -282,6 +323,7 @@ const App = () => {
                             {t("dialogSentenceLabel")}
                         </Label>
                         <Textarea
+                            disabled={loading}
                             style={{ height: "60vh" }}
                             onInput={inputHandle}
                             placeholder={t("areaPlaceholder")}
@@ -302,7 +344,6 @@ const App = () => {
                             <Field>
                                 <FieldLabel>{t("dialogTitleLabel")}</FieldLabel>
                                 <Input
-                                    placeholder="标题"
                                     required
                                     value={result.title}
                                     onInput={(e) => {
@@ -320,7 +361,6 @@ const App = () => {
                                 <Textarea
                                     readOnly
                                     style={{ height: "400px" }}
-                                    placeholder="请输入内容,最多3000个字符"
                                     value={result.sentences
                                         ?.map(
                                             (item) =>

@@ -135,7 +135,7 @@
         "search": "Search"
     },
     "create": {
-        "owerLangLabel": "My Native Language",
+        "owerLangLabel": "Native Language",
         "targetLangLabel": "Target Language",
         "characterLabel": "Voice Character",
         "speakRateLabel": "Speaking Speed",
