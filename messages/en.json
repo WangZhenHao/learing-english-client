@@ -115,7 +115,10 @@
         },
         "category": {
             "all": "All",
-            "other": "Other"
+            "other": "Other",
+            "academic": "Academic",
+            "general": "General Training",
+            "ielts": "IELTS"
         },
         "logout": "log out"
     },

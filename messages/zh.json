@@ -115,7 +115,10 @@
         },
         "category": {
             "all": "全部",
-            "other": "其他"
+            "other": "其他",
+            "academic": "A类",
+            "general": "G类",
+            "ielts": "雅思"
         },
         "logout": "退出登录"
     },
