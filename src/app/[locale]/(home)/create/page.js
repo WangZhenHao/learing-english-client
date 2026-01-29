@@ -81,7 +81,7 @@ const CreatePage = () => {
             getUser();
         }
         // console.log(currentLocale)
-    }, []);
+    }, [userInfo?.id]);
     // console.log(result.sentences.map(item => item.sentence).join('\n'));
     const clickHandler = (e) => {
         e.preventDefault();
@@ -181,6 +181,7 @@ const CreatePage = () => {
             //             : `生成语音文章`}
             //     </Button>
             // );
+            const count = deespeekCount - userInfo.deepseekCount
             return uidList.includes(userInfo.uid) ? (
                 <Button
                     loading={loading}
@@ -194,13 +195,13 @@ const CreatePage = () => {
                     loading={loading}
                     className="mt-5"
                     onClick={clickHandler}
-                    disabled={deespeekCount - userInfo.deepseekCount === 0}
+                    disabled={count <= 0}
                 >
                     {
                         loading
                             ? t("submitting")
                             : t("submitCount", {
-                                  count: deespeekCount - userInfo.deepseekCount,
+                                  count: count <= 0 ? 0 : count,
                               })
                         // `生成语音文章, 今天剩余次数${
                         //       deespeekCount - userInfo.deepseekCount

@@ -1,3 +1,4 @@
+// "use client"
 import { useCookieState, useLocalStorageState } from "ahooks";
 import { useEffect, useState } from "react";
 
@@ -14,14 +15,15 @@ export default function useAuth() {
         if (userInfo) {
           setStateUserInfo(userInfo);
         }
-    }, []);
-    const setLocalValueBefore = (val) => {
-        setLocalValue(val);
-        setStateUserInfo(val);
-    }
+        // console.log(userInfo)
+    }, [userInfo]);
+    // const setLocalValueBefore = (val) => {
+    //     setLocalValue(val);
+    //     setStateUserInfo(val);
+    // }
     return {
         setCookie,
-        setLocalValue: setLocalValueBefore,
+        setLocalValue,
         userInfo: stateUserInfo,
     };
 }
