@@ -7,8 +7,9 @@ import { useTranslations } from "next-intl";
 const toasterId = "GameTips";
 
 let targetToast;
+let t = null;
 const showTipsDetail = (wordLsit, showList, sentence = {}) => {
-    const t = useTranslations("game.setting");
+    // const t = useTranslations("game.setting");
 
     return (
         <div>
@@ -51,7 +52,8 @@ const showTipsDetail = (wordLsit, showList, sentence = {}) => {
     );
 };
 
-export default function showTips(wordLsit, showList, sentence) {
+export default function showTips(wordLsit, showList, sentence, options) {
+    t = options.t;
     // toast.custom(() => showTipsDetail(wordLsit, showList));
     // showTipsDetail(wordLsit, showList)
     // const fn = (a) => <><div>test{a.map(item => <><div>{item}</div></>)}</div></>

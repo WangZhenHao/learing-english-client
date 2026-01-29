@@ -87,7 +87,7 @@ const TranslatePop = (props) => {
     const [isOpen, setIsOpen] = useState(false);
     const [loading, setLoading] = useState(false);
     const [entries, setEntries] = useState({
-        word: ''
+        word: "",
     });
     const language = LanguageList.find(
         (item) => item.code.toLowerCase() === props.language.toLowerCase()
@@ -103,12 +103,13 @@ const TranslatePop = (props) => {
         //     setIsOpen(true);
         //     setEntries(res.data);
         // });
+        let word = text.toLowerCase();
         setIsOpen(true);
         setEntries({
             ...entries,
-            word: text
-        })
-        toSeacher(text);
+            word,
+        });
+        toSeacher(word);
     });
 
     const toSeacher = (text) => {
@@ -116,14 +117,16 @@ const TranslatePop = (props) => {
         toTranslate({
             language: language?.code || "en",
             word: text,
-        }).then((res) => {
-            setIsOpen(true);
-            setEntries(res.data);
-            setLoading(false);
-        }).catch(() => {
-            setLoading(false);
-            setIsOpen(true);
         })
+            .then((res) => {
+                setIsOpen(true);
+                setEntries(res.data);
+                setLoading(false);
+            })
+            .catch(() => {
+                setLoading(false);
+                setIsOpen(true);
+            });
     };
     // }
     const InputChangeHanlde = (e) => {
@@ -165,7 +168,7 @@ const TranslatePop = (props) => {
                                         toSeacher(entries.word);
                                     }}
                                 >
-                                    {t('search')}
+                                    {t("search")}
                                 </Button>
                             </div>
                         </DialogTitle>
@@ -184,7 +187,7 @@ const TranslatePop = (props) => {
                                     <div className="pt-1.5 pl-2.5">
                                         {filterSensence(item.senses).map(
                                             (sense, index) => {
-                                                return sense.examples.length ? (
+                                                return (
                                                     <div
                                                         key={index}
                                                         className="mb-2.5"
@@ -240,7 +243,7 @@ const TranslatePop = (props) => {
                                                             </div>
                                                         </div>
                                                     </div>
-                                                ) : null;
+                                                );
                                             }
                                         )}
                                     </div>

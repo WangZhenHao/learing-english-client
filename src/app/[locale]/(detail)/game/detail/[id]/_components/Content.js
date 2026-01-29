@@ -9,6 +9,7 @@ import { Toaster } from "sonner";
 import ShowKeyboard from "./ShowKeyboard";
 import GameResult from "./GameResult";
 import TranslatePop from "@/app/[locale]/(home)/_components/TranslatePop";
+import { useTranslations } from "next-intl";
 
 
 const App = ({ data: { content, subtitle = [], title, targetLang }, audioSrc }) => {
@@ -22,6 +23,7 @@ const App = ({ data: { content, subtitle = [], title, targetLang }, audioSrc }) 
     const contentMap = useRef({});
     const [score, setScore] = useState({});
     const gameResultRef = useRef(null);
+    const tsetting = useTranslations("game.setting");
     // console.log(subtitle, content);
 
     useEffect(() => {
@@ -154,13 +156,16 @@ const App = ({ data: { content, subtitle = [], title, targetLang }, audioSrc }) 
             gameTips(
                 subtitle[sentenceIndex],
                 wordDataArrMap[sentenceIndex],
-                content[sentenceIndex]
+                content[sentenceIndex],
+                { t: tsetting }
             );
         } else if (isPrimary && keyCode === "arrowdown") {
             typeof wordIndex === "number" &&
                 gameTips(
                     [subtitle[sentenceIndex][wordIndex]],
-                    [wordDataArrMap[sentenceIndex][wordIndex]]
+                    [wordDataArrMap[sentenceIndex][wordIndex]],
+                    undefined,
+                    { t: tsetting }
                 );
         } else if (keyCode === "enter") {
             playCurrentWorld(wordIndex);
