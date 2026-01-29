@@ -66,7 +66,8 @@
             "passwordNotMatch": "两次输入的密码不一致",
             "passwordTooShort": "密码长度至少为6位",
             "codeRequired": "请输入验证码",
-            "codeLength": "验证码长度为6位"
+            "codeLength": "验证码长度为6位",
+            "privacyRequired": "请同意隐私协议"
         },
         "footer": {
             "hasAccount": "已有账户？",

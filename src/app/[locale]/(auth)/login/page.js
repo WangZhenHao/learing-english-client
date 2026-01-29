@@ -18,7 +18,8 @@ import { toast } from "sonner";
 import { login } from "@/api/login";
 import useAuth from "../_component/useAuth";
 import { Link } from "@/i18n/routing";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
+import PriviceConfirm from "../_component/PriviceConfirm";
 // import { NextResponse } from "next/server";
 
 // import { useCookieState, useLocalStorageState } from "ahooks";
@@ -38,6 +39,7 @@ const LoginPage = () => {
         searchParams.toString() ? `?${searchParams.toString()}` : ""
     }`;
     const { setCookie, setLocalValue } = useAuth();
+    const currentLocale = useLocale()
 
     // const [, setCookie] = useCookieState("Bearer", {
     //     defaultValue: "",
@@ -72,8 +74,10 @@ const LoginPage = () => {
             setCookie(token);
             setLocalValue(result.data.user);
             // router.push(callback ? callback : "/course"); // Redirect after login
+            // const callback = currentLocale === 'zh' ? '/create' : `/${currentLocale}/create` 
             setTimeout(() => {
-                window.location.href = callback ? callback : "/course";
+                const backup = currentLocale === 'zh' ? '/course' : `/${currentLocale}/course`;
+                window.location.href = callback ? callback : backup;
             }, 100)
         } catch (error) {
             // toast.error("登录失败，请检查您的凭据");
@@ -128,6 +132,7 @@ const LoginPage = () => {
                                 {t("login.inmmidateFound")}
                             </Link>
                         </div>
+                        
                     </CardContent>
                     <CardFooter className="flex flex-col">
                         <Button
@@ -138,6 +143,9 @@ const LoginPage = () => {
                         >
                             {isLoading ? t("login.logining") : t("login.login")}
                         </Button>
+                        <div className="flex justify-end pt-2">
+                            <div><PriviceConfirm /></div>
+                        </div>
                         <Separator className="my-4" />
                         <div className="text-center text-sm">
                             <p>

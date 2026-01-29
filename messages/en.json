@@ -96,7 +96,8 @@
             "passwordNotMatch": "The passwords do not match",
             "passwordTooShort": "Password must be at least 6 characters",
             "codeRequired": "Please enter the verification code",
-            "codeLength": "The verification code must be 6 digits"
+            "codeLength": "The verification code must be 6 digits",
+            "privacyRequired": "Please agree to the privacy policy"
         },
         "footer": {
             "hasAccount": "Already have an account?",

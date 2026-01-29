@@ -58,7 +58,7 @@ const App = ({ status, id }) => {
                 {status === 2 && !open && (
                     <p className="bg-red-200 p-2.5 text-red-600 rounded-[6px] flex items-center">
                         <Megaphone size={20} />
-                        &nbsp;&nbsp;生成视频失败,{" "}
+                        &nbsp;&nbsp;生成视频失败,{" "}请确保内容没有特殊符号,
                         <a
                             className=" underline px-1 cursor-pointer"
                             onClick={() => setOpen(true)}

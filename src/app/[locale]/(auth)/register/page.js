@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { useSearchParams } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -21,11 +21,13 @@ import useAuth from "../_component/useAuth";
 import { register } from '@/api/login';
 import { Link } from "@/i18n/routing";
 import { useTranslations } from "next-intl";
-import { NextResponse } from "next/server";
+// import { NextResponse } from "next/server";
+import PriviceConfirm from "../_component/PriviceConfirm";
 
 const RegisterPage = () => {
     const t = useTranslations('register'); // ✅ ADDED: Register namespace
-    
+
+    const privacyRef = useRef(null);
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
@@ -38,7 +40,11 @@ const RegisterPage = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        
+
+        if (!privacyRef.current?.isCheck()) {
+            toast.error(t('errors.privacyRequired'));
+            return;
+        }
         // ✅ REPLACED: Error messages with translations
         if (!email) {
             toast.error(t('errors.emailRequired'));
@@ -154,7 +160,9 @@ const RegisterPage = () => {
                                 maxLength={20}
                             />
                         </div>
-                        <div className="space-y-2"> </div>
+                        <div className="space-y-2">
+                            <PriviceConfirm ref={privacyRef}  click={true} />
+                        </div>
                     </CardContent>
                     <CardFooter className="flex flex-col">
                         <Button
