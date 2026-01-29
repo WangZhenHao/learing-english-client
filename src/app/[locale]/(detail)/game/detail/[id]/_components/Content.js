@@ -8,8 +8,10 @@ import gameTips from "./GameTips";
 import { Toaster } from "sonner";
 import ShowKeyboard from "./ShowKeyboard";
 import GameResult from "./GameResult";
+import TranslatePop from "@/app/[locale]/(home)/_components/TranslatePop";
 
-const App = ({ data: { content, subtitle = [], title }, audioSrc }) => {
+
+const App = ({ data: { content, subtitle = [], title, targetLang }, audioSrc }) => {
     const audioPlayRef = useRef(null);
     const [sentenceIndex, setSentenceIndex] = useState(0);
     const [wordIndex, setWordIndex] = useState(null);
@@ -213,7 +215,7 @@ const App = ({ data: { content, subtitle = [], title }, audioSrc }) => {
             />
             <SettingNav title={title} score={score} reset={resetAll} handleSelectWord={handleSelectWord} />
             <Process step={sentenceIndex + 1} total={content.length} />
-            <div className="flex flex-wrap">
+            <div className="flex flex-wrap" id="gameWrap">
                 <div className="relative flex flex-wrap justify-center gap-2 sentent-wrap">
                     {subtitle[sentenceIndex]?.map((item, index) => {
                         const randomItem = wordDataArrMap[sentenceIndex]
@@ -279,6 +281,12 @@ const App = ({ data: { content, subtitle = [], title }, audioSrc }) => {
                     controlled={false}
                 />
             )}
+
+
+            <TranslatePop
+                areaId="#gameWrap"
+                language={targetLang}
+            />
         </>
     );
 };

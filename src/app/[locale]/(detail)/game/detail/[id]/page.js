@@ -18,7 +18,7 @@ export async function generateMetadata({ params }) {
 }
 const App = async ({ params }) => {
     const { id } = await params; // params 已经解构，不需要再次 await
-    const BASE_URL = process.env.API_URL;
+    // const BASE_URL = process.env.API_URL;
     let res = await getArticleId(id);
 
     if (!res.data || res.data.status !== 1) {
@@ -35,7 +35,7 @@ const App = async ({ params }) => {
                 className="text-center pb-2 font-bold text-[18px] pt-2.5"
                 dangerouslySetInnerHTML={{ __html: res.data.title }}
             /> */}
-            <div className="">
+            <div>
                 <Content
                     audioSrc={audioSrc}
                     data={res.data}
