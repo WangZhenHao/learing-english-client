@@ -81,7 +81,7 @@ const CreatePage = () => {
             getUser();
         }
         // console.log(currentLocale)
-    }, [userInfo]);
+    }, []);
     // console.log(result.sentences.map(item => item.sentence).join('\n'));
     const clickHandler = (e) => {
         e.preventDefault();
