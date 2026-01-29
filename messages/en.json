@@ -139,7 +139,9 @@
             "2": "Generation Failed"
         },
         "confirmBtn": "Confirm",
-        "search": "Search"
+        "search": "Search",
+        "pronunce": "Pronunce",
+        "speed": "Speed"
     },
     "create": {
         "owerLangLabel": "Native Language",

@@ -3,17 +3,21 @@ import { Link } from "@/i18n/routing";
 import dayjs from "dayjs";
 import { Trash2 } from "lucide-react";
 import { deleteArticel } from "@/api/course";
-import { statusMap } from "./map";
+// import { statusMap } from "./map";
 
 import "./page.scss";
 import { Button } from "@/components/ui/button";
-import { langMap } from "../../create/_components/map";
+// import { langMap } from "../../create/_components/map";
 import { useTranslations } from "next-intl";
+import { transtlateRateMap } from "@app/(home)/create/_components/map";
+
 const App = (props) => {
     const list = props.data;
     const canDelete = props.canDelete;
     const t = useTranslations("course");
     const languageMap = useTranslations('language');
+    const character = useTranslations('character');
+    const speakRate = useTranslations('speakRate');
     // const deleteArticel = props.deleteArticel || function(){}
     const deleteArticelHadnle = async (event, item) => {
         event.preventDefault();
@@ -31,7 +35,7 @@ const App = (props) => {
                     return (
                         // <Link href={`${props.route}/${item.id}`} key={index}>
                         <div
-                            className="item border border-border relative"
+                            className="item border border-border relative pb-2"
                             key={index}
                         >
                             {item.status !== 1 && (
@@ -87,15 +91,19 @@ const App = (props) => {
                                     </Button>
                                 </Link>
                             </div>
-                            <div className="flex justify-between px-2 py-2 text-[12px] text-[#999]">
+                            <div className="flex justify-between px-2 pt-2 text-[12px] text-[#999]">
+                                <span>{t('pronunce')}: {character(item.character)}</span> 
+                                <span>{t('speed')}: {speakRate(transtlateRateMap[item.speakRate])}</span>   
+                            </div>
+                            <div className="flex justify-between px-2 pt-1 text-[12px] text-[#999]">
                                 <span>
-                                    {dayjs(item.createdAt).format("YYYY-MM-DD")}
-                                </span>
-                                <span>
-                                    {t("study")}：
+                                    {t("study")}: 
                                     {/* {langMap[item.targetLang]} */}
                                     {languageMap(item.targetLang)}
 
+                                </span>
+                                <span>
+                                    {dayjs(item.createdAt).format("YYYY-MM-DD")}
                                 </span>
                                 {/* {item.views ? (
                                         <span>浏览量：{item.views}</span>
