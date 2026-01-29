@@ -147,7 +147,7 @@
         "characterLabel": "Voice Character",
         "speakRateLabel": "Speaking Speed",
         "categoryLabel": "Category",
-        "areaPlaceholder": "Please enter the content (approximately 150–3000 characters)",
+        "areaPlaceholder": "Please enter the content (approximately 150–6000 characters)",
         "submit": "Generate Audio Article",
         "submitting": "Generating, this may take 1–2 minutes. Please wait...",
         "submitCount": "Generate audio article, remaining attempts today: {count}",

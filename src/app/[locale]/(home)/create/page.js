@@ -35,7 +35,7 @@ import { useLocalStorageState } from "ahooks";
 import { useRouter } from "@/i18n/routing";
 import { useLocale } from "next-intl";
 
-const deespeekCount = 3;
+const deespeekCount = 2;
 const uidList = ["admin", "tester"];
 const CreatePage = () => {
     const router = useRouter();
@@ -333,7 +333,7 @@ const CreatePage = () => {
                             style={{ height: "60vh" }}
                             onInput={inputHandle}
                             placeholder={t("areaPlaceholder")}
-                            maxLength={3000}
+                            maxLength={6000}
                         />
                     </Field>
                 </div>

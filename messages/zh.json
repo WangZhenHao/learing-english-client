@@ -147,7 +147,7 @@
         "characterLabel": "发音人物",
         "speakRateLabel": "说话速度",
         "categoryLabel": "分类",
-        "areaPlaceholder": "请输入内容,大概150-3000个字",
+        "areaPlaceholder": "请输入内容,大概150-6000个字",
         "submit": "生成语音文章",
         "submitting": "生成中，1-2分钟完成，请稍等...",
         "submitCount": "生成语音文章, 今天剩余次数{count}",
