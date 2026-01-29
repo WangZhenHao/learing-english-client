@@ -15,9 +15,13 @@ export default function useAuth() {
           setStateUserInfo(userInfo);
         }
     }, []);
+    const setLocalValueBefore = (val) => {
+        setLocalValue(val);
+        setStateUserInfo(val);
+    }
     return {
         setCookie,
-        setLocalValue,
+        setLocalValue: setLocalValueBefore,
         userInfo: stateUserInfo,
     };
 }
