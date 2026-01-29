@@ -93,7 +93,7 @@ const App = (props) => {
                             </div>
                             <div className="flex justify-between px-2 pt-2 text-[12px] text-[#999]">
                                 <span>{t('pronunce')}: {character(item.character)}</span> 
-                                <span>{t('speed')}: {speakRate(transtlateRateMap[item.speakRate])}</span>   
+                                <span>{t('speed')}: x{item.speakRate}</span>   
                             </div>
                             <div className="flex justify-between px-2 pt-1 text-[12px] text-[#999]">
                                 <span>

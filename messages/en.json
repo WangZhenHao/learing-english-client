@@ -208,8 +208,8 @@
     },
     "speakRate": {
         "half": "x0.5",
-        "pointEight": "x0.8 (Recommended)",
-        "one": "x1 (Normal)",
+        "pointEight": "x0.8 (rec.)",
+        "one": "x1 (norm.)",
         "oneTwo": "x1.2",
         "oneFive": "x1.5"
     }
