@@ -93,9 +93,10 @@ Axios.interceptors.response.use(res => {
             statusCode: '000000'
         }
     }
-
-    return res;
-}, (error) => error)
+    return Promise.resolve(res);
+}, (error) => {
+    return Promise.reject(error);
+})
 
 Axios.interceptors.response.use(
     (res) => {
@@ -115,7 +116,7 @@ Axios.interceptors.response.use(
     (error) => {
         const response = error.response;
         const data = response?.data;
-        
+        // debugger
         if (error.message.includes('timeout')) {
             Toast(requestError(504) || '服务器异常');
         } else {
