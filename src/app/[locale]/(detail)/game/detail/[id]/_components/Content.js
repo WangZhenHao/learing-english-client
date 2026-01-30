@@ -83,8 +83,8 @@ const App = ({ data: { content, subtitle = [], title, targetLang }, audioSrc }) 
             const item = subtitle[sentenceIndex][index];
 
             if (item) {
-                let start = item.offset;
-                let end = item.offset + item.duration;
+                let start = item.offset - 500;
+                let end = item.offset + item.duration + 500;
                 // if (preItem) {
                 //     start = preItem.offset + preItem.duration;
                 // }
