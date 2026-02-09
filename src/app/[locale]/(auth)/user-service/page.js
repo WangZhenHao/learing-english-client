@@ -14,7 +14,7 @@ export default function UserService() {
         </h1>
   
         <p className="mb-8 text-sm text-gray-500 text-center">
-          更新日期：2026 年 1 月 29 日 · 生效日期：2026 年 1 月 29 日
+          更新日期：2026 年 1 月 29 日 <br /> 生效日期：2026 年 1 月 29 日
         </p>
   
         <section className="space-y-6 text-base leading-7">
