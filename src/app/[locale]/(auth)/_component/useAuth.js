@@ -10,7 +10,9 @@ export default function useAuth() {
         path: "/",
         expires: (() => new Date(+new Date() + 6 * 24 * 60 * 60 * 1000))(),
     });
-    const [userInfo, setLocalValue] = useLocalStorageState("userInfo");
+    const [userInfo, setLocalValue] = useLocalStorageState("userInfo", {
+        expires: (() => new Date(+new Date() + 6 * 24 * 60 * 60 * 1000))(),
+    });
     useEffect(() => {
         if (userInfo) {
           setStateUserInfo(userInfo);

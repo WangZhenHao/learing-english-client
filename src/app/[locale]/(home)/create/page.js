@@ -116,7 +116,13 @@ const CreatePage = () => {
     const getUser = () => {
         getUserInfo().then((res) => {
             setLocalValue(res.data);
-        });
+        }).catch(error => {
+            if(error.response.status === 401) {
+                setLocalValue({})
+            }
+            // console.log(error);
+            // debugger
+        })
     };
     const submitHandler = (e) => {
         e.preventDefault(); // Prevent default form submission
